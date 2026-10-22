@@ -8,14 +8,14 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   
-  <title>亞馬森特寵專科醫院 - 櫃台周邊生活與即時停車導覽 v1.0.3</title>
+  <title>亞馬森特寵專科醫院 - 櫃台周邊生活與即時停車導覽 v1.0.4</title>
   
   <!-- iOS PWA 支援 -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="亞馬森導覽">
   <meta name="theme-color" content="#1B4332">
-  <link rel="manifest" href="manifest.json?v=103">
+  <link rel="manifest" href="manifest.json?v=104">
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -236,7 +236,7 @@
       transform: scale(0.95);
     }
 
-    /* 主內容區域 (左右分欄: iPad 專用優化比例) */
+    /* 主內容區域 */
     .main-container {
       flex: 1;
       display: flex;
@@ -257,7 +257,6 @@
       height: 100%;
     }
 
-    /* 地圖浮動控制項 */
     .map-floating-controls {
       position: absolute;
       bottom: 20px;
@@ -432,6 +431,13 @@
       color: #5D4037;
     }
 
+    .tag-entrance {
+      background: #FFF3CD;
+      color: #856404;
+      font-weight: 800;
+      border: 1px solid #FFEBAA;
+    }
+
     .tag-closed {
       background: #FFE3E3;
       color: #D90429;
@@ -503,7 +509,28 @@
       color: var(--primary-dark);
     }
 
-    /* QR Code 導航掃碼區 */
+    /* 車道入口特別指引盒 */
+    .entrance-notice-box {
+      background: #FFFBEA;
+      border: 1.5px dashed #D4A373;
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: #7A4B1A;
+      line-height: 1.45;
+    }
+
+    .entrance-notice-box i {
+      font-size: 1.1rem;
+      color: #B57F50;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* QR Code 導航掃碼區 (精確定位車輛入口) */
     .qrcode-section {
       background: linear-gradient(135deg, #143626 0%, #1B4332 100%);
       color: #FFFFFF;
@@ -554,6 +581,12 @@
       margin-bottom: 7px;
     }
 
+    .nav-buttons-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
     .btn-direct-nav {
       display: inline-flex;
       align-items: center;
@@ -570,6 +603,20 @@
 
     .btn-direct-nav:active {
       transform: scale(0.96);
+    }
+
+    .btn-walk-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     /* 列表清單區 */
@@ -663,7 +710,7 @@
       white-space: nowrap;
     }
 
-    /* 地圖自訂 Marker 樣式 */
+    /* 地圖自訂 Marker 樣式 (車道入口專用圖標) */
     .custom-marker {
       display: flex;
       align-items: center;
@@ -689,10 +736,10 @@
     }
 
     .marker-parking {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       background: #2D6A4F;
-      border: 2px solid #FFFFFF;
+      border: 2.5px solid #FFFFFF;
       color: #FFFFFF;
       font-size: 15px;
     }
@@ -767,14 +814,14 @@
 </head>
 <body>
 
-  <!-- 頂部亞馬森專屬導航 (含真實 Logo 與 v1.0.3) -->
+  <!-- 頂部亞馬森專屬導航 -->
   <header>
     <div class="brand-group">
       <div class="brand-logo-container">
-        <img src="logo.svg?v=103" alt="亞馬森 Logo" class="brand-logo-img" id="brand-logo-img">
+        <img src="logo.svg?v=104" alt="亞馬森 Logo" class="brand-logo-img" id="brand-logo-img">
       </div>
       <div class="brand-titles">
-        <h1>亞馬森特寵專科醫院 <span class="en">AEAH Kiosk Map v1.0.3</span></h1>
+        <h1>亞馬森特寵專科醫院 <span class="en">AEAH Kiosk Map v1.0.4</span></h1>
         <p>
           <span><i class="fa-solid fa-location-dot"></i> 台北市內湖區內湖路二段39-2號1樓</span>
           <span><i class="fa-solid fa-phone"></i> (02) 8792-3248</span>
@@ -848,14 +895,14 @@
       </div>
     </div>
 
-    <!-- 右側資訊與手機掃碼導航 (修復被截斷：自帶流暢捲動，焦點卡片完整展開) -->
+    <!-- 右側資訊與手機掃碼導航 (精準鎖定車道入口) -->
     <div class="sidebar">
       <div class="sidebar-header">
         <h2><i class="fa-solid fa-circle-info"></i> 周邊設施導覽</h2>
         <span class="count-badge" id="item-count-badge">共 15 處</span>
       </div>
 
-      <!-- 當前焦點卡片 (置頂完整呈現) -->
+      <!-- 當前焦點卡片 -->
       <div class="focus-card" id="focus-card">
         <div class="focus-badge" id="focus-badge">當前選取</div>
         <div class="focus-title-group">
@@ -866,7 +913,7 @@
           </div>
         </div>
 
-        <!-- 停車場專屬動態儀表 (非停車場時隱藏) -->
+        <!-- 停車場專屬動態儀表 -->
         <div class="parking-meter" id="parking-meter-box" style="display: none;">
           <div class="meter-left">
             <span class="meter-label"><i class="fa-solid fa-square-parking"></i> 即時車位狀態</span>
@@ -878,30 +925,40 @@
           </div>
         </div>
 
-        <!-- 詳細說明備註 -->
-        <div class="focus-desc" id="focus-desc">
-          點選左側地圖任一圖示，或從下方清單挑選，即可查看即時空位、步行導引與手機帶走 QR Code！
+        <!-- 車道入口精準指引提醒 (停車場專屬) -->
+        <div class="entrance-notice-box" id="entrance-notice-box" style="display: none;">
+          <i class="fa-solid fa-diamond-turn-right"></i>
+          <div>
+            <strong>🚗 車輛進場入口指引：</strong>
+            <span id="entrance-desc">由主幹道順向進入專用車道入口</span>
+          </div>
         </div>
 
-        <!-- QR Code 導航掃碼區 -->
+        <!-- 詳細說明備註 -->
+        <div class="focus-desc" id="focus-desc">
+          點選左側地圖任一圖示，或從下方清單挑選，即可查看即時空位、車輛入口與手機帶走 QR Code！
+        </div>
+
+        <!-- QR Code 導航掃碼區 (直接導航至車道入口) -->
         <div class="qrcode-section">
-          <div class="qrcode-wrapper" id="qrcode-box">
-            <!-- QRCode 動態渲染於此 -->
-          </div>
+          <div class="qrcode-wrapper" id="qrcode-box"></div>
           <div class="qrcode-info">
-            <h4><i class="fa-solid fa-qrcode"></i> 手機一掃即走</h4>
-            <p>打開手機相機掃描，立即在手機 Google Maps 開始步行/開車導航。</p>
-            <a href="#" target="_blank" class="btn-direct-nav" id="btn-direct-nav">
-              <i class="fa-solid fa-diamond-turn-right"></i> 在本機開啟導航
-            </a>
+            <h4 id="qrcode-title"><i class="fa-solid fa-qrcode"></i> 手機一掃導航</h4>
+            <p id="qrcode-desc">手機相機一掃，直接啟動 Google Maps 車輛入口精準導航。</p>
+            <div class="nav-buttons-row">
+              <a href="#" target="_blank" class="btn-direct-nav" id="btn-direct-nav">
+                <i class="fa-solid fa-location-arrow"></i> 開啟車道導航
+              </a>
+              <a href="#" target="_blank" class="btn-walk-nav" id="btn-walk-nav">
+                <i class="fa-solid fa-person-walking"></i> 步行導航
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 設施列表清單 -->
-      <div class="item-list" id="item-list">
-        <!-- 動態渲染卡片列表 -->
-      </div>
+      <div class="item-list" id="item-list"></div>
     </div>
 
   </div>
@@ -913,24 +970,21 @@
     // 亞馬森特寵專科醫院精確核心座標
     const AMAZON_COORDS = [25.07905, 121.57995];
 
-    // 判斷內湖國小地下停車場目前是否對外開放 (院長特別指示：未開放時嚴禁推薦上來被罵！)
+    // 判斷內湖國小地下停車場目前是否對外開放
     function checkNeihuElemStatus() {
       const now = new Date();
-      const day = now.getDay(); // 0 = 週日, 6 = 週六
+      const day = now.getDay();
       const hour = now.getHours();
       const min = now.getMinutes();
 
-      // 例假日 (週六、週日) 全天對外開放
       if (day === 0 || day === 6) {
         return { isOpen: true, statusText: '🟢 例假日全天開放臨停', tagText: '例假日全天開放' };
       }
 
-      // 平日 (週一至週五)：僅 18:30 以後至翌日 06:30 開放
       if (hour > 18 || (hour === 18 && min >= 30) || hour < 6) {
         return { isOpen: true, statusText: '🟢 夜間開放時段 (至06:30)', tagText: '夜間臨停開放中' };
       }
 
-      // 平日白天上課期間：嚴格不對外開放！
       return { 
         isOpen: false, 
         statusText: '⛔ 校園上課中・不對外開放', 
@@ -938,78 +992,83 @@
       };
     }
 
-    // 周邊真實設施資料庫 (經停管處與現地路網嚴格驗證)
+    // 周邊設施資料庫：【重要更新】停車場座標全部精準校正為「車輛車道入口 (Driveway Entrance)」
     const LOCATIONS = [
-      // 停車場 (重要性最高：院長首推 24 小時公有轉乘場，杜絕被罵風險)
+      // 停車場 (全數校正為精確車道入口)
       {
         id: 'park_wende',
         category: 'parking',
         name: '文德捷運站轉乘停車場 (嘟嘟房)',
-        coords: [25.07835, 121.58430],
+        coords: [25.07842, 121.58475], // 精確車輛入口：文德路216號臨路側車道
         distance: '450m',
         walkTime: '5-6 分鐘',
         driveTime: '2 分鐘',
         rate: '30-40 元 / 小時',
         totalSpaces: 210,
         availableSpaces: 78,
-        tags: ['24H全日開放', '捷運公有轉乘', '車位多', '文德路216號'],
-        desc: '<strong>院長首推推薦！24小時全日開放！</strong>位於文德路216號（捷運文德站下），為停管處正式公有轉乘停車場。車位數充裕、出入動線寬敞，適合載送毛孩就醫或搭捷運轉乘之飼主。'
+        tags: ['24H全日開放', '捷運公有轉乘', '車位多', '文德路臨路入口'],
+        entranceGuide: '車道入口位於<strong>文德路臨路側（捷運文德站 2 號出口旁）</strong>，沿文德路順向行駛即可直接右轉進場，切勿轉進後方死巷！',
+        desc: '<strong>院長首推推薦！24小時全日開放！</strong>停管處正規公有轉乘場。車位充足且車道寬敞好轉入，載送毛孩最安心。'
       },
       {
         id: 'park_gangfu',
         category: 'parking',
         name: '港富立體停車場',
-        coords: [25.08050, 121.57460],
+        coords: [25.08045, 121.57465], // 精確車輛入口：737巷50弄口
         distance: '550m',
         walkTime: '6-7 分鐘',
         driveTime: '2 分鐘',
         rate: '30 元 / 小時',
         totalSpaces: 160,
         availableSpaces: 45,
-        tags: ['24H立體場', '車位充足', '內湖路737商圈'],
-        desc: '位於內湖路一段737巷50弄，為多層立體停車場，24小時開放。車位多且流動快，若就診後想順道品嚐 737 巷在地小吃非常推薦。'
+        tags: ['24H立體場', '737商圈', '50弄專用車道'],
+        entranceGuide: '車輛入口位於<strong>內湖路一段 737 巷 50 弄口</strong>。請由 737 巷轉入 50 弄直行 20 公尺即可看到立體車道閘門（傍晚時段請減速慢行留意行人）。',
+        desc: '多層立體鋼骨停車塔，24小時開放，車位多流動快。若就診後想順道品嚐 737 巷美食小吃非常方便。'
       },
       {
         id: 'park_onstreet',
         category: 'parking',
         name: '內湖路二段公有路邊收費停車格',
-        coords: [25.07910, 121.58100],
+        coords: [25.07910, 121.58100], // 精確路邊車位區段
         distance: '80m',
         walkTime: '1 分鐘',
         driveTime: '1 分鐘',
         rate: '30 元 / 小時 (09:00-17:00)',
         totalSpaces: 25,
         availableSpaces: 5,
-        tags: ['路邊停車格', '極近距離', '停管處公有'],
-        desc: '由停管處規劃之內湖路二段路邊汽車格（54號至文德路段），周一至周六 09:00-17:00 計時收費，若運氣好門口有空格可直接臨停下車。'
+        tags: ['路邊停車格', '門口臨停', '停管處公有'],
+        entranceGuide: '位於<strong>內湖路二段（門牌54號至文德路段）兩側</strong>，若行經醫院門口見有空劃線車格，可直接靠邊順向停入。',
+        desc: '停管處公有收費車格，周一至周六計時收費，若運氣好門口有空格可直接下車就醫。'
       },
       {
         id: 'park_dudufang',
         category: 'parking',
         name: '宜舍 / 台灣聯通內湖平面停車場',
-        coords: [25.07880, 121.58200],
+        coords: [25.07885, 121.58210], // 精確入口：內湖路二段平面車道口
         distance: '200m',
         walkTime: '2-3 分鐘',
         driveTime: '1 分鐘',
         rate: '50-60 元 / 小時',
         totalSpaces: 35,
         availableSpaces: 9,
-        tags: ['平面停車', '步行極短', '信用卡折抵'],
+        tags: ['平面停車場', '免開坡道', '內湖路臨路入口'],
+        entranceGuide: '車道入口位於<strong>內湖路二段臨路側</strong>，車輛順向減速直接駛入平面車場，免上下坡道。',
         desc: '步行僅 2-3 分鐘之民營露天平面場，免開上下坡，若抱著較重之特寵外出籠或推車，省力且快速。'
       },
       {
         id: 'park_neihu_elem',
         category: 'parking',
         name: '內湖國小地下停車場 (孝悌樓)',
-        coords: [25.07920, 121.58020],
+        coords: [25.07925, 121.58015], // 精確車輛入口：內湖國小孝悌樓校區車道門
         distance: '30m',
         walkTime: '10 秒鐘',
         driveTime: '0 分鐘',
         rate: '限例假日全天或平日夜間',
         totalSpaces: 49,
         availableSpaces: 12,
-        tags: ['內湖路二段41號', '限時段開放'],
-        desc: '<strong>注意時段限制：</strong>位於門牌 41 號（亞馬森正隔壁）。配合校園安全，<strong>平日白天上課期間嚴禁外車進入</strong>；僅於例假日（週六日全天）及平日晚間 18:30 後開放臨停。'
+        tags: ['就在隔壁', '限時段開放', '校門車道口'],
+        entranceGuide: '車道入口位於<strong>內湖路二段 41 號（亞馬森正隔壁）校門口車道閘門</strong>。<strong>注意：平日白天上課時間嚴格禁止外車進入！</strong>',
+        desc: '<strong>注意時段限制：</strong>位於門牌 41 號。平日白天校園上課期間嚴禁外車進入；僅於例假日（週六日全天）及平日晚間 18:30 後開放臨停。'
       },
 
       // 休息咖啡 / 美食
@@ -1128,14 +1187,13 @@
     let qrcodeObj = null;
     let idleTimer = null;
 
-    // 初始化地圖 (正統 Google Maps 向量街道圖磚，零水印、字體超清晰)
     function initMap() {
       map = L.map('map', {
         zoomControl: false,
         attributionControl: false
       }).setView(AMAZON_COORDS, 16);
 
-      // Google Maps 官方繁中街道圖磚
+      // Google Maps 官方繁體中文向量街道底圖
       L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=zh-TW', {
         maxZoom: 20,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
@@ -1193,9 +1251,7 @@
         correctLevel: QRCode.CorrectLevel.M
       });
 
-      // 預設選中 24 小時開放的文德捷運站轉乘停車場 (絕不選未開放的場地)
       selectItem('park_wende');
-
       renderList();
 
       fetchParkingData();
@@ -1237,8 +1293,8 @@
         const customIcon = L.divIcon({
           className: `custom-marker ${iconClass}`,
           html: `${iconHtml}${bubbleHtml}`,
-          iconSize: [36, 36],
-          iconAnchor: [18, 18]
+          iconSize: [38, 38],
+          iconAnchor: [19, 19]
         });
 
         const marker = L.marker(loc.coords, { icon: customIcon }).addTo(map);
@@ -1267,15 +1323,14 @@
 
       map.flyTo(loc.coords, 17, { duration: 0.8 });
 
-      // 檢查是否為內湖國小
       let isElemClosed = false;
       if (id === 'park_neihu_elem') {
         const check = checkNeihuElemStatus();
         isElemClosed = !check.isOpen;
       }
 
-      document.getElementById('focus-badge').innerText = loc.category === 'parking' ? '🅿️ 停車推薦' : '設施導覽';
-      document.getElementById('focus-name').innerText = loc.name;
+      document.getElementById('focus-badge').innerText = loc.category === 'parking' ? '🅿️ 車道入口' : '設施導覽';
+      document.getElementById('focus-name').innerText = loc.category === 'parking' ? `${loc.name}（入口）` : loc.name;
 
       const metaContainer = document.getElementById('focus-meta');
       let tagsHtml = `
@@ -1284,14 +1339,22 @@
         ${loc.rate ? `<span class="tag tag-category" style="background:#FFF3CD; color:#856404;"><i class="fa-solid fa-ticket"></i> ${loc.rate}</span>` : ''}
       `;
 
+      if (loc.category === 'parking') {
+        tagsHtml += `<span class="tag tag-entrance"><i class="fa-solid fa-location-crosshairs"></i> 鎖定車輛入口</span>`;
+      }
+
       if (isElemClosed) {
         tagsHtml += `<span class="tag tag-closed"><i class="fa-solid fa-triangle-exclamation"></i> 平日白天校園不開放</span>`;
       }
       metaContainer.innerHTML = tagsHtml;
 
       const parkingBox = document.getElementById('parking-meter-box');
+      const entranceBox = document.getElementById('entrance-notice-box');
       if (loc.category === 'parking') {
         parkingBox.style.display = 'flex';
+        entranceBox.style.display = 'flex';
+        document.getElementById('entrance-desc').innerHTML = loc.entranceGuide || '請順向依指標駛入專用車道入口';
+
         if (isElemClosed) {
           const numEl = document.getElementById('meter-number');
           const textEl = document.getElementById('meter-status-text');
@@ -1304,15 +1367,23 @@
         }
       } else {
         parkingBox.style.display = 'none';
+        entranceBox.style.display = 'none';
       }
 
       document.getElementById('focus-desc').innerHTML = loc.desc;
 
-      const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${loc.coords[0]},${loc.coords[1]}&destination_place_id=&travelmode=walking`;
-      qrcodeObj.clear();
-      qrcodeObj.makeCode(navUrl);
+      // 精準導航至車道入口 (開車模式 & 步行模式)
+      const driveNavUrl = `https://www.google.com/maps/dir/?api=1&destination=${loc.coords[0]},${loc.coords[1]}&destination_place_id=&travelmode=driving`;
+      const walkNavUrl = `https://www.google.com/maps/dir/?api=1&destination=${loc.coords[0]},${loc.coords[1]}&destination_place_id=&travelmode=walking`;
 
-      document.getElementById('btn-direct-nav').href = navUrl;
+      // 停車場優先生成開車導航直達車道口
+      const targetNavUrl = loc.category === 'parking' ? driveNavUrl : walkNavUrl;
+      qrcodeObj.clear();
+      qrcodeObj.makeCode(targetNavUrl);
+
+      document.getElementById('btn-direct-nav').href = driveNavUrl;
+      document.getElementById('btn-direct-nav').innerHTML = loc.category === 'parking' ? '<i class="fa-solid fa-car"></i> 車道入口導航' : '<i class="fa-solid fa-location-arrow"></i> 開啟地圖導航';
+      document.getElementById('btn-walk-nav').href = walkNavUrl;
 
       document.querySelectorAll('.list-card').forEach(c => c.classList.remove('selected'));
       const activeCard = document.getElementById(`card-${id}`);
@@ -1326,7 +1397,6 @@
       const textEl = document.getElementById('meter-status-text');
 
       numEl.innerText = avail;
-
       numEl.className = 'meter-number';
       textEl.className = 'meter-status-text';
 
@@ -1351,7 +1421,6 @@
 
       const elemCheck = checkNeihuElemStatus();
 
-      // 過濾與排序：未開放的內湖國小在平日白天自動降至最底或標記
       let filtered = LOCATIONS.filter(item => {
         if (currentCategory === 'all') return true;
         return item.category === currentCategory;
@@ -1408,7 +1477,7 @@
               <div class="card-sub">
                 <span>${item.distance}</span>
                 <span>•</span>
-                <span>${item.tags[0] || ''}</span>
+                <span>${item.category === 'parking' ? '🚗 車道入口定位' : (item.tags[0] || '')}</span>
               </div>
             </div>
           </div>
@@ -1448,6 +1517,7 @@
         <span class="tag tag-category">非犬貓特寵醫療核心</span>
       `;
       document.getElementById('parking-meter-box').style.display = 'none';
+      document.getElementById('entrance-notice-box').style.display = 'none';
       document.getElementById('focus-desc').innerHTML = '<strong>亞馬森特種寵物專科醫院</strong><br>專門看診鼠、兔、鳥禽、爬蟲兩棲等特殊寵物。<br>門診電話：(02) 8792-3248<br>台北市內湖區內湖路二段39-2號1樓';
       
       const shareUrl = 'https://www.google.com/maps/search/?api=1&query=25.07905,121.57995';
