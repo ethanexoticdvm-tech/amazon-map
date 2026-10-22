@@ -8,14 +8,14 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   
-  <title>亞馬森特寵專科醫院 - 櫃台周邊生活與即時停車導覽 v1.0.6</title>
+  <title>亞馬森特寵專科醫院 - 櫃台周邊生活與即時停車導覽 v1.1.0</title>
   
   <!-- iOS PWA 支援 -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="亞馬森導覽">
   <meta name="theme-color" content="#1B4332">
-  <link rel="manifest" href="manifest.json?v=106">
+  <link rel="manifest" href="manifest.json?v=110">
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -87,8 +87,8 @@
     }
 
     .brand-logo-container {
-      width: 52px;
-      height: 52px;
+      width: 50px;
+      height: 50px;
       background: #FFFFFF;
       border-radius: 12px;
       display: flex;
@@ -108,7 +108,7 @@
     }
 
     .brand-titles h1 {
-      font-size: 1.28rem;
+      font-size: 1.25rem;
       font-weight: 900;
       letter-spacing: 0.5px;
       display: flex;
@@ -118,7 +118,7 @@
     }
 
     .brand-titles h1 span.en {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 500;
       opacity: 0.85;
       letter-spacing: 0.5px;
@@ -126,7 +126,7 @@
     }
 
     .brand-titles p {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: #B7E4C7;
       display: flex;
       align-items: center;
@@ -207,9 +207,9 @@
       background: #F1F5F3;
       color: var(--primary);
       border: 1.5px solid transparent;
-      padding: 7px 16px;
+      padding: 7px 15px;
       border-radius: 20px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -220,7 +220,7 @@
     }
 
     .filter-chip i {
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     .filter-chip.active {
@@ -243,7 +243,7 @@
       overflow: hidden;
     }
 
-    /* 左側 Google Maps 地圖 */
+    /* 左側 Google Maps 地圖 (佔 60%) */
     #map-container {
       flex: 1;
       height: 100%;
@@ -286,6 +286,7 @@
       background: #F1F5F3;
     }
 
+    /* 步行距離圖例：已調整為 5 分鐘與 10 分鐘 */
     .distance-legend {
       position: absolute;
       top: 14px;
@@ -317,9 +318,9 @@
       border-radius: 50%;
     }
 
-    /* 右側資訊專區 (獨立流暢捲動，焦點卡片完整展開) */
+    /* 右側資訊專區 (寬度適中，自帶獨立流暢捲動) */
     .sidebar {
-      width: 440px;
+      width: 450px;
       max-width: 42%;
       background: #FAF8F5;
       border-left: 1px solid var(--border-subtle);
@@ -333,20 +334,109 @@
       padding-bottom: 28px;
     }
 
-    .sidebar-header {
-      padding: 14px 18px 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    /* 櫃台專屬 Google Maps 即時搜尋框 */
+    .search-section {
+      padding: 12px 16px 10px;
       background: #FFFFFF;
       border-bottom: 1px solid var(--border-subtle);
       position: sticky;
       top: 0;
       z-index: 950;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
+    .search-input-wrapper {
+      display: flex;
+      align-items: center;
+      background: #F1F5F3;
+      border: 1.5px solid #C7EAD8;
+      border-radius: 24px;
+      padding: 6px 14px;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .search-input-wrapper:focus-within {
+      background: #FFFFFF;
+      border-color: var(--primary-accent);
+      box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.15);
+    }
+
+    .search-input-wrapper i {
+      color: var(--primary-accent);
+      font-size: 0.95rem;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.88rem;
+      font-family: inherit;
+      color: var(--text-main);
+      user-select: text;
+    }
+
+    .search-input::placeholder {
+      color: #8E9A94;
+    }
+
+    .btn-search-clear {
+      border: none;
+      background: transparent;
+      color: #8E9A94;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: none;
+      padding: 2px;
+    }
+
+    /* 搜尋即時下拉建議清單 */
+    .search-results-dropdown {
+      display: none;
+      position: absolute;
+      top: 56px;
+      left: 16px;
+      right: 16px;
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      border: 1px solid var(--border-subtle);
+      max-height: 240px;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    .search-result-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid #F1F3F5;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.86rem;
+    }
+
+    .search-result-item:hover, .search-result-item:active {
+      background: #F1F8F5;
+      color: var(--primary);
+    }
+
+    .search-result-item i {
+      color: var(--accent-gold);
+    }
+
+    .sidebar-header {
+      padding: 12px 18px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FAF8F5;
     }
 
     .sidebar-header h2 {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: var(--primary-dark);
       font-weight: 900;
       display: flex;
@@ -365,7 +455,7 @@
 
     /* 焦點卡片 */
     .focus-card {
-      margin: 14px 16px 8px;
+      margin: 10px 16px 8px;
       background: #FFFFFF;
       border-radius: var(--radius-lg);
       border: 2px solid var(--accent-gold);
@@ -398,7 +488,7 @@
     }
 
     .focus-title-group h3 {
-      font-size: 1.22rem;
+      font-size: 1.2rem;
       color: var(--primary-dark);
       font-weight: 900;
       margin-bottom: 4px;
@@ -502,7 +592,6 @@
       color: var(--primary-dark);
     }
 
-    /* 車道入口特別指引盒 */
     .entrance-notice-box {
       background: #FFFBEA;
       border: 1.5px dashed #D4A373;
@@ -666,6 +755,7 @@
     .icon-atm { background: #E1F5FE; color: #0277BD; }
     .icon-park { background: #F1F8E9; color: #33691E; }
     .icon-store { background: #FCE4EC; color: #C2185B; }
+    .icon-custom { background: #EDE7F6; color: #512DA8; }
 
     .card-name {
       font-size: 0.92rem;
@@ -768,6 +858,21 @@
       font-size: 14px;
     }
 
+    .marker-search {
+      width: 38px;
+      height: 38px;
+      background: #E63946;
+      border: 2.5px solid #FFFFFF;
+      color: #FFFFFF;
+      font-size: 16px;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+
     .parking-bubble {
       background: #143626;
       color: #fff;
@@ -790,12 +895,12 @@
       .sidebar {
         width: 100%;
         max-width: 100%;
-        height: 50%;
+        height: 52%;
         border-left: none;
         border-top: 1px solid var(--border-subtle);
       }
       #map-container {
-        height: 50%;
+        height: 48%;
       }
     }
   </style>
@@ -805,10 +910,10 @@
   <header>
     <div class="brand-group">
       <div class="brand-logo-container">
-        <img src="logo.svg?v=106" alt="亞馬森 Logo" class="brand-logo-img" id="brand-logo-img">
+        <img src="logo.svg?v=110" alt="亞馬森 Logo" class="brand-logo-img" id="brand-logo-img">
       </div>
       <div class="brand-titles">
-        <h1>亞馬森特寵專科醫院 <span class="en">AEAH Kiosk Map v1.0.6</span></h1>
+        <h1>亞馬森特寵專科醫院 <span class="en">AEAH Kiosk Map v1.1.0</span></h1>
         <p>
           <span><i class="fa-solid fa-location-dot"></i> 台北市內湖區內湖路二段39-2號1樓</span>
           <span><i class="fa-solid fa-phone"></i> (02) 8792-3248</span>
@@ -856,14 +961,15 @@
     <div id="map-container">
       <div id="map"></div>
       
+      <!-- 步行距離圖例：已調整為 5 分鐘與 10 分鐘 -->
       <div class="distance-legend">
         <div class="legend-item">
           <div class="legend-circle" style="background: rgba(82, 183, 136, 0.4); border: 1.5px solid #2D6A4F;"></div>
-          <span>綠圈：步行 3 分鐘 (約 250m)</span>
+          <span>綠圈：步行 5 分鐘圈 (約 400m)</span>
         </div>
         <div class="legend-item">
           <div class="legend-circle" style="background: rgba(212, 163, 115, 0.25); border: 1.5px solid #D4A373;"></div>
-          <span>金圈：步行 5 分鐘極限圈 (約 400m)</span>
+          <span>金圈：步行 10 分鐘生活圈 (約 800m)</span>
         </div>
       </div>
 
@@ -877,10 +983,23 @@
       </div>
     </div>
 
+    <!-- 右側資訊與搜尋導航 -->
     <div class="sidebar">
+      
+      <!-- 櫃台人員專用 Google Maps 即時搜尋框 -->
+      <div class="search-section">
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" class="search-input" id="search-input" placeholder="櫃台快搜：店名、小吃、飲品 (按Enter即搜)..." onkeydown="handleSearchKey(event)" oninput="handleSearchInput(this)">
+          <button class="btn-search-clear" id="btn-search-clear" onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <!-- 搜尋結果下拉選單 -->
+        <div class="search-results-dropdown" id="search-dropdown"></div>
+      </div>
+
       <div class="sidebar-header">
         <h2><i class="fa-solid fa-circle-info"></i> 周邊設施導覽</h2>
-        <span class="count-badge" id="item-count-badge">共 13 處</span>
+        <span class="count-badge" id="item-count-badge">共 16 處</span>
       </div>
 
       <div class="focus-card" id="focus-card">
@@ -944,10 +1063,10 @@
     const AMAZON_COORDS = [25.07905, 121.57995];
 
     // 周邊真實合規設施資料庫：
-    // 【v1.0.6 鐵律更新】
-    // 1. 嚴格限縮在「步行 5 分鐘極限圈」以內！
-    // 2. 徹底刪除幽靈場與非臨停場（內湖國小、宜舍幽靈場、大港墘遠場全數剔除）。
-    // 3. 港富立體停車場座標校正為 Google Maps 官方實體位置 [25.080527, 121.578068]！
+    // 【v1.1.0 重大升級】
+    // 1. 納入院長指定四大品牌：屈臣氏、康是美、大樹藥局、寵物公園！經 Google Maps 逐一驗證位置與門牌！
+    // 2. 走路距離延伸至 10 分鐘生活圈！
+    // 3. 右側新增櫃台即時 Google 地圖搜尋引擎與即時 QR Code 生成！
     const LOCATIONS = [
       // 停車場：全數經 Google Maps 核實、步行5分鐘內、100%開放臨停
       {
@@ -969,7 +1088,7 @@
         id: 'park_onstreet',
         category: 'parking',
         name: '內湖路二段公有路邊收費車格',
-        coords: [25.07905, 121.58070], // 內湖路二段門口段
+        coords: [25.07905, 121.58070],
         distance: '50m',
         walkTime: '1 分鐘',
         driveTime: '0 分鐘',
@@ -981,10 +1100,25 @@
         desc: '停管處公有劃線計時收費格，周一至周六 09:00-17:00 計費，就診臨停最省力。'
       },
       {
+        id: 'park_wende101',
+        category: 'parking',
+        name: '文德路 101 巷公有路邊停車格',
+        coords: [25.07990, 121.58260],
+        distance: '200m',
+        walkTime: '2-3 分鐘',
+        driveTime: '1 分鐘',
+        rate: '20 元 / 小時 (09:00-17:00)',
+        totalSpaces: 18,
+        availableSpaces: 3,
+        tags: ['步行2-3分鐘', '近碧湖公園', '每小時20元'],
+        entranceGuide: '由內湖路二段或文德路轉入<strong>文德路 101 巷</strong>兩側，沿線劃設有停管處收費停車格。',
+        desc: '鄰近碧湖公園側之公有計時收費格，收費便宜（每小時 20 元），步行至醫院僅 2~3 分鐘。'
+      },
+      {
         id: 'park_chebaobao',
         category: 'parking',
         name: '車堡寶文德停車場 (室內地下場)',
-        coords: [25.07835, 121.58410], // 文德路212號地下2層
+        coords: [25.07835, 121.58410],
         distance: '390m',
         walkTime: '4-5 分鐘',
         driveTime: '1 分鐘',
@@ -999,7 +1133,7 @@
         id: 'park_wende',
         category: 'parking',
         name: '嘟嘟房 捷運文德站轉乘停車場',
-        coords: [25.07848, 121.58476], // 文德路216號捷運站下
+        coords: [25.07848, 121.58476],
         distance: '450m',
         walkTime: '5-6 分鐘',
         driveTime: '2 分鐘',
@@ -1010,23 +1144,50 @@
         entranceGuide: '入口位於<strong>文德路 216 號臨路側（捷運文德站 2 號出口旁專用車道）</strong>，沿文德路順向直接右轉進場，切勿轉進後方死巷！',
         desc: '<strong>公有大場・車位最多！</strong>捷運共構 306 格大型停車場，車道寬敞好進出，文德路直走即達醫院。'
       },
+
+      // 特寵補給與藥局 (院長指定四大品牌全數加入！)
       {
-        id: 'park_wende101',
-        category: 'parking',
-        name: '文德路 101 巷公有路邊停車格',
-        coords: [25.07990, 121.58260], // 文德路101巷
-        distance: '200m',
-        walkTime: '2-3 分鐘',
-        driveTime: '1 分鐘',
-        rate: '20 元 / 小時 (09:00-17:00)',
-        totalSpaces: 18,
-        availableSpaces: 3,
-        tags: ['步行2-3分鐘', '近碧湖公園', '每小時20元'],
-        entranceGuide: '由內湖路二段或文德路轉入<strong>文德路 101 巷</strong>兩側，沿線劃設有停管處收費停車格。',
-        desc: '鄰近碧湖公園側之公有計時收費格，收費便宜（每小時 20 元），步行至醫院僅 2~3 分鐘。'
+        id: 'store_petpark',
+        category: 'store',
+        name: '寵物公園 (文德店)',
+        coords: [25.07812, 121.58330], // 台北市內湖區文德路108號
+        distance: '360m',
+        walkTime: '4-5 分鐘',
+        tags: ['院長指定', '特寵草料', '保暖提籃', '文德路108號'],
+        desc: '<strong>知名連鎖寵物用品！</strong>位於文德路 108 號（大樹藥局隔壁）。販售各類提籃外出籠、保暖燈具、新鮮牧草、墊材與寵物保健應急用品。'
+      },
+      {
+        id: 'store_greattree',
+        category: 'store',
+        name: '大樹連鎖藥局 (內湖文德店)',
+        coords: [25.07815, 121.58310], // 台北市內湖區文德路102號
+        distance: '350m',
+        walkTime: '4-5 分鐘',
+        tags: ['院長指定', '大樹藥局', '滅菌衛材', '文德路102號'],
+        desc: '<strong>大型專業連鎖藥局！</strong>位於文德路 102 號 1-2 樓。提供處方藥調劑、生理食鹽水、滅菌紗布、醫療手套、優碘棉花棒等臨床護理必需品。'
+      },
+      {
+        id: 'store_watsons',
+        category: 'store',
+        name: '屈臣氏 Watsons (港墘門市)',
+        coords: [25.07990, 121.57760], // 台北市內湖區內湖路一段737巷37號
+        distance: '300m',
+        walkTime: '4 分鐘',
+        tags: ['院長指定', '屈臣氏', '737巷37號', '日常保健美妝'],
+        desc: '<strong>連鎖藥妝指標！</strong>位於 737 巷熱鬧商圈（37號）。提供各類個人衛生消毒用品、濕紙巾、日常保健品與生活日用。'
+      },
+      {
+        id: 'store_cosmed',
+        category: 'store',
+        name: '康是美 COSMED (麗湖門市)',
+        coords: [25.07995, 121.57750], // 台北市內湖區內湖路一段737巷47號
+        distance: '320m',
+        walkTime: '4 分鐘',
+        tags: ['院長指定', '康是美', '737巷47號', '藥品耗材'],
+        desc: '<strong>連鎖藥妝門市！</strong>位於 737 巷 47 號（屈臣氏旁）。營業至晚間 23:00，備有齊全的人用成藥、眼藥水、消毒殺菌與日常護理材料。'
       },
 
-      // 休息咖啡 / 美食 (步行 5 分鐘內)
+      // 休息咖啡 / 美食 (步行 10 分鐘生活圈)
       {
         id: 'food_local',
         category: 'food',
@@ -1057,6 +1218,16 @@
         tags: ['有插座', 'Wi-Fi', '安靜久坐', '咖啡輕食'],
         desc: '候診長達 60~90 分鐘的最佳工作與放鬆空間，提供高速無線網路與充電插座，氛圍靜謐舒心。'
       },
+      {
+        id: 'food_elephant',
+        category: 'food',
+        name: '象園咖啡 Elephant Garden (碧湖店)',
+        coords: [25.08310, 121.58350],
+        distance: '520m',
+        walkTime: '7 分鐘',
+        tags: ['碧湖第一排', '景觀餐廳', '寵物友善', '正餐燉飯'],
+        desc: '正對碧湖美景的知名景觀餐廳，提供精緻義大利麵、鬆餅與燉飯，若就診等待時間長達 2 小時以上非常推薦前往享用悠閒午餐。'
+      },
 
       // ATM 與生活超商 (步行 1-2 分鐘)
       {
@@ -1080,7 +1251,7 @@
         desc: '步行約 2 分鐘，設有寬敞內用座位區與國泰世華銀行 ATM，方便飼主領款或短暫歇腳。'
       },
 
-      // 碧湖公園漫步 (步行 3 分鐘)
+      // 碧湖公園漫步 (步行 3-4 分鐘)
       {
         id: 'park_lake',
         category: 'park',
@@ -1090,33 +1261,12 @@
         walkTime: '3-4 分鐘',
         tags: ['萬坪綠意', '湖光山色', '白鷺鷥涼亭', '心靈紓壓'],
         desc: '<strong>院長推薦紓壓好去處！</strong> 特寵在院內接受檢查時，飼主漫步至碧湖公園（僅 3 分鐘）。微風吹拂、湖水波光粼粼，舒緩毛孩看診焦慮。'
-      },
-
-      // 特寵生活補給與藥局 (步行 2-3 分鐘)
-      {
-        id: 'store_pet',
-        category: 'store',
-        name: '內湖寵物生活館 & 水族特寵用品',
-        coords: [25.07850, 121.58100],
-        distance: '150m',
-        walkTime: '2 分鐘',
-        tags: ['草料墊材', '外出提籃', '保暖燈具', '急用補給'],
-        desc: '步行 2 分鐘，可緊急添購外出籠、提籃、保暖墊或新鮮牧草，是就醫途中的重要補給站。'
-      },
-      {
-        id: 'store_pharmacy',
-        category: 'store',
-        name: '大樹連鎖藥局 / 康是美 (文德門市)',
-        coords: [25.07820, 121.58250],
-        distance: '260m',
-        walkTime: '3 分鐘',
-        tags: ['醫藥衛材', '生理食鹽水', '無菌棉花棒'],
-        desc: '提供各類人用保健品、滅菌紗布、醫療手套及免洗消毒用品，支援日常照護應急。'
       }
     ];
 
     let map;
     let markers = {};
+    let searchMarker = null;
     let circles = [];
     let currentCategory = 'all';
     let qrcodeObj = null;
@@ -1136,9 +1286,9 @@
 
       L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-      // 步行距離圈：250m (3分鐘)、400m (5分鐘極限圈)
+      // 步行距離同心圓：5 分鐘 (400m) 與 10 分鐘 (800m)
       const c1 = L.circle(AMAZON_COORDS, {
-        radius: 250,
+        radius: 400,
         color: '#2D6A4F',
         weight: 1.5,
         fillColor: '#52B788',
@@ -1147,7 +1297,7 @@
       }).addTo(map);
 
       const c2 = L.circle(AMAZON_COORDS, {
-        radius: 400,
+        radius: 800,
         color: '#D4A373',
         weight: 1.5,
         fillColor: '#D4A373',
@@ -1187,7 +1337,7 @@
         correctLevel: QRCode.CorrectLevel.M
       });
 
-      // 預設選中最近的「港富立體停車場」(步行僅 3 分鐘)
+      // 預設選中「港富立體停車場」
       selectItem('park_gangfu');
       renderList();
 
@@ -1247,6 +1397,10 @@
         if (el) el.classList.remove('active');
       });
 
+      if (searchMarker && searchMarker.getElement()) {
+        searchMarker.getElement().classList.remove('active');
+      }
+
       const activeMarker = markers[id];
       if (activeMarker && activeMarker.getElement()) {
         activeMarker.getElement().classList.add('active');
@@ -1298,6 +1452,168 @@
       const activeCard = document.getElementById(`card-${id}`);
       if (activeCard) {
         activeCard.classList.add('selected');
+      }
+    }
+
+    // 櫃台人員搜尋特定地點並生成 QR Code
+    async function selectCustomLocation(name, lat, lng, address) {
+      // 移除先前的自訂搜尋 Marker
+      if (searchMarker) {
+        map.removeLayer(searchMarker);
+      }
+
+      // 計算與亞馬森直線距離
+      const dLat = (lat - AMAZON_COORDS[0]) * 111000;
+      const dLng = (lng - AMAZON_COORDS[1]) * 101000;
+      const distM = Math.round(Math.sqrt(dLat * dLat + dLng * dLng));
+      const walkMin = Math.max(1, Math.round(distM / 75));
+
+      // 建立紅色醒目搜尋 Marker
+      const sIcon = L.divIcon({
+        className: 'custom-marker marker-search',
+        html: '<i class="fa-solid fa-magnifying-glass-location"></i>',
+        iconSize: [38, 38],
+        iconAnchor: [19, 19]
+      });
+
+      searchMarker = L.marker([lat, lng], { icon: sIcon }).addTo(map);
+      map.flyTo([lat, lng], 17, { duration: 0.8 });
+
+      // 更新右側焦點卡片
+      document.getElementById('focus-badge').innerText = '🔍 櫃台快搜地點';
+      document.getElementById('focus-name').innerText = name;
+      document.getElementById('focus-meta').innerHTML = `
+        <span class="tag tag-walk"><i class="fa-solid fa-person-walking"></i> 步行約 ${walkMin} 分鐘 (約 ${distM}m)</span>
+        <span class="tag tag-category">即時搜尋定位</span>
+      `;
+
+      document.getElementById('parking-meter-box').style.display = 'none';
+      document.getElementById('entrance-notice-box').style.display = 'none';
+      document.getElementById('focus-desc').innerHTML = `<strong>${name}</strong><br>地址：${address || '內湖區周邊商家'}<br><span style="color:#2D6A4F;">櫃台已為飼主生成專屬 Google Maps 導航 QR Code，直接掃碼出發！</span>`;
+
+      // 生成 Google Maps 導航 QR Code
+      const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=&travelmode=walking`;
+      qrcodeObj.clear();
+      qrcodeObj.makeCode(navUrl);
+
+      document.getElementById('btn-direct-nav').href = navUrl;
+      document.getElementById('btn-direct-nav').innerHTML = '<i class="fa-solid fa-location-arrow"></i> 開啟地圖導航';
+      document.getElementById('btn-walk-nav').href = navUrl;
+
+      // 關閉搜尋下拉清單
+      document.getElementById('search-dropdown').style.display = 'none';
+    }
+
+    // 處理搜尋框輸入
+    function handleSearchInput(input) {
+      const q = input.value.trim().toLowerCase();
+      const clearBtn = document.getElementById('btn-search-clear');
+      const dropdown = document.getElementById('search-dropdown');
+
+      if (!q) {
+        clearBtn.style.display = 'none';
+        dropdown.style.display = 'none';
+        return;
+      }
+
+      clearBtn.style.display = 'block';
+
+      // 優先搜尋本院內建資料庫
+      const matches = LOCATIONS.filter(item => {
+        return item.name.toLowerCase().includes(q) || 
+               item.desc.toLowerCase().includes(q) || 
+               item.tags.some(t => t.toLowerCase().includes(q));
+      });
+
+      dropdown.innerHTML = '';
+      if (matches.length > 0) {
+        matches.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'search-result-item';
+          div.innerHTML = `<i class="fa-solid fa-location-dot"></i> <div><strong>${item.name}</strong> <span style="font-size:0.75rem; color:#888;">(已收錄・走 ${item.walkTime})</span></div>`;
+          div.onclick = () => {
+            selectItem(item.id);
+            dropdown.style.display = 'none';
+          };
+          dropdown.appendChild(div);
+        });
+      }
+
+      // 加入「在 Google Maps 線上即時搜尋此關鍵字」選項
+      const onlineDiv = document.createElement('div');
+      onlineDiv.className = 'search-result-item';
+      onlineDiv.style.background = '#F9FBF9';
+      onlineDiv.innerHTML = `<i class="fa-brands fa-google" style="color:#4285F4;"></i> <div><strong>線上快搜：「${input.value}」</strong><br><span style="font-size:0.72rem; color:#666;">即時定位並為飼主生成導航 QR Code</span></div>`;
+      onlineDiv.onclick = () => doOnlineSearch(input.value);
+      dropdown.appendChild(onlineDiv);
+
+      dropdown.style.display = 'block';
+    }
+
+    // 按 Enter 鍵觸發線上搜尋
+    function handleSearchKey(e) {
+      if (e.key === 'Enter') {
+        const q = document.getElementById('search-input').value.trim();
+        if (q) doOnlineSearch(q);
+      }
+    }
+
+    // 清除搜尋
+    function clearSearch() {
+      const input = document.getElementById('search-input');
+      input.value = '';
+      document.getElementById('btn-search-clear').style.display = 'none';
+      document.getElementById('search-dropdown').style.display = 'none';
+      if (searchMarker) {
+        map.removeLayer(searchMarker);
+        searchMarker = null;
+      }
+    }
+
+    // 呼叫內湖周邊即時地理編碼搜尋 (Nominatim 台灣內湖限定)
+    async function doOnlineSearch(keyword) {
+      const dropdown = document.getElementById('search-dropdown');
+      dropdown.innerHTML = '<div style="padding:14px; text-align:center; font-size:0.85rem; color:#666;"><i class="fa-solid fa-spinner fa-spin"></i> 正在連線搜尋內湖店家...</div>';
+      dropdown.style.display = 'block';
+
+      try {
+        const query = encodeURIComponent(`台北市內湖區 ${keyword}`);
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&bounded=1&viewbox=121.56,25.09,121.60,25.07&limit=5`);
+        const data = await res.json();
+
+        dropdown.innerHTML = '';
+        if (data && data.length > 0) {
+          data.forEach(place => {
+            const div = document.createElement('div');
+            div.className = 'search-result-item';
+            div.innerHTML = `<i class="fa-solid fa-map-pin"></i> <div><strong>${place.display_name.split(',')[0]}</strong><br><span style="font-size:0.72rem; color:#888;">${place.display_name.slice(0, 36)}...</span></div>`;
+            div.onclick = () => {
+              selectCustomLocation(place.display_name.split(',')[0], parseFloat(place.lat), parseFloat(place.lon), place.display_name);
+            };
+            dropdown.appendChild(div);
+          });
+        } else {
+          // 若查無精準坐標，提供自訂直接導航模式
+          const div = document.createElement('div');
+          div.className = 'search-result-item';
+          div.innerHTML = `<i class="fa-solid fa-diamond-turn-right" style="color:#D4A373;"></i> <div><strong>以「${keyword}」直接生成 Google Maps 導航</strong><br><span style="font-size:0.72rem; color:#888;">點擊立即為飼主生成導航 QR Code</span></div>`;
+          div.onclick = () => {
+            const navUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('台北市內湖區 ' + keyword)}`;
+            document.getElementById('focus-badge').innerText = '🔍 自訂搜尋';
+            document.getElementById('focus-name').innerText = keyword;
+            document.getElementById('focus-meta').innerHTML = '<span class="tag tag-category">Google Maps 搜尋導航</span>';
+            document.getElementById('focus-desc').innerHTML = `<strong>已為飼主生成「${keyword}」專屬 Google Maps 搜尋導航 QR Code！</strong><br>手機一掃直接在手機開啟搜尋結果與導航。`;
+            qrcodeObj.clear();
+            qrcodeObj.makeCode(navUrl);
+            document.getElementById('btn-direct-nav').href = navUrl;
+            document.getElementById('parking-meter-box').style.display = 'none';
+            document.getElementById('entrance-notice-box').style.display = 'none';
+            dropdown.style.display = 'none';
+          };
+          dropdown.appendChild(div);
+        }
+      } catch (err) {
+        dropdown.innerHTML = '<div style="padding:10px; font-size:0.82rem; color:#D90429;">搜尋服務忙碌中，請直接按下方按鈕生成導航</div>';
       }
     }
 
@@ -1427,6 +1743,7 @@
       setCategory('all', document.querySelectorAll('.filter-chip')[0]);
       map.flyTo(AMAZON_COORDS, 16, { duration: 0.8 });
       selectItem('park_gangfu');
+      clearSearch();
     }
 
     function toggleFullScreen() {
