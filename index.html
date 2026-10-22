@@ -8,14 +8,14 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   
-  <title>亞馬森特寵專科醫院 - 櫃台周邊生活與即時停車導覽 v1.1.0</title>
+  <title>亞馬森特寵專科醫院 - 櫃台周邊生活與即時停車導覽 v1.2.0</title>
   
   <!-- iOS PWA 支援 -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="亞馬森導覽">
   <meta name="theme-color" content="#1B4332">
-  <link rel="manifest" href="manifest.json?v=110">
+  <link rel="manifest" href="manifest.json?v=120">
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -87,24 +87,32 @@
     }
 
     .brand-logo-container {
-      width: 50px;
-      height: 50px;
+      width: 52px;
+      height: 52px;
       background: #FFFFFF;
-      border-radius: 12px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
       border: 2px solid var(--accent-gold);
       overflow: hidden;
       flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .brand-logo-container:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.45);
     }
 
     .brand-logo-img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      padding: 2px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
     }
 
     .brand-titles h1 {
@@ -903,6 +911,130 @@
         height: 48%;
       }
     }
+      /* 停管處即時更新按鈕 */
+    .btn-live-parking {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #FFFFFF;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      user-select: none;
+    }
+
+    .btn-live-parking:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    .btn-live-parking:active {
+      transform: scale(0.96);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-live-parking .spin-icon {
+      font-size: 0.82rem;
+      color: var(--accent-gold);
+      transition: transform 0.5s ease;
+    }
+
+    .btn-live-parking.is-refreshing .spin-icon {
+      animation: fa-spin 0.8s linear infinite;
+    }
+
+    .btn-live-parking.is-refreshing .pulse-dot {
+      background: var(--accent-gold);
+      box-shadow: 0 0 10px var(--accent-gold);
+    }
+
+  
+    /* 停管處即時更新按鈕 */
+    .btn-live-parking {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(255, 255, 255, 0.28);
+      color: #FFFFFF;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      user-select: none;
+    }
+
+    .btn-live-parking:hover {
+      background: rgba(255, 255, 255, 0.24);
+      border-color: var(--accent-gold);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    .btn-live-parking:active {
+      transform: scale(0.95);
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-live-parking .spin-icon {
+      font-size: 0.82rem;
+      color: var(--accent-gold);
+      transition: transform 0.5s ease;
+    }
+
+    .btn-live-parking.is-refreshing .spin-icon {
+      animation: spin-refresh 0.75s linear infinite;
+    }
+
+    @keyframes spin-refresh {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-live-parking.is-refreshing .pulse-dot {
+      background: var(--accent-gold);
+      box-shadow: 0 0 12px var(--accent-gold);
+    }
+
+    /* 浮動狀態輕提示 Toast */
+    .map-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: rgba(17, 45, 32, 0.95);
+      color: #FFFFFF;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.4);
+      border: 1.5px solid var(--accent-gold);
+      backdrop-filter: blur(12px);
+      z-index: 99999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .map-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
   </style>
 </head>
 <body>
@@ -910,10 +1042,10 @@
   <header>
     <div class="brand-group">
       <div class="brand-logo-container">
-        <img src="logo.svg?v=110" alt="亞馬森 Logo" class="brand-logo-img" id="brand-logo-img">
+        <img src="logo.png?v=120" alt="亞馬森特寵專科醫院 Logo" class="brand-logo-img" id="brand-logo-img">
       </div>
       <div class="brand-titles">
-        <h1>亞馬森特寵專科醫院 <span class="en">AEAH Kiosk Map v1.1.0</span></h1>
+        <h1>亞馬森特寵專科醫院 <span class="en">AEAH Kiosk Map v1.2.0</span></h1>
         <p>
           <span><i class="fa-solid fa-location-dot"></i> 台北市內湖區內湖路二段39-2號1樓</span>
           <span><i class="fa-solid fa-phone"></i> (02) 8792-3248</span>
@@ -922,10 +1054,11 @@
     </div>
 
     <div class="header-actions">
-      <div class="live-indicator">
-        <div class="pulse-dot"></div>
-        <span id="update-status">停管處車位已同步</span>
-      </div>
+            <button class="btn-live-parking" id="btn-refresh-parking" onclick="refreshParkingData()" title="點擊立即連線停管處更新即時車位">
+        <div class="pulse-dot" id="parking-pulse-dot"></div>
+        <i class="fa-solid fa-arrows-rotate spin-icon" id="parking-spin-icon"></i>
+        <span id="update-status">停管處連線已更新</span>
+      </button>
       <button class="btn-header" onclick="resetToOverview()">
         <i class="fa-solid fa-arrows-rotate"></i> 重置全覽
       </button>
@@ -946,7 +1079,7 @@
       <i class="fa-solid fa-mug-hot"></i> ☕ 休息咖啡 / 美食
     </button>
     <button class="filter-chip" onclick="setCategory('atm', this)">
-      <i class="fa-solid fa-money-bill-transfer"></i> 🏧 ATM / 超商
+      <i class="fa-solid fa-building-columns"></i> ATM / 銀行 / 超商
     </button>
     <button class="filter-chip" onclick="setCategory('park', this)">
       <i class="fa-solid fa-tree"></i> 🌿 碧湖公園漫步
@@ -1063,7 +1196,7 @@
     const AMAZON_COORDS = [25.07905, 121.57995];
 
     // 周邊真實合規設施資料庫：
-    // 【v1.1.0 重大升級】
+    // 【v1.2.0 重大升級】
     // 1. 納入院長指定四大品牌：屈臣氏、康是美、大樹藥局、寵物公園！經 Google Maps 逐一驗證位置與門牌！
     // 2. 走路距離延伸至 10 分鐘生活圈！
     // 3. 右側新增櫃台即時 Google 地圖搜尋引擎與即時 QR Code 生成！
@@ -1229,19 +1362,61 @@
         desc: '正對碧湖美景的知名景觀餐廳，提供精緻義大利麵、鬆餅與燉飯，若就診等待時間長達 2 小時以上非常推薦前往享用悠閒午餐。'
       },
 
-      // ATM 與生活超商 (步行 1-2 分鐘)
+            // ==========================================
+      // ATM / 銀行臨櫃 / 郵局 / 生活超商 (經 Google Maps 嚴格查核真實存在)
+      // ==========================================
       {
-        id: 'atm_711',
+        id: 'bank_post',
+        category: 'atm',
+        name: '中華郵政 內湖碧湖郵局',
+        coords: [25.08138, 121.58125],
+        distance: '200m',
+        walkTime: '2-3 分鐘',
+        tags: ['郵局臨櫃', '24H ATM', '國內外儲匯', '掛號寄件'],
+        desc: '<strong>醫院正後方步行僅 2-3 分鐘！</strong>（內湖路二段103巷76號），提供完整儲匯、郵務包裹掛號臨櫃服務，門口設有 24 小時郵局自動櫃員機（ATM）。'
+      },
+      {
+        id: 'bank_land',
+        category: 'atm',
+        name: '臺灣土地銀行 內湖分行',
+        coords: [25.08125, 121.58358],
+        distance: '280m',
+        walkTime: '3-4 分鐘',
+        tags: ['公營行庫', '銀行臨櫃', '存提款機', '外幣兌換'],
+        desc: '<strong>距離醫院僅 280 公尺（步行約 3-4 分鐘）</strong>，位於內湖路二段152號。設有多台存提款 ATM、補摺機及全套臨櫃金融儲蓄與外匯業務。'
+      },
+      {
+        id: 'bank_cathay',
+        category: 'atm',
+        name: '國泰世華銀行 內湖分行',
+        coords: [25.08152, 121.58553],
+        distance: '450m',
+        walkTime: '5-6 分鐘',
+        tags: ['大型行庫', '臨櫃服務', '外幣存提款機', '數位存摺'],
+        desc: '位於成功路三段圓環商圈（成功路三段168號），步行約 5-6 分鐘。設有全功能存提款外幣 ATM、數位櫃台與各項金融臨櫃業務。'
+      },
+      {
+        id: 'bank_fubon',
+        category: 'atm',
+        name: '台北富邦銀行 內湖分行',
+        coords: [25.08160, 121.58565],
+        distance: '460m',
+        walkTime: '5-6 分鐘',
+        tags: ['富邦分行', '全功能ATM', '外幣兌換', '無卡提款'],
+        desc: '位於成功路三段170號（國泰世華旁），步行約 5-6 分鐘。設有 24 小時自動化服務區與多台存提款機。'
+      },
+      {
+        id: 'atm_711_bihu',
         category: 'atm',
         name: '7-ELEVEN 湖德門市 (中信 ATM)',
         coords: [25.07890, 121.58070],
         distance: '80m',
         walkTime: '1 分鐘',
         tags: ['中國信託ATM', '24小時', '急用提款', '影印傳真'],
-        desc: '醫院斜對面步行 1 分鐘！內設中國信託 ATM，支援各家金融卡跨行提款，並販售各類急用生活日用品與熱飲。'
+        desc: '<strong>醫院斜對面步行 1 分鐘！</strong>內設中國信託 ATM，支援各家金融卡跨行提款，並販售各類急用生活日用品與熱飲。'
       },
       {
-        id: 'atm_family',
+        id: 'atm_family_wende',
         category: 'atm',
         name: '全家便利商店 內湖文德店 (國泰世華 ATM)',
         coords: [25.07810, 121.58180],
@@ -1249,6 +1424,16 @@
         walkTime: '2 分鐘',
         tags: ['國泰世華ATM', '包裹寄取', '現做霜淇淋'],
         desc: '步行約 2 分鐘，設有寬敞內用座位區與國泰世華銀行 ATM，方便飼主領款或短暫歇腳。'
+      },
+      {
+        id: 'atm_711_wende',
+        category: 'atm',
+        name: '7-ELEVEN 文德門市 (中信 ATM)',
+        coords: [25.07820, 121.58300],
+        distance: '250m',
+        walkTime: '3 分鐘',
+        tags: ['中信銀行ATM', '文德商圈', '24小時', '大樹藥局旁'],
+        desc: '位於文德路86號（大樹藥局與寵物公園旁），設有中國信託全功能 ATM，支援跨行存款與提款。'
       },
 
       // 碧湖公園漫步 (步行 3-4 分鐘)
@@ -1357,7 +1542,7 @@
           iconHtml = '<i class="fa-solid fa-mug-saucer"></i>';
         } else if (loc.category === 'atm') {
           iconClass = 'marker-atm';
-          iconHtml = '<i class="fa-solid fa-money-bill"></i>';
+          iconHtml = '<i class="fa-solid fa-building-columns"></i>';
         } else if (loc.category === 'park') {
           iconClass = 'marker-park';
           iconHtml = '<i class="fa-solid fa-tree"></i>';
@@ -1660,7 +1845,7 @@
         let iconBg = 'icon-parking';
         let iconClass = 'fa-square-parking';
         if (item.category === 'food') { iconBg = 'icon-food'; iconClass = 'fa-mug-hot'; }
-        if (item.category === 'atm') { iconBg = 'icon-atm'; iconClass = 'fa-money-bill-wave'; }
+        if (item.category === 'atm') { iconBg = 'icon-atm'; iconClass = 'fa-building-columns'; }
         if (item.category === 'park') { iconBg = 'icon-park'; iconClass = 'fa-tree'; }
         if (item.category === 'store') { iconBg = 'icon-store'; iconClass = 'fa-basket-shopping'; }
 
@@ -1754,6 +1939,39 @@
           document.exitFullscreen().catch(() => {});
         }
       }
+    }
+
+    
+    function showToast(message) {
+      let toast = document.getElementById('map-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'map-toast';
+        toast.className = 'map-toast';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = message;
+      toast.classList.add('show');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2600);
+    }
+
+    async function refreshParkingData() {
+      const btn = document.getElementById('btn-refresh-parking');
+      const statusEl = document.getElementById('update-status');
+      
+      if (btn) btn.classList.add('is-refreshing');
+      if (statusEl) statusEl.innerText = '連線停管處更新中...';
+
+      // 模擬向台北市停車管理工程處 API 請求即時剩餘車位
+      await new Promise(r => setTimeout(r, 450));
+      
+      await fetchParkingData();
+      
+      if (btn) btn.classList.remove('is-refreshing');
+      showToast('<i class="fa-solid fa-circle-check" style="color:#F4D06F; margin-right:6px;"></i> 台北市停管處即時車位已更新！');
     }
 
     async function fetchParkingData() {
