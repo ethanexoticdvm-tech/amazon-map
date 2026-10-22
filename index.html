@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <!-- 防快取快取更新標記 -->
+  <!-- 防快取更新標記 -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   
-  <title>亞馬森特寵專科醫院 - 櫃台周邊即時導覽互動地圖 v1.4.0</title>
+  <title>亞馬森特寵專科醫院 - 櫃台周邊即時導覽互動地圖 v1.4.1</title>
   
   <!-- iOS PWA 支援 -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="亞馬森周邊">
   <meta name="theme-color" content="#1B4332">
-  <link rel="manifest" href="manifest.json?v=140">
-  <link rel="apple-touch-icon" href="logo.png?v=140">
+  <link rel="manifest" href="manifest.json?v=141">
+  <link rel="apple-touch-icon" href="logo.png?v=141">
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -68,7 +68,7 @@
       flex-direction: column;
     }
 
-    /* 頂部導航列 */
+    /* 頂部導航 */
     header {
       background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 65%, var(--primary-light) 100%);
       color: #FFFFFF;
@@ -170,10 +170,6 @@
       background: rgba(255, 255, 255, 0.22);
       border-color: rgba(255, 255, 255, 0.4);
       transform: translateY(-1px);
-    }
-
-    .btn-sync-parking:active {
-      transform: translateY(1px);
     }
 
     .live-dot {
@@ -290,9 +286,9 @@
       flex-shrink: 0;
     }
 
-    /* 櫃台搜尋區塊 */
+    /* 搜尋列 (寬敞大方、排版精緻、無多餘雜物) */
     .search-section {
-      padding: 12px 16px;
+      padding: 14px 16px;
       background: #FFFFFF;
       border-bottom: 1px solid var(--border-subtle);
       position: relative;
@@ -301,23 +297,24 @@
     .search-input-wrapper {
       display: flex;
       align-items: center;
-      background: #F1F3F5;
+      background: #F8F9FA;
       border: 1.5px solid #E2E8F0;
       border-radius: 12px;
-      padding: 0 10px;
-      gap: 8px;
-      transition: all 0.2s ease;
+      padding: 2px 8px 2px 14px;
+      gap: 10px;
+      transition: all 0.25s ease;
     }
 
     .search-input-wrapper:focus-within {
       border-color: var(--primary-accent);
       background: #FFFFFF;
-      box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.15);
+      box-shadow: 0 0 0 3.5px rgba(64, 145, 108, 0.15);
     }
 
     .search-input-wrapper i.search-icon {
-      color: var(--text-muted);
-      font-size: 0.95rem;
+      color: #8E9BAE;
+      font-size: 1rem;
+      flex-shrink: 0;
     }
 
     .search-input-wrapper input {
@@ -325,86 +322,78 @@
       outline: none;
       background: transparent;
       padding: 10px 0;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-family: inherit;
       width: 100%;
       color: var(--text-main);
     }
 
+    .search-input-wrapper input::placeholder {
+      color: #94A3B8;
+      font-size: 0.9rem;
+    }
+
     .btn-search-clear {
       border: none;
       background: transparent;
-      color: #ADB5BD;
+      color: #CBD5E1;
       cursor: pointer;
-      font-size: 0.9rem;
-      padding: 4px;
+      font-size: 0.95rem;
+      padding: 6px;
       display: none;
+      transition: color 0.15s;
     }
 
     .btn-search-clear:hover {
-      color: var(--text-main);
+      color: #64748B;
     }
 
-    .btn-gemini-search {
-      background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);
+    .btn-search-go {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
       color: #FFFFFF;
       border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 6px rgba(27, 67, 50, 0.25);
-    }
-
-    .btn-gemini-search:hover {
-      background: linear-gradient(135deg, #2D6A4F 0%, #40916C 100%);
-      transform: translateY(-1px);
-    }
-
-    .btn-gemini-key {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
+      justify-content: center;
+      font-size: 0.95rem;
       cursor: pointer;
-      font-size: 0.9rem;
-      padding: 4px;
-      transition: color 0.2s;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(27, 67, 50, 0.2);
     }
 
-    .btn-gemini-key:hover {
-      color: var(--primary);
+    .btn-search-go:hover {
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-accent) 100%);
+      transform: scale(1.04);
     }
 
     /* 搜尋即時下拉建議 */
     .search-dropdown {
       position: absolute;
-      top: 60px;
+      top: 66px;
       left: 16px;
       right: 16px;
       background: #FFFFFF;
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.18);
       border: 1px solid var(--border-subtle);
       z-index: 100;
-      max-height: 280px;
+      max-height: 300px;
       overflow-y: auto;
       display: none;
     }
 
     .search-result-item {
-      padding: 10px 14px;
+      padding: 12px 14px;
       border-bottom: 1px solid #F1F3F5;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 0.88rem;
+      gap: 12px;
+      font-size: 0.9rem;
       transition: background 0.15s;
     }
 
@@ -413,17 +402,17 @@
     }
 
     .search-result-item:hover {
-      background: #F8F9FA;
+      background: #F4FBF7;
     }
 
     .search-result-item i {
       color: var(--primary-accent);
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
 
     /* 焦點卡片區 (選定之目標) */
     .focus-card-section {
-      padding: 16px;
+      padding: 16px 18px;
       background: #FFFFFF;
       border-bottom: 1px solid var(--border-subtle);
     }
@@ -541,12 +530,12 @@
     }
 
     .focus-desc {
-      font-size: 0.85rem;
-      color: #495057;
-      line-height: 1.5;
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.55;
       margin-bottom: 14px;
       background: #FAF8F5;
-      padding: 10px 12px;
+      padding: 11px 13px;
       border-radius: var(--radius-sm);
       border: 1px solid #EFEBE5;
     }
@@ -610,7 +599,7 @@
     .btn-direct-nav, .btn-walk-nav {
       flex: 1;
       text-align: center;
-      padding: 6px 10px;
+      padding: 7px 10px;
       border-radius: var(--radius-sm);
       font-size: 0.78rem;
       font-weight: 700;
@@ -744,106 +733,7 @@
       display: block;
     }
 
-    /* 模態彈窗 (Gemini API Key 設定) */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-box {
-      background: #FFFFFF;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 480px;
-      padding: 24px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .modal-box h3 {
-      font-size: 1.2rem;
-      font-weight: 900;
-      color: var(--primary-dark);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .modal-box p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 16px;
-    }
-
-    .modal-input-group {
-      margin-bottom: 18px;
-    }
-
-    .modal-input-group label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-main);
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .modal-input-group input {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1.5px solid #CBD5E1;
-      font-size: 0.9rem;
-      font-family: monospace;
-      outline: none;
-      box-sizing: border-box;
-    }
-
-    .modal-input-group input:focus {
-      border-color: var(--primary-accent);
-      box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.15);
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-
-    .btn-modal-cancel {
-      padding: 8px 16px;
-      border-radius: 8px;
-      border: 1px solid #CBD5E1;
-      background: #F1F3F5;
-      color: var(--text-main);
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-
-    .btn-modal-save {
-      padding: 8px 18px;
-      border-radius: 8px;
-      border: none;
-      background: var(--primary);
-      color: #FFFFFF;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-
-    /* 地圖自定義圖標樣式 */
+    /* 地圖自定義標記樣式 */
     .custom-marker {
       display: flex;
       align-items: center;
@@ -860,17 +750,31 @@
       z-index: 9999 !important;
     }
 
-    .marker-hospital {
-      background: linear-gradient(135deg, #1B4332, #40916C);
-      width: 44px;
-      height: 44px;
-      border: 3px solid #D4A373;
-      font-size: 1.25rem;
-      box-shadow: 0 0 16px rgba(27, 67, 50, 0.6);
-      animation: pulse-hospital 2.5s infinite;
+    /* 醫院原版動物牽手 Logo 圓徽章標記 */
+    .marker-hospital-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2.5px solid var(--accent-gold);
+      box-shadow: 0 4px 16px rgba(17, 45, 32, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: pulse-hospital-logo 2.5s infinite;
+      cursor: pointer;
     }
 
-    @keyframes pulse-hospital {
+    .marker-logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    @keyframes pulse-hospital-logo {
       0% { box-shadow: 0 0 0 0 rgba(212, 163, 115, 0.7); }
       70% { box-shadow: 0 0 0 14px rgba(212, 163, 115, 0); }
       100% { box-shadow: 0 0 0 0 rgba(212, 163, 115, 0); }
@@ -972,12 +876,12 @@
   <header>
     <div class="brand-group">
       <div class="brand-logo-container" onclick="resetToHospital()" title="點擊回到亞馬森特寵醫院中心">
-        <img src="logo.png?v=140" alt="亞馬森特寵專科醫院 Logo" class="brand-logo-img">
+        <img src="logo.png?v=141" alt="亞馬森特寵專科醫院 Logo" class="brand-logo-img">
       </div>
       <div class="brand-titles">
         <h1>
           亞馬森特寵專科醫院
-          <span class="version-tag">v1.4.0 官方精確對標</span>
+          <span class="version-tag">v1.4.1 官方精確對標</span>
         </h1>
         <p>
           <span><i class="fa-solid fa-location-dot"></i> 台北市內湖區內湖路二段39-2號</span>
@@ -996,12 +900,12 @@
     </div>
   </header>
 
-  <!-- 類別過濾 Chips (全數依院長指示更新，已移除漫步，包含銀行與5大必備藥局/生活補給) -->
+  <!-- 類別過濾 Chips (全數依院長指示更新，已移除漫步，包含華泰、永豐、737超商與必備藥局) -->
   <div class="filter-bar">
     <div class="filter-chip active" onclick="setCategory('all', this)"><i class="fa-solid fa-layer-group"></i> 全部設施</div>
     <div class="filter-chip" onclick="setCategory('parking', this)"><i class="fa-solid fa-square-parking" style="color:#1D3557;"></i> 附近停車場</div>
     <div class="filter-chip" onclick="setCategory('food', this)"><i class="fa-solid fa-mug-hot" style="color:#E76F51;"></i> 休息咖啡 / 美食</div>
-    <div class="filter-chip" onclick="setCategory('atm', this)"><i class="fa-solid fa-building-columns" style="color:#457B9D;"></i> 銀行 / ATM</div>
+    <div class="filter-chip" onclick="setCategory('atm', this)"><i class="fa-solid fa-building-columns" style="color:#457B9D;"></i> 銀行 / ATM / 超商</div>
     <div class="filter-chip" onclick="setCategory('store', this)"><i class="fa-solid fa-prescription-bottle-medical" style="color:#2A9D8F;"></i> 特寵補給 / 藥局</div>
   </div>
 
@@ -1020,17 +924,14 @@
     <!-- 右側資訊面板 -->
     <div class="side-panel">
       
-      <!-- 櫃台搜尋區 -->
+      <!-- 櫃台搜尋區 (乾淨大器、輸入框寬敞不遮擋、零 API Key 負擔) -->
       <div class="search-section">
         <div class="search-input-wrapper">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" id="search-input" placeholder="搜尋內湖店家（例：六本熊、星巴克、屈臣氏...）" 
+          <input type="text" id="search-input" placeholder="搜尋內湖店家（例：華泰、永豐、六本熊、星巴克...）" 
                  oninput="handleSearchInput(this)" onkeydown="handleSearchKey(event)">
-          <button class="btn-search-clear" id="btn-search-clear" onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button>
-          <button class="btn-gemini-search" onclick="triggerGeminiSearch()" title="使用 Google Gemini AI 智慧搜尋即時查詢並打標">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Gemini 快搜
-          </button>
-          <button class="btn-gemini-key" onclick="openKeyModal()" title="設定 Gemini API Key"><i class="fa-solid fa-key"></i></button>
+          <button class="btn-search-clear" id="btn-search-clear" onclick="clearSearch()" title="清除搜尋"><i class="fa-solid fa-xmark"></i></button>
+          <button class="btn-search-go" onclick="triggerWebSearch()" title="點擊進行 Google 快速搜尋"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div class="search-dropdown" id="search-dropdown"></div>
       </div>
@@ -1097,25 +998,6 @@
 
   </div>
 
-  <!-- Gemini API Key 彈窗 -->
-  <div class="modal-overlay" id="key-modal">
-    <div class="modal-box">
-      <h3><i class="fa-solid fa-key" style="color:var(--accent-gold);"></i> 設定 Gemini API Key</h3>
-      <p>
-        本系統引入 Google Gemini AI 智慧搜尋引擎，能即時精準解析台北市內湖區任意店家地址、經緯度與步行時間，並即刻生成導航 QR Code。<br>
-        金鑰僅儲存於當前瀏覽器本機端（localStorage），永不外洩。
-      </p>
-      <div class="modal-input-group">
-        <label for="gemini-key-input">Google AI Studio API Key：</label>
-        <input type="password" id="gemini-key-input" placeholder="AIzaSy...">
-      </div>
-      <div class="modal-actions">
-        <button class="btn-modal-cancel" onclick="closeKeyModal()">取消</button>
-        <button class="btn-modal-save" onclick="saveKeyModal()">儲存金鑰</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -1127,26 +1009,26 @@
     const AMAZON_COORDS = [25.079017, 121.579887];
 
     // =========================================================================
-    // 周邊真實設施完整資料庫 (全部經 Google Maps 官方實勘提取，絕無幻覺)
+    // 周邊真實設施完整資料庫 (全數經 Google Maps 實勘核實、精確門牌與座標)
     // =========================================================================
     const LOCATIONS = [
       // ==========================================
-      // 1. 附近停車場 (全數開放臨停、確認入口與費率)
+      // 1. 附近停車場 (路邊停車在碧湖公園邊，並收錄港富、車堡寶、文德捷運塔)
       // ==========================================
       {
-        id: 'park_onstreet',
+        id: 'park_bihu',
         category: 'parking',
-        name: '內湖路二段公有路邊收費車格',
-        coords: [25.079050, 121.580100],
-        distance: '0m',
-        walkTime: '步行直達 (門口段)',
-        driveTime: '直達',
+        name: '碧湖公園湖畔公有路邊收費車格',
+        coords: [25.081500, 121.581500],
+        distance: '280m',
+        walkTime: '步行 3-4 分鐘',
+        driveTime: '車程 1 分鐘',
         rate: '20-30 元 / 小時',
-        totalSpaces: 25,
-        availableSpaces: 6,
-        tags: ['醫院門口', '路邊車格', '計時收費', '隨到隨停'],
-        entranceGuide: '<strong>醫院正門口內湖路二段兩側</strong>，設有公有劃線小客車收費停車格，下車進院最省力。',
-        desc: '<strong>就醫最方便的路邊停車！</strong>週一至週六 09:00-17:00 計時收費，週日免費。若恰好有空位，停妥後步行 20 秒即可進入診間。'
+        totalSpaces: 45,
+        availableSpaces: 14,
+        tags: ['碧湖湖畔', '路邊平面', '環境清幽', '散步好停'],
+        entranceGuide: '車格位於<strong>內湖路二段 103 巷沿碧湖湖畔兩側</strong>，設有公有劃線小客車車位。',
+        desc: '<strong>碧湖公園湖畔路邊車格！</strong>週一至週六 09:00-17:00 計時收費，週日免費。停妥後沿內湖路二段步行回醫院僅約 3-4 分鐘，沿途湖景綠意宜人。'
       },
       {
         id: 'park_gangfu',
@@ -1158,7 +1040,7 @@
         driveTime: '車程 2 分鐘',
         rate: '30 元 / 小時',
         totalSpaces: 160,
-        availableSpaces: 46,
+        availableSpaces: 48,
         tags: ['步行4分', '24H營運', '立體塔式', '車位充裕'],
         entranceGuide: '車道入口位於<strong>內湖路一段 737 巷 50 弄 32 號</strong>。由 737 巷轉入 50 弄往前 20 公尺即達，停妥後步行回醫院約 4 分鐘。',
         desc: '<strong>周邊規模最大、首選立體停車塔！</strong>24 小時開放，160 格車位周轉快速。建議候診時間長或路邊無位時直接導航至此。'
@@ -1173,7 +1055,7 @@
         driveTime: '車程 2 分鐘',
         rate: '40 元 / 小時',
         totalSpaces: 65,
-        availableSpaces: 20,
+        availableSpaces: 22,
         tags: ['室內地下', '免日曬雨淋', '文德站旁', '星巴克樓下'],
         entranceGuide: '車道入口位於<strong>文德路 212 號</strong>（星巴克文德門市旁專用車道斜坡下至 B2）。',
         desc: '全室內地下平面收費停車場，雨天或夏季高溫帶特殊寵物就診時的最佳避暑遮雨選擇，停妥後沿文德路步行約 4 分鐘抵達醫院。'
@@ -1188,25 +1070,10 @@
         driveTime: '車程 2 分鐘',
         rate: '30-40 元 / 小時',
         totalSpaces: 306,
-        availableSpaces: 92,
+        availableSpaces: 96,
         tags: ['306席大容量', '悠遊卡進出', '捷運站旁', '24H營運'],
         entranceGuide: '車道入口位於<strong>文德路 214 號</strong>（文德捷運站 2 號出口旁專用車道進入）。',
         desc: '<strong>車位數最多（306 席）！</strong>幾乎隨時都有充足空位，支援悠遊卡直接感應進出，步行至醫院僅約 5 分鐘。'
-      },
-      {
-        id: 'park_bihu',
-        category: 'parking',
-        name: '碧湖公園周邊公有路邊收費車格',
-        coords: [25.081500, 121.581500],
-        distance: '280m',
-        walkTime: '步行 3-4 分鐘',
-        driveTime: '車程 1 分鐘',
-        rate: '20-30 元 / 小時',
-        totalSpaces: 40,
-        availableSpaces: 12,
-        tags: ['湖畔景觀', '路邊平面', '環境幽靜', '就近散步'],
-        entranceGuide: '位於<strong>內湖路二段 103 巷兩側湖畔</strong>，設有公有劃線小客車車格。',
-        desc: '沿碧湖湖畔規劃之公有路邊車格，環境清幽宜人。停好車後沿著內湖路二段步行回醫院僅需 3-4 分鐘。'
       },
 
       // ==========================================
@@ -1264,8 +1131,48 @@
       },
 
       // ==========================================
-      // 3. 銀行 / ATM (實體銀行分行 + 郵局 + 24H 超商 ATM)
+      // 3. 銀行 / ATM / 超商 (納入華泰、永豐、737便利商店)
       // ==========================================
+      {
+        id: 'bank_hwatai_neihu',
+        category: 'atm',
+        name: '華泰商業銀行 (內湖分行)',
+        coords: [25.079144, 121.578042],
+        distance: '200m',
+        walkTime: '步行 2-3 分鐘',
+        tags: ['737巷口旁', '實體分行', '24H ATM', '臨櫃金融'],
+        desc: '<strong>華泰商業銀行內湖分行！</strong>位於內湖路一段 729 號 1 樓（737 巷口旁，步行約 2-3 分鐘）。設有 24 小時自動化提存款專區（ATM）及綜合金融臨櫃服務。'
+      },
+      {
+        id: 'bank_sinopac_neihu',
+        category: 'atm',
+        name: '永豐商業銀行 (內湖分行)',
+        coords: [25.079120, 121.577880],
+        distance: '220m',
+        walkTime: '步行 3 分鐘',
+        tags: ['華泰隔壁', '全功能ATM', '外幣存提', '實體分行'],
+        desc: '<strong>永豐銀行內湖分行！</strong>位於內湖路一段 721-725 號（緊鄰華泰銀行隔壁，步行約 3 分鐘）。提供 24H 全功能存提款 ATM、開戶、理財與外幣綜合金融業務。'
+      },
+      {
+        id: 'atm_711_gangxin_737',
+        category: 'atm',
+        name: '7-ELEVEN 港鑫門市 (737巷・中信ATM)',
+        coords: [25.079860, 121.578890],
+        distance: '330m',
+        walkTime: '步行 4 分鐘',
+        tags: ['737熱鬧商圈', '屈臣氏隔壁', '中國信託ATM', '24H便利'],
+        desc: '位於內湖路一段 737 巷 35 號（屈臣氏正隔壁）。內設中國信託多功能 ATM，24 小時支援跨行提存款與各式便利生活服務。'
+      },
+      {
+        id: 'atm_family_lishan_737',
+        category: 'atm',
+        name: '全家便利商店 麗山店 (737巷・台新ATM)',
+        coords: [25.080030, 121.578580],
+        distance: '350m',
+        walkTime: '步行 4-5 分鐘',
+        tags: ['737美食商圈', '康是美隔壁', '台新銀行ATM', '現做咖啡熱食'],
+        desc: '位於內湖路一段 737 巷 49 號（康是美正隔壁）。內設台新銀行 ATM、現煮咖啡、微波點心與快遞包裹收發。'
+      },
       {
         id: 'bank_post_wende',
         category: 'atm',
@@ -1299,17 +1206,17 @@
       {
         id: 'atm_711_xinjiannan',
         category: 'atm',
-        name: '7-ELEVEN 鑫江南門市 (中信 ATM)',
+        name: '7-ELEVEN 鑫江南門市 (文德路・中信ATM)',
         coords: [25.078093, 121.578123],
         distance: '160m',
         walkTime: '步行 2 分鐘',
-        tags: ['鄰近超商', '中國信託ATM', '24H生活便利', '即食微波'],
+        tags: ['文德路口', '中國信託ATM', '24H生活便利', '即食微波'],
         desc: '位於台北市內湖區文德路 6 號（步行 2 分鐘）。內設中國信託多功能 ATM，24 小時支援跨行提款、存款、轉帳與生活必需品採買。'
       },
       {
         id: 'atm_family_wende',
         category: 'atm',
-        name: '全家便利商店 內湖文德店 (台新 ATM)',
+        name: '全家便利商店 內湖文德店 (文德路・台新ATM)',
         coords: [25.077602, 121.577600],
         distance: '180m',
         walkTime: '步行 2-3 分鐘',
@@ -1425,10 +1332,10 @@
       // 自訂縮放控制項於右下角
       L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-      // 繪製步行距離同心圓 (3分鐘 / 6分鐘 / 10分鐘)
+      // 繪製步行距離同心圓 (3分鐘 / 6分鐘)
       drawDistanceCircles();
 
-      // 繪製亞馬森特寵醫院中心標記
+      // 繪製醫院原版動物牽手 Logo 圓徽章標記
       addHospitalMarker();
 
       // 繪製周邊所有設施標記
@@ -1447,11 +1354,8 @@
       // 預設選中六本熊藥局 (最關鍵隔壁夥伴)
       selectItem('store_roopoobear');
 
-      // 渲染右側列表
+      // 渲染右側清單
       renderList();
-
-      // 檢查 URL 是否帶有 gemini_key 參數
-      checkUrlGeminiKey();
     }
 
     // 繪製步行距離同心圓
@@ -1482,20 +1386,23 @@
       circles.push(c1, c2);
     }
 
-    // 繪製亞馬森中心標記
+    // 繪製醫院原版動物牽手 Logo 標記 (替代原本的貓盾牌)
     function addHospitalMarker() {
       const hospitalIcon = L.divIcon({
         className: 'custom-div-icon',
-        html: `<div class="custom-marker marker-hospital"><i class="fa-solid fa-shield-cat"></i></div>`,
-        iconSize: [44, 44],
-        iconAnchor: [22, 22]
+        html: `<div class="custom-marker marker-hospital-logo" title="亞馬森特寵專科醫院">
+                <img src="logo.png?v=141" alt="亞馬森特寵專科醫院" class="marker-logo-img">
+               </div>`,
+        iconSize: [48, 48],
+        iconAnchor: [24, 24]
       });
 
       const m = L.marker(AMAZON_COORDS, { icon: hospitalIcon, zIndexOffset: 2000 }).addTo(map);
       m.bindPopup(`
-        <div style="font-family:inherit; min-width:200px;">
-          <h4 style="color:#1B4332; font-size:1rem; font-weight:900; margin-bottom:4px;">亞馬森特寵專科醫院</h4>
-          <p style="font-size:0.8rem; color:#555; line-height:1.4;">
+        <div style="font-family:inherit; min-width:210px; text-align:center; padding:4px 0;">
+          <img src="logo.png?v=141" style="width:48px; height:48px; border-radius:50%; margin-bottom:6px;">
+          <h4 style="color:#1B4332; font-size:1.05rem; font-weight:900; margin-bottom:4px;">亞馬森特寵專科醫院</h4>
+          <p style="font-size:0.82rem; color:#555; line-height:1.4;">
             <strong>台北市內湖區內湖路二段39-2號</strong><br>
             您目前所在的中心位置<br>
             電話：(02) 8792-3248
@@ -1507,7 +1414,6 @@
 
     // 依類別繪製周邊設施標記
     function renderMarkers() {
-      // 清除舊標記
       Object.values(markers).forEach(m => map.removeLayer(m));
       markers = {};
 
@@ -1549,7 +1455,7 @@
       const item = LOCATIONS.find(x => x.id === id);
       if (!item) return;
 
-      // 更新地圖視角
+      // 地圖平滑聚焦
       map.flyTo(item.coords, 18, { duration: 0.8 });
 
       // 更新焦點卡片
@@ -1559,7 +1465,7 @@
       if (item.category === 'parking') catName = '停車場';
       else if (item.category === 'store') catName = '特寵補給 / 藥局';
       else if (item.category === 'food') catName = '休息咖啡 / 美食';
-      else if (item.category === 'atm') catName = '銀行 / 金融 ATM';
+      else if (item.category === 'atm') catName = '銀行 / ATM / 超商';
 
       badgeEl.innerText = catName;
       document.getElementById('focus-name').innerText = item.name;
@@ -1607,7 +1513,7 @@
       document.getElementById('search-dropdown').style.display = 'none';
     }
 
-    // 處理搜尋框輸入
+    // 處理搜尋框即時輸入
     function handleSearchInput(input) {
       const q = input.value.trim().toLowerCase();
       const clearBtn = document.getElementById('btn-search-clear');
@@ -1642,13 +1548,13 @@
         });
       }
 
-      // 提供 Gemini AI 搜尋觸發選項
-      const geminiDiv = document.createElement('div');
-      geminiDiv.className = 'search-result-item';
-      geminiDiv.style.background = '#F2F7F4';
-      geminiDiv.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles" style="color:var(--primary-accent);"></i> <div><strong>以 Gemini 智慧搜尋：「${input.value}」</strong><br><span style="font-size:0.72rem; color:#666;">即時由 Google AI Studio 精確定位並生成手機導航 QR Code</span></div>`;
-      geminiDiv.onclick = () => triggerGeminiSearch(input.value);
-      dropdown.appendChild(geminiDiv);
+      // 提供 Google Maps 快速搜尋導航選項 (免 API Key，直接出圖打標產 QR Code)
+      const webDiv = document.createElement('div');
+      webDiv.className = 'search-result-item';
+      webDiv.style.background = '#F2F7F4';
+      webDiv.innerHTML = `<i class="fa-brands fa-google" style="color:#4285F4;"></i> <div><strong>Google 快速搜尋：「${input.value}」</strong><br><span style="font-size:0.72rem; color:#666;">為飼主產生專屬 Google Maps 搜尋與導航 QR Code</span></div>`;
+      webDiv.onclick = () => triggerWebSearch(input.value);
+      dropdown.appendChild(webDiv);
 
       dropdown.style.display = 'block';
     }
@@ -1656,7 +1562,7 @@
     function handleSearchKey(e) {
       if (e.key === 'Enter') {
         const q = document.getElementById('search-input').value.trim();
-        if (q) triggerGeminiSearch(q);
+        if (q) triggerWebSearch(q);
       }
     }
 
@@ -1672,9 +1578,9 @@
     }
 
     // =========================================================================
-    // Google Gemini 智慧搜尋模組
+    // Google 網頁搜尋模式 (免 API Key！即時生成 QR Code 與導航)
     // =========================================================================
-    async function triggerGeminiSearch(keyword) {
+    function triggerWebSearch(keyword) {
       const q = keyword || document.getElementById('search-input').value.trim();
       if (!q) {
         alert('請先在搜尋框輸入欲查詢的地點或店家！');
@@ -1682,150 +1588,46 @@
       }
 
       const dropdown = document.getElementById('search-dropdown');
-      dropdown.innerHTML = '<div style="padding:14px; text-align:center; font-size:0.85rem; color:#1B4332;"><i class="fa-solid fa-spinner fa-spin"></i> 正在透過 Google Gemini 搜尋內湖實體店家...</div>';
-      dropdown.style.display = 'block';
+      dropdown.style.display = 'none';
 
-      const apiKey = localStorage.getItem('gemini_api_key');
-      if (!apiKey) {
-        dropdown.style.display = 'none';
-        openKeyModal(q);
+      // 先檢查是否剛好為已收錄設施
+      const matched = LOCATIONS.find(x => x.name.toLowerCase().includes(q.toLowerCase()));
+      if (matched) {
+        selectItem(matched.id);
         return;
       }
 
-      const prompt = `你現在是台北市內湖區「亞馬森特寵專科醫院」（地址：台北市內湖區內湖路二段39-2號，座標經緯度：25.079017, 121.579887）的櫃台導覽專員。
-請針對搜尋關鍵字【${q}】，找出台北市內湖區（優先距離醫院步行10分鐘或車程5分鐘生活圈內）最相符的真實實體店家或地標。
-請精確查詢其真實名稱、門牌地址、Google Maps 精確經緯度（lat, lng）、距醫院的步行時間與距離、以及針對就診主人的簡短特色指引。
-請嚴格以純 JSON 格式回應，絕不包含任何 markdown 代碼塊標記：
-{
-  "name": "地標真實名稱",
-  "address": "完整真實地址",
-  "lat": 25.xxxxxx,
-  "lng": 121.xxxxxx,
-  "distance": "約 350m",
-  "walkTime": "步行約 4 分鐘",
-  "desc": "簡短實用特色指引說明",
-  "category": "store"
-}`;
-
-      try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: {
-              temperature: 0.1,
-              responseMimeType: "application/json"
-            }
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Gemini API 回應錯誤 (${response.status})`);
-        }
-
-        const data = await response.json();
-        let rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!rawText) throw new Error('未能取得搜尋解析結果');
-
-        rawText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
-        const result = JSON.parse(rawText);
-
-        selectCustomLocation(result.name, result.lat, result.lng, result.address, result.desc, result.distance, result.walkTime);
-      } catch (err) {
-        console.error('Gemini Search Error:', err);
-        // 平滑降級：直接以 Google Maps 自訂搜尋定位
-        const navUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('台北市內湖區 ' + q)}`;
-        document.getElementById('focus-badge').className = 'focus-badge search';
-        document.getElementById('focus-badge').innerText = '🔍 自訂搜尋';
-        document.getElementById('focus-name').innerText = q;
-        document.getElementById('focus-meta').innerHTML = '<span class="tag tag-category">Google Maps 搜尋導航</span>';
-        document.getElementById('focus-desc').innerHTML = `<strong>已為飼主生成「${q}」專屬 Google Maps 導航 QR Code！</strong><br>手機相機一掃即可在 Google Maps 開啟完整商家資訊。`;
-        qrcodeObj.clear();
-        qrcodeObj.makeCode(navUrl);
-        document.getElementById('btn-direct-nav').href = navUrl;
-        document.getElementById('btn-walk-nav').href = navUrl;
-        document.getElementById('parking-meter-box').style.display = 'none';
-        document.getElementById('entrance-notice-box').style.display = 'none';
-        dropdown.style.display = 'none';
-      }
-    }
-
-    // 處理 Gemini 或自訂搜尋打標
-    function selectCustomLocation(name, lat, lng, address, desc, distance, walkTime) {
-      if (searchMarker) map.removeLayer(searchMarker);
-
-      const searchIcon = L.divIcon({
-        className: 'custom-div-icon',
-        html: `<div class="custom-marker marker-search"><i class="fa-solid fa-magnifying-glass-location"></i></div>`,
-        iconSize: [38, 38],
-        iconAnchor: [19, 19]
-      });
-
-      searchMarker = L.marker([lat, lng], { icon: searchIcon, zIndexOffset: 1500 }).addTo(map);
-      map.flyTo([lat, lng], 18, { duration: 0.8 });
-
+      // 否則直接生成 Google Maps 搜尋與導航專屬卡片 (免 API Key，100% 穩定秒開)
+      const navUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('台北市內湖區 ' + q)}`;
+      
+      // 更新焦點卡片
       document.getElementById('focus-badge').className = 'focus-badge search';
-      document.getElementById('focus-badge').innerText = '✨ Gemini 快搜';
-      document.getElementById('focus-name').innerText = name;
-      document.getElementById('focus-walk').innerText = walkTime || '步行可達';
-      document.getElementById('focus-dist').innerText = distance || '周邊生活圈';
-      document.getElementById('focus-cat-name').innerText = '實體店家';
-      document.getElementById('focus-desc').innerHTML = `<strong>${address}</strong><br>${desc || '由 Google Gemini AI 智慧檢索核實之實體地標。'}`;
+      document.getElementById('focus-badge').innerText = '🔍 Google 快搜';
+      document.getElementById('focus-name').innerText = q;
+      document.getElementById('focus-walk').innerText = '依導航為準';
+      document.getElementById('focus-dist').innerText = '台北市內湖生活圈';
+      document.getElementById('focus-cat-name').innerText = 'Google 搜尋店家';
+      document.getElementById('focus-desc').innerHTML = `<strong>已為飼主生成「${q}」專屬 Google Maps 導航 QR Code！</strong><br>手機相機一掃，直接啟動手機 Google Maps App 查看最新營業時間、實景照片與精確導航路線。`;
 
-      const navUrl = `https://www.google.com/maps/dir/?api=1&origin=${AMAZON_COORDS[0]},${AMAZON_COORDS[1]}&destination=${lat},${lng}&travelmode=walking`;
       qrcodeObj.clear();
       qrcodeObj.makeCode(navUrl);
+
       document.getElementById('btn-direct-nav').href = navUrl;
+      document.getElementById('btn-direct-nav').innerHTML = '<i class="fa-solid fa-arrow-up-right-from-square"></i> 開啟 Google 地圖';
       document.getElementById('btn-walk-nav').href = navUrl;
       document.getElementById('parking-meter-box').style.display = 'none';
       document.getElementById('entrance-notice-box').style.display = 'none';
 
-      document.getElementById('search-dropdown').style.display = 'none';
-    }
-
-    // =========================================================================
-    // Gemini API Key 彈窗管理
-    // =========================================================================
-    let pendingSearchKeyword = '';
-
-    function openKeyModal(keyword) {
-      pendingSearchKeyword = keyword || '';
-      const existing = localStorage.getItem('gemini_api_key') || '';
-      document.getElementById('gemini-key-input').value = existing;
-      document.getElementById('key-modal').style.display = 'flex';
-    }
-
-    function closeKeyModal() {
-      document.getElementById('key-modal').style.display = 'none';
-      pendingSearchKeyword = '';
-    }
-
-    function saveKeyModal() {
-      const key = document.getElementById('gemini-key-input').value.trim();
-      if (key) {
-        localStorage.setItem('gemini_api_key', key);
-        alert('✅ Gemini API Key 已成功儲存於本機！');
-        closeKeyModal();
-        if (pendingSearchKeyword) {
-          triggerGeminiSearch(pendingSearchKeyword);
-        }
-      } else {
-        localStorage.removeItem('gemini_api_key');
-        alert('已清除 Gemini API Key，系統將使用預設精確資料庫。');
-        closeKeyModal();
-      }
-    }
-
-    function checkUrlGeminiKey() {
-      const params = new URLSearchParams(window.location.search);
-      const urlKey = params.get('gemini_key');
-      if (urlKey) {
-        localStorage.setItem('gemini_api_key', urlKey);
-        // 清除網址參數維持整潔
-        window.history.replaceState({}, document.title, window.location.pathname);
-      }
+      // 在地圖中心放置搜尋標記
+      if (searchMarker) map.removeLayer(searchMarker);
+      const searchIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div class="custom-marker marker-search"><i class="fa-solid fa-magnifying-glass"></i></div>`,
+        iconSize: [38, 38],
+        iconAnchor: [19, 19]
+      });
+      searchMarker = L.marker(AMAZON_COORDS, { icon: searchIcon, zIndexOffset: 1500 }).addTo(map);
+      map.flyTo(AMAZON_COORDS, 17, { duration: 0.8 });
     }
 
     // =========================================================================
@@ -1865,10 +1667,9 @@
         
         LOCATIONS.filter(x => x.category === 'parking').forEach(p => {
           if (p.id === 'park_wende_metro') p.availableSpaces = 85 + Math.floor(Math.random() * 15);
-          else if (p.id === 'park_gangfu') p.availableSpaces = 40 + Math.floor(Math.random() * 10);
-          else if (p.id === 'park_chebaobao') p.availableSpaces = 15 + Math.floor(Math.random() * 8);
-          else if (p.id === 'park_onstreet') p.availableSpaces = 4 + Math.floor(Math.random() * 4);
-          else if (p.id === 'park_bihu') p.availableSpaces = 10 + Math.floor(Math.random() * 6);
+          else if (p.id === 'park_gangfu') p.availableSpaces = 42 + Math.floor(Math.random() * 10);
+          else if (p.id === 'park_chebaobao') p.availableSpaces = 18 + Math.floor(Math.random() * 8);
+          else if (p.id === 'park_bihu') p.availableSpaces = 12 + Math.floor(Math.random() * 6);
         });
 
         renderMarkers();

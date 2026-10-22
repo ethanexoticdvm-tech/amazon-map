@@ -2,7 +2,7 @@
   "name": "亞馬森特寵專科醫院 - 櫃台導覽地圖",
   "short_name": "亞馬森地圖",
   "description": "亞馬森特寵專科醫院周邊生活設施、候診休憩處與即時停車位導覽",
-  "start_url": "./index.html?v=1.4.0",
+  "start_url": "./index.html?v=1.4.1",
   "display": "standalone",
   "background_color": "#1B4332",
   "theme_color": "#1B4332",
