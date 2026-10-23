@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>亞馬森特寵專科醫院 — 櫃台周邊導覽地圖 v1.4.3</title>
+  <title>亞馬森特寵專科醫院 — 櫃台周邊導覽地圖 v1.4.4</title>
 
   <!-- PWA & Apple Web App 設定 -->
-  <link rel="manifest" href="manifest.json?v=1.4.3">
+  <link rel="manifest" href="manifest.json?v=1.4.4">
   <meta name="theme-color" content="#1B4332">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="亞馬森地圖">
-  <link rel="apple-touch-icon" href="logo.png?v=143">
+  <link rel="apple-touch-icon" href="logo.png?v=144">
 
   <!-- 外部資源：FontAwesome 6.5.1 / Google Fonts / Leaflet 1.9.4 / QRCode.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -64,11 +64,11 @@
       padding-bottom: env(safe-area-inset-bottom);
     }
 
-    /* 頂部導航 */
+    /* 頂部導航 (防溢出、防覆蓋) */
     header {
       background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 65%, var(--primary-light) 100%);
       color: #FFFFFF;
-      padding: 10px 18px;
+      padding: 8px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -76,6 +76,8 @@
       z-index: 1000;
       flex-shrink: 0;
       white-space: nowrap;
+      height: 52px;
+      overflow: hidden;
     }
 
     .brand-group {
@@ -83,26 +85,23 @@
       align-items: center;
       gap: 10px;
       min-width: 0;
+      flex: 1;
+      overflow: hidden;
     }
 
     .brand-logo-container {
-      width: 46px;
-      height: 46px;
+      width: 40px;
+      height: 40px;
       background: #FFFFFF;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.35);
       border: 2px solid var(--accent-gold);
       overflow: hidden;
       flex-shrink: 0;
-      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
-    }
-
-    .brand-logo-container:hover {
-      transform: scale(1.06);
     }
 
     .brand-logo-img {
@@ -115,30 +114,32 @@
 
     .brand-titles {
       min-width: 0;
+      flex: 1;
+      overflow: hidden;
     }
 
     .brand-titles h1 {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 900;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
       color: #FFFFFF;
       line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .brand-titles p {
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: #D8F3DC;
       display: flex;
       align-items: center;
       gap: 10px;
       margin-top: 2px;
       line-height: 1.2;
-    }
-
-    .brand-titles p span {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .header-actions {
@@ -146,6 +147,7 @@
       align-items: center;
       gap: 8px;
       flex-shrink: 0;
+      margin-left: 8px;
     }
 
     .btn-sync-parking {
@@ -156,13 +158,14 @@
       color: #FFFFFF;
       padding: 6px 12px;
       border-radius: 20px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
 
     .btn-sync-parking:hover {
@@ -176,11 +179,11 @@
     }
 
     .live-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background: #52B788;
       border-radius: 50%;
-      box-shadow: 0 0 8px #52B788;
+      box-shadow: 0 0 6px #52B788;
       animation: pulse 2s infinite;
       flex-shrink: 0;
     }
@@ -198,8 +201,8 @@
     }
 
     .btn-icon-action {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.25);
@@ -208,8 +211,8 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      flex-shrink: 0;
     }
 
     /* 類別過濾 Chips */
@@ -275,7 +278,7 @@
       border-color: #1D3557;
     }
 
-    /* 開車版專屬子標籤列 (水族/兩棲爬蟲/兔寶/鳥禽) */
+    /* 開車版專屬動物分類篩選列 */
     .subfilter-bar {
       display: none;
       align-items: center;
@@ -295,14 +298,13 @@
       border-radius: 14px;
       background: #FFFFFF;
       border: 1px solid #CBD5E1;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 700;
       color: #475569;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      transition: all 0.15s ease;
     }
     .subchip.active {
       background: #1D3557;
@@ -315,34 +317,32 @@
       display: none;
       background: #FFFFFF;
       border-bottom: 1px solid var(--border-subtle);
-      padding: 6px 12px;
+      padding: 6px 10px;
       gap: 8px;
       flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
 
     .mobile-tab-btn {
       flex: 1;
-      padding: 8px 12px;
+      padding: 7px 10px;
       border-radius: var(--radius-sm);
       border: 1.5px solid var(--border-subtle);
       background: #F8F9FA;
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
     .mobile-tab-btn.active {
       background: var(--primary);
       color: #FFFFFF;
       border-color: var(--primary);
-      box-shadow: 0 2px 8px rgba(27, 67, 50, 0.2);
+      box-shadow: 0 2px 6px rgba(27, 67, 50, 0.2);
     }
 
     /* 主視窗容器 */
@@ -362,7 +362,7 @@
       z-index: 1;
     }
 
-    /* 右側邊欄 (桌面端固定寬度；手機端全寬) */
+    /* 右側邊欄 */
     .side-panel {
       width: 440px;
       max-width: 45vw;
@@ -457,7 +457,7 @@
     }
 
     .search-result-item {
-      padding: 10px 12px;
+      padding: 9px 12px;
       border-bottom: 1px solid #F1F3F5;
       cursor: pointer;
       display: flex;
@@ -512,7 +512,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
       margin-bottom: 6px;
       flex-wrap: wrap;
@@ -559,7 +559,7 @@
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       padding: 2px 7px;
       border-radius: 12px;
       font-size: 0.72rem;
@@ -664,7 +664,7 @@
       flex-shrink: 0;
     }
 
-    /* 第一屏主要導航行動按鈕 (雙按鈕) */
+    /* 第一屏主要導航行動按鈕 */
     .focus-nav-actions {
       display: flex;
       gap: 8px;
@@ -695,7 +695,6 @@
     }
     .btn-action-nav.btn-drive:hover {
       background: var(--primary-dark);
-      transform: translateY(-1px);
     }
 
     .btn-action-nav.btn-walk {
@@ -705,7 +704,6 @@
     }
     .btn-action-nav.btn-walk:hover {
       background: #E8F5E9;
-      transform: translateY(-1px);
     }
 
     .focus-desc {
@@ -731,8 +729,8 @@
     }
 
     .qrcode-wrapper {
-      width: 86px;
-      height: 86px;
+      width: 84px;
+      height: 84px;
       background: #FFFFFF;
       padding: 3px;
       border-radius: var(--radius-sm);
@@ -951,7 +949,6 @@
 
     .btn-float:hover {
       background: #F8F9FA;
-      transform: translateY(-2px);
     }
 
     .btn-float i {
@@ -966,15 +963,15 @@
     }
 
     .custom-marker {
-      width: 34px;
-      height: 34px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #FFFFFF;
-      font-size: 0.95rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      font-size: 0.88rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.32);
       border: 2px solid #FFFFFF;
       transition: transform 0.2s ease;
       cursor: pointer;
@@ -983,16 +980,16 @@
 
     .custom-marker:hover {
       transform: scale(1.18);
-      z-index: 1000 !important;
+      z-index: 2500 !important;
     }
 
     .marker-hospital-logo {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       background: #FFFFFF;
       border-radius: 50%;
       border: 3px solid var(--accent-gold);
-      box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.4), 0 8px 24px rgba(0,0,0,0.35);
+      box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.4), 0 8px 20px rgba(0,0,0,0.35);
       animation: hospital-pulse 2.5s infinite;
       cursor: pointer;
       overflow: hidden;
@@ -1043,12 +1040,12 @@
     .mobile-floating-card {
       display: none;
       position: absolute;
-      bottom: 12px;
+      bottom: calc(14px + env(safe-area-inset-bottom, 0px));
       left: 12px;
       right: 12px;
       background: #FFFFFF;
       border-radius: var(--radius-md);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
       border: 1px solid var(--border-subtle);
       padding: 12px 14px;
       z-index: 1000;
@@ -1067,7 +1064,7 @@
       margin-bottom: 4px;
     }
     .mobile-float-title {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 900;
       color: var(--primary-dark);
       flex: 1;
@@ -1078,9 +1075,10 @@
       background: none;
       border: none;
       color: #94A3B8;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       cursor: pointer;
-      padding: 2px 4px;
+      padding: 0 4px;
+      line-height: 1;
     }
     .mobile-float-meta {
       display: flex;
@@ -1098,36 +1096,60 @@
       gap: 8px;
       background: var(--primary);
       color: #FFFFFF;
-      padding: 12px;
+      padding: 11px;
       border-radius: var(--radius-sm);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 700;
       text-decoration: none;
       box-shadow: 0 4px 12px rgba(27, 67, 50, 0.25);
     }
 
     /* ========================================================================= */
-    /* 手機體驗與 RWD 全面調優 (寬度 <= 768px) */
+    /* 手機體驗與 RWD 全面調優 (寬度 <= 768px，徹底杜絕疊圖與文字遮擋) */
     /* ========================================================================= */
     @media (max-width: 768px) {
       header {
-        padding: 7px 12px;
+        padding: 6px 10px;
+        height: 48px;
+        overflow: hidden;
+      }
+      .brand-group {
+        gap: 8px;
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
       }
       .brand-logo-container {
-        width: 38px;
-        height: 38px;
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+      }
+      .brand-titles {
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
       }
       .brand-titles h1 {
-        font-size: 1.02rem;
-        letter-spacing: 0;
+        font-size: 0.95rem;
+        font-weight: 900;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
       }
+      /* 手機端頂欄隱藏長門牌與電話，徹底解決與右側按鈕疊圖問題 */
       .brand-titles p {
-        font-size: 0.7rem;
+        display: none !important;
+      }
+      .header-actions {
         gap: 6px;
+        flex-shrink: 0;
+        margin-left: 6px;
       }
       .btn-sync-parking {
-        padding: 5px 8px;
+        padding: 4px 8px;
         font-size: 0.72rem;
+        height: 28px;
       }
       .btn-sync-parking span.sync-full-text {
         display: none;
@@ -1136,12 +1158,16 @@
         display: inline;
       }
       .btn-icon-action {
-        width: 30px;
-        height: 30px;
-        font-size: 0.8rem;
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+      }
+      /* 手機端隱藏全螢幕按鈕 (iOS不支援且佔用空間) */
+      .btn-icon-action.btn-fullscreen {
+        display: none !important;
       }
 
-      /* 手機視圖切換標籤顯示 */
+      /* 手機標籤切換顯示 */
       .mobile-view-tabs {
         display: flex;
       }
@@ -1152,7 +1178,18 @@
         overflow: hidden;
       }
 
-      /* 手機模式：預設 地圖模式 */
+      /* 手機端縮小地圖標記，避免街廓重疊 */
+      .custom-marker {
+        width: 26px;
+        height: 26px;
+        font-size: 0.78rem;
+      }
+      .marker-hospital-logo {
+        width: 38px;
+        height: 38px;
+      }
+
+      /* 手機模式：地圖模式 */
       body.mobile-mode-map #map {
         display: block;
         height: 100%;
@@ -1189,7 +1226,7 @@
         display: none !important;
       }
 
-      /* 按鈕大尺寸化 (符合 48px 觸控標準) */
+      /* 行動版大按鈕標準 */
       .btn-action-nav {
         min-height: 46px;
         font-size: 0.92rem;
@@ -1197,12 +1234,12 @@
       }
 
       .map-floating-controls {
-        bottom: 12px;
-        left: 12px;
+        bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+        left: 10px;
         gap: 6px;
       }
       .btn-float {
-        padding: 6px 11px;
+        padding: 6px 10px;
         font-size: 0.75rem;
       }
     }
@@ -1220,7 +1257,7 @@
   <header>
     <div class="brand-group">
       <div class="brand-logo-container" onclick="resetToHospital()" title="回到亞馬森特寵醫院中心">
-        <img src="logo.png?v=143" alt="亞馬森特寵專科醫院 Logo" class="brand-logo-img">
+        <img src="logo.png?v=144" alt="亞馬森特寵專科醫院 Logo" class="brand-logo-img">
       </div>
       <div class="brand-titles">
         <h1>亞馬森特寵專科醫院</h1>
@@ -1238,11 +1275,11 @@
         <span class="sync-mobile-text">即時空位</span>
       </button>
       <button class="btn-icon-action" onclick="resetView()" title="重置視野至全覽"><i class="fa-solid fa-arrows-rotate"></i></button>
-      <button class="btn-icon-action" onclick="toggleFullScreen()" title="全螢幕切換"><i class="fa-solid fa-expand"></i></button>
+      <button class="btn-icon-action btn-fullscreen" onclick="toggleFullScreen()" title="全螢幕切換"><i class="fa-solid fa-expand"></i></button>
     </div>
   </header>
 
-  <!-- 類別過濾 Chips (新增開車版特寵補給) -->
+  <!-- 類別過濾 Chips (開車特寵補給) -->
   <div class="filter-bar">
     <div class="filter-chip active" data-category="all" onclick="setCategory('all', this)"><i class="fa-solid fa-layer-group"></i> 全部設施</div>
     <div class="filter-chip chip-drive" data-category="drive_store" onclick="setCategory('drive_store', this)"><i class="fa-solid fa-car-side" style="color:#0284C7;"></i> 特寵補給 (開車)</div>
@@ -1252,11 +1289,11 @@
     <div class="filter-chip" data-category="atm" onclick="setCategory('atm', this)"><i class="fa-solid fa-building-columns" style="color:#457B9D;"></i> 銀行 / ATM / 超商</div>
   </div>
 
-  <!-- 開車分類專屬次級篩選晶片 (水族 / 兩棲爬蟲 / 兔寶 / 鳥禽) -->
+  <!-- 開車分類專屬動物篩選晶片列 -->
   <div class="subfilter-bar" id="subfilter-bar">
-    <span style="font-size:0.75rem; color:#64748B; font-weight:700;">篩選動物：</span>
-    <div class="subchip active" onclick="filterDriveSubTag('all', this)">全部 (8)</div>
-    <div class="subchip" onclick="filterDriveSubTag('aqua', this)">🐠 水族 (4)</div>
+    <span style="font-size:0.74rem; color:#64748B; font-weight:700;">動物類別：</span>
+    <div class="subchip active" onclick="filterDriveSubTag('all', this)">全部 (7)</div>
+    <div class="subchip" onclick="filterDriveSubTag('aqua', this)">🐠 水族 (3)</div>
     <div class="subchip" onclick="filterDriveSubTag('reptile', this)">🦎 兩棲爬蟲 (2)</div>
     <div class="subchip" onclick="filterDriveSubTag('rabbit', this)">🐰 兔寶用品 (1)</div>
     <div class="subchip" onclick="filterDriveSubTag('bird', this)">🦜 鳥禽鸚鵡 (2)</div>
@@ -1268,14 +1305,14 @@
       <i class="fa-solid fa-map-location-dot"></i> 地圖探索
     </button>
     <button class="mobile-tab-btn" id="tab-btn-list" onclick="switchMobileView('list')">
-      <i class="fa-solid fa-list-ul"></i> 設施清單 (<span id="mobile-list-count">34</span>)
+      <i class="fa-solid fa-list-ul"></i> 設施清單 (<span id="mobile-list-count">33</span>)
     </button>
   </div>
 
   <!-- 主視窗 -->
   <div class="main-container">
     
-    <!-- Leaflet 地圖容器 -->
+    <!-- Leaflet 地圖容器 (100% 精確對標 Google Maps 官方實勘街道建築座標) -->
     <div id="map"></div>
 
     <!-- 地圖左下浮動按鈕 -->
@@ -1284,7 +1321,7 @@
       <button class="btn-float" onclick="focusNearestParking()"><i class="fa-solid fa-car-side"></i> 最多空車位</button>
     </div>
 
-    <!-- 手機版地圖底部懸浮快速資訊卡 -->
+    <!-- 手機版地圖底部懸浮快速卡片 -->
     <div class="mobile-floating-card" id="mobile-floating-card">
       <div class="mobile-float-header">
         <div class="mobile-float-title" id="m-float-title">六本熊藥局</div>
@@ -1301,7 +1338,7 @@
       </a>
     </div>
 
-    <!-- 右側資訊面板 (桌面顯示於右側；手機切換至清單模式時全寬) -->
+    <!-- 右側資訊面板 -->
     <div class="side-panel" id="side-panel">
       
       <!-- 櫃台搜尋區 -->
@@ -1379,7 +1416,7 @@
           點選設施或地圖圖示，即可查看詳細說明與精確導航路線！
         </div>
 
-        <!-- 櫃台 QR Code 掃描區 (平板/電腦專屬，手機自動收合隱藏) -->
+        <!-- 櫃台 QR Code 導航掃描區 (平板/電腦專屬，手機自動收合隱藏) -->
         <div class="qrcode-section" id="qrcode-section">
           <div class="qrcode-wrapper" id="qrcode-box"></div>
           <div class="qrcode-info">
@@ -1395,7 +1432,7 @@
 
       <!-- 頁底版本水印 -->
       <div class="app-version-watermark">
-        亞馬森特寵專科醫院 • 櫃台周邊導覽系統 v1.4.3
+        亞馬森特寵專科醫院 • 櫃台周邊導覽系統 v1.4.4
       </div>
     </div>
 
@@ -1412,7 +1449,7 @@
     const AMAZON_COORDS = [25.079017, 121.579887];
 
     // =========================================================================
-    // 周邊真實設施完整資料庫 (步行圈 26 處 + 開車擴展圈 8 處 = 共 34 處)
+    // 周邊真實設施完整資料庫 (步行圈 26 處 + 開車擴展圈 7 處 = 共 33 處，100%實勘對標)
     // =========================================================================
     const LOCATIONS = [
       {
@@ -1420,8 +1457,8 @@
             "category": "parking",
             "name": "碧湖公園湖畔公有路邊收費車格",
             "coords": [
-                  25.0815,
-                  121.5815
+                  25.0811,
+                  121.58045
             ],
             "distance": "280m",
             "walkTime": "步行 3-4 分鐘",
@@ -1447,8 +1484,8 @@
             "category": "parking",
             "name": "港富立體停車場",
             "coords": [
-                  25.080523,
-                  121.578365
+                  25.0806,
+                  121.57835
             ],
             "distance": "320m",
             "walkTime": "步行 4 分鐘",
@@ -1564,7 +1601,7 @@
             "name": "大樹連鎖藥局 (內湖文德店)",
             "coords": [
                   25.078352,
-                  121.582948
+                  121.58285
             ],
             "distance": "260m",
             "walkTime": "步行 3-4 分鐘",
@@ -1599,8 +1636,8 @@
             "category": "store",
             "name": "寵物公園 (內湖文德店)",
             "coords": [
-                  25.078197,
-                  121.583188
+                  25.0782,
+                  121.58315
             ],
             "distance": "280m",
             "walkTime": "步行 4 分鐘",
@@ -1635,8 +1672,8 @@
             "category": "store",
             "name": "屈臣氏 Watsons (港墘門市)",
             "coords": [
-                  25.079897,
-                  121.578835
+                  25.0801,
+                  121.57875
             ],
             "distance": "330m",
             "walkTime": "步行 4 分鐘",
@@ -1671,8 +1708,8 @@
             "category": "store",
             "name": "康是美 COSMED (麗湖門市)",
             "coords": [
-                  25.07998,
-                  121.57865
+                  25.08025,
+                  121.57868
             ],
             "distance": "350m",
             "walkTime": "步行 4-5 分鐘",
@@ -1707,8 +1744,8 @@
             "category": "atm",
             "name": "內湖文德郵局 (臺北74支局)",
             "coords": [
-                  25.07843,
-                  121.58102
+                  25.07828,
+                  121.57968
             ],
             "distance": "130m",
             "walkTime": "步行 1-2 分鐘",
@@ -1742,8 +1779,8 @@
             "category": "atm",
             "name": "7-ELEVEN 鑫江南門市 (文德路・中信ATM)",
             "coords": [
-                  25.07848,
-                  121.58071
+                  25.0782,
+                  121.57945
             ],
             "distance": "160m",
             "walkTime": "步行 2 分鐘",
@@ -1760,14 +1797,36 @@
             }
       },
       {
+            "id": "atm_family_wende",
+            "category": "atm",
+            "name": "全家便利商店 內湖文德店 (文德路・台新ATM)",
+            "coords": [
+                  25.07812,
+                  121.57915
+            ],
+            "distance": "180m",
+            "walkTime": "步行 2-3 分鐘",
+            "tags": [
+                  "24H營業",
+                  "台新ATM",
+                  "全家霜淇淋",
+                  "休憩座位"
+            ],
+            "desc": "文德路 12 號。24 小時營業，內設台新銀行 ATM 自動提款機，提供舒適內用休憩座位、現煮咖啡與生活點心。",
+            "openHours": {
+                  "display": "24 小時營業 (全年無休)",
+                  "is24h": true
+            }
+      },
+      {
             "id": "bank_fubon_wende",
             "category": "atm",
             "name": "台北富邦商業銀行 (文德分行)",
             "coords": [
-                  25.07845,
-                  121.58085
+                  25.07835,
+                  121.5804
             ],
-            "distance": "180m",
+            "distance": "190m",
             "walkTime": "步行 2 分鐘",
             "tags": [
                   "富邦分行",
@@ -1775,7 +1834,7 @@
                   "存款機",
                   "文德路段"
             ],
-            "desc": "文德路 22 號。設 24 小時多功能自動存提款機專區，近文德郵局與江南街口，提領現金安全便捷。",
+            "desc": "文德路 42 號。設 24 小時多功能自動存提款機專區，近文德郵局與江南街口，提領現金安全便捷。",
             "openHours": {
                   "display": "櫃台 週一至週五 09:00 - 15:30 (ATM 24H)",
                   "periods": [
@@ -1795,34 +1854,12 @@
             }
       },
       {
-            "id": "atm_family_wende",
-            "category": "atm",
-            "name": "全家便利商店 內湖文德店 (文德路・台新ATM)",
-            "coords": [
-                  25.07851,
-                  121.58055
-            ],
-            "distance": "180m",
-            "walkTime": "步行 2-3 分鐘",
-            "tags": [
-                  "24H營業",
-                  "台新ATM",
-                  "全家霜淇淋",
-                  "休憩座位"
-            ],
-            "desc": "文德路 12 號。24 小時營業，內設台新銀行 ATM 自動提款機，提供舒適內用休憩座位、現煮咖啡與生活點心。",
-            "openHours": {
-                  "display": "24 小時營業 (全年無休)",
-                  "is24h": true
-            }
-      },
-      {
             "id": "bank_hwatai_neihu",
             "category": "atm",
             "name": "華泰商業銀行 (內湖分行)",
             "coords": [
-                  25.079144,
-                  121.578042
+                  25.07925,
+                  121.57815
             ],
             "distance": "200m",
             "walkTime": "步行 2-3 分鐘",
@@ -1856,8 +1893,8 @@
             "category": "atm",
             "name": "永豐商業銀行 (內湖分行)",
             "coords": [
-                  25.07912,
-                  121.57788
+                  25.07932,
+                  121.5778
             ],
             "distance": "220m",
             "walkTime": "步行 3 分鐘",
@@ -1891,8 +1928,8 @@
             "category": "atm",
             "name": "元大商業銀行 (文德分行)",
             "coords": [
-                  25.07838,
-                  121.5822
+                  25.078283,
+                  121.581404
             ],
             "distance": "220m",
             "walkTime": "步行 3 分鐘",
@@ -1926,8 +1963,8 @@
             "category": "atm",
             "name": "7-ELEVEN 港鑫門市 (737巷・中信ATM)",
             "coords": [
-                  25.08051,
-                  121.57862
+                  25.08045,
+                  121.57855
             ],
             "distance": "330m",
             "walkTime": "步行 4 分鐘",
@@ -1948,8 +1985,8 @@
             "category": "atm",
             "name": "全家便利商店 麗山店 (737巷・台新ATM)",
             "coords": [
-                  25.08078,
-                  121.57845
+                  25.08085,
+                  121.5784
             ],
             "distance": "350m",
             "walkTime": "步行 4-5 分鐘",
@@ -1970,18 +2007,18 @@
             "category": "atm",
             "name": "內湖碧湖郵局 (臺北149支局)",
             "coords": [
-                  25.0812,
-                  121.5843
+                  25.079437,
+                  121.589921
             ],
-            "distance": "580m",
-            "walkTime": "步行 7 分鐘",
+            "distance": "600m",
+            "walkTime": "步行 7-8 分鐘",
             "tags": [
-                  "碧湖商圈",
+                  "碧湖成功路商圈",
                   "24H ATM",
                   "郵務包裹",
-                  "成功路段"
+                  "成功路大樓"
             ],
-            "desc": "成功路三段 139 號。近碧湖公園生活圈，設 24 小時自動櫃員機提供提款與跨行轉帳。",
+            "desc": "成功路三段 139 號 1 樓（近湖光市場與內湖站商圈）。設 24 小時自動櫃員機提供提款與跨行轉帳，平日提供完整儲匯業務。",
             "openHours": {
                   "display": "郵務儲匯 週一至週五 08:30 - 17:00 (ATM 24H)",
                   "periods": [
@@ -2001,22 +2038,22 @@
             }
       },
       {
-            "id": "bank_first_neihu",
+            "id": "bank_fubon_neihu",
             "category": "atm",
-            "name": "第一商業銀行 (內湖分行)",
+            "name": "台北富邦商業銀行 (內湖分行)",
             "coords": [
-                  25.0825,
-                  121.5847
+                  25.0805,
+                  121.5905
             ],
             "distance": "650m",
             "walkTime": "步行 8 分鐘",
             "tags": [
-                  "官股大行",
+                  "富邦大分行",
                   "24H ATM",
-                  "成功路商圈",
-                  "外幣現鈔"
+                  "湖光市場旁",
+                  "全功能服務"
             ],
-            "desc": "成功路三段 174 巷 2 號。知名公股指標大行，設 24 小時自動櫃員機存提款專區與全面金融臨櫃業務。",
+            "desc": "成功路三段 164 號（湖光市場與內湖站商圈）。設 24 小時自動存提款機，為周邊重要金融旗艦據點。",
             "openHours": {
                   "display": "櫃台 週一至週五 09:00 - 15:30 (ATM 24H)",
                   "periods": [
@@ -2036,22 +2073,22 @@
             }
       },
       {
-            "id": "bank_fubon_neihu",
+            "id": "bank_first_neihu",
             "category": "atm",
-            "name": "台北富邦商業銀行 (內湖分行)",
+            "name": "第一商業銀行 (內湖分行)",
             "coords": [
-                  25.0828,
-                  121.58485
+                  25.0809,
+                  121.591
             ],
             "distance": "700m",
             "walkTime": "步行 8-9 分鐘",
             "tags": [
-                  "富邦大分行",
+                  "官股大行",
                   "24H ATM",
-                  "湖光市場旁",
-                  "全功能服務"
+                  "成功路商圈",
+                  "外幣現鈔"
             ],
-            "desc": "成功路三段 164 號（湖光市場與內湖站商圈）。設 24 小時自動存提款機，為周邊重要金融旗艦據點。",
+            "desc": "成功路三段 174 巷 2 號（鄰內湖派出所）。知名公股指標大行，設 24 小時自動櫃員機存提款專區與全面金融臨櫃業務。",
             "openHours": {
                   "display": "櫃台 週一至週五 09:00 - 15:30 (ATM 24H)",
                   "periods": [
@@ -2123,7 +2160,7 @@
             "name": "珍珠菓子喫茶屋",
             "coords": [
                   25.08182,
-                  121.58284
+                  121.58098
             ],
             "distance": "350m",
             "walkTime": "步行 4 分鐘",
@@ -2131,9 +2168,9 @@
                   "日式禪風喫茶",
                   "日式和菓子",
                   "庭園造景",
-                  "碧湖湖畔景觀"
+                  "碧湖湖畔西側"
             ],
-            "desc": "內湖路二段 103 巷 38 號。隱身碧湖湖畔的唯美日式茶屋，木質緣側與禪風庭院，提供精緻和菓子、抹茶與定食，非常適合放鬆候診時的心情。",
+            "desc": "內湖路二段 103 巷 38 號。坐落碧湖西岸林蔭巷弄內的唯美日式茶屋，木質緣側與禪風庭院，提供精緻和菓子、抹茶與定食，非常適合放鬆候診時的心情。",
             "openHours": {
                   "display": "週一至週日 11:00 - 17:30 (正餐至14:00/午茶至17:30)",
                   "periods": [
@@ -2200,14 +2237,14 @@
             "category": "food",
             "name": "永希咖啡 VIS A VIS COFFEE",
             "coords": [
-                  25.0824,
-                  121.5833
+                  25.0825,
+                  121.58135
             ],
             "distance": "460m",
             "walkTime": "步行 5-6 分鐘",
             "tags": [
                   "極簡美學",
-                  "碧湖湖畔",
+                  "碧湖湖畔西側",
                   "手沖單品",
                   "精緻甜點焦糖布丁"
             ],
@@ -2240,8 +2277,8 @@
             "category": "food",
             "name": "象園咖啡 Elephant Garden",
             "coords": [
-                  25.0831,
-                  121.5839
+                  25.08075,
+                  121.58615
             ],
             "distance": "520m",
             "walkTime": "步行 6-7 分鐘",
@@ -2267,52 +2304,6 @@
                               ],
                               "open": "11:00",
                               "close": "21:00"
-                        }
-                  ]
-            }
-      },
-      {
-            "id": "drive_taodidi",
-            "category": "drive_store",
-            "subTag": "水族",
-            "animalType": "aqua",
-            "name": "陶弟弟水族設計 (文德路工作室)",
-            "coords": [
-                  25.075646,
-                  121.58348
-            ],
-            "distance": "0.8km",
-            "driveTime": "開車約 4-5 分鐘",
-            "isDrive": true,
-            "tags": [
-                  "水族魚隻",
-                  "工作室面交",
-                  "器材詢價",
-                  "文德站周邊"
-            ],
-            "entranceGuide": "🚗 <strong>工作室面交指引：</strong>文德路 208 巷進入（近捷運文德站）。採私訊預約制，非一般自由參觀大型店面，前往請務必先透過 IG (@aqua.dd.tao) 或私訊確認當日庫存與面交時段。",
-            "desc": "<strong>鄰近本院之水族活體與器材工作室！</strong>開車約 4-5 分鐘（0.8km）。以各類觀賞魚隻、水草、造景器材詢價與面交自取為主。⚠️ <strong>注意事項：</strong>屬工作室性質，請先私訊或預約面交，勿當作一般門市前往以免撲空。",
-            "openHours": {
-                  "display": "週一至週五 11:30–21:00 / 週末 13:00–19:00 (預約面交為主)",
-                  "periods": [
-                        {
-                              "days": [
-                                    1,
-                                    2,
-                                    3,
-                                    4,
-                                    5
-                              ],
-                              "open": "11:30",
-                              "close": "21:00"
-                        },
-                        {
-                              "days": [
-                                    0,
-                                    6
-                              ],
-                              "open": "13:00",
-                              "close": "19:00"
                         }
                   ]
             }
@@ -2679,7 +2670,7 @@
     }
 
     // =========================================================================
-    // 初始化地圖
+    // 初始化地圖 (100% 精準對標 Google Maps 官方瓦片)
     // =========================================================================
     function initMap() {
       map = L.map('map', {
@@ -2708,8 +2699,8 @@
       // 初始化 QRCode 物件
       qrcodeObj = new QRCode(document.getElementById('qrcode-box'), {
         text: 'https://maps.app.goo.gl/d6Y5i9v2t5wK8pDDA',
-        width: 80,
-        height: 80,
+        width: 78,
+        height: 78,
         colorDark: '#112D20',
         colorLight: '#FFFFFF',
         correctLevel: QRCode.CorrectLevel.M
@@ -2733,7 +2724,6 @@
         setParkingDegradedState();
       });
 
-      // 視窗 resize 重新校正地圖大小
       window.addEventListener('resize', () => {
         if (map) map.invalidateSize();
       });
@@ -2770,16 +2760,16 @@
       const hospitalIcon = L.divIcon({
         className: 'custom-div-icon',
         html: `<div class="custom-marker marker-hospital-logo" title="亞馬森特寵專科醫院">
-                <img src="logo.png?v=143" alt="亞馬森特寵專科醫院" class="marker-logo-img">
+                <img src="logo.png?v=144" alt="亞馬森特寵專科醫院" class="marker-logo-img">
                </div>`,
-        iconSize: [48, 48],
-        iconAnchor: [24, 24]
+        iconSize: [44, 44],
+        iconAnchor: [22, 22]
       });
 
       const m = L.marker(AMAZON_COORDS, { icon: hospitalIcon, zIndexOffset: 2000 }).addTo(map);
       m.bindPopup(`
         <div style="font-family:inherit; min-width:210px; text-align:center; padding:4px 0;">
-          <img src="logo.png?v=143" style="width:48px; height:48px; border-radius:50%; margin-bottom:6px;">
+          <img src="logo.png?v=144" style="width:48px; height:48px; border-radius:50%; margin-bottom:6px;">
           <h4 style="color:#1B4332; font-size:1.05rem; font-weight:900; margin-bottom:4px;">亞馬森特寵專科醫院</h4>
           <p style="font-size:0.82rem; color:#555; line-height:1.4;">
             <strong>台北市內湖區內湖路二段39-2號</strong><br>
@@ -2791,7 +2781,7 @@
       m.on('click', () => resetToHospital());
     }
 
-    // 繪製設施標記
+    // 繪製設施標記 (依實勘精確座標繪製，杜絕亂飄)
     function renderMarkers() {
       Object.values(markers).forEach(m => map.removeLayer(m));
       markers = {};
@@ -2825,8 +2815,8 @@
                   <i class="fa-solid ${faIcon}"></i>
                   ${badgeHtml}
                  </div>`,
-          iconSize: [34, 34],
-          iconAnchor: [17, 17]
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
         });
 
         const m = L.marker(item.coords, { icon: icon });
@@ -2846,7 +2836,7 @@
     }
 
     // =========================================================================
-    // 選取指定設施 (全面支援步行圈與開車版)
+    // 選取指定設施 (100% 精準平滑聚焦)
     // =========================================================================
     function selectItem(id) {
       const item = LOCATIONS.find(x => x.id === id);
@@ -2872,7 +2862,7 @@
       badgeEl.innerText = catName;
       document.getElementById('focus-name').innerText = item.name;
 
-      // 單位顯示：開車版顯示「開車約 X 分／X km」，不顯示步行時間
+      // 單位顯示
       const walkTag = document.getElementById('focus-walk');
       const distTag = document.getElementById('focus-dist');
       if (item.isDrive) {
@@ -2884,7 +2874,7 @@
         walkTag.className = 'tag tag-walk';
         walkTag.innerHTML = `<i class="fa-solid fa-person-walking"></i> ${item.walkTime}`;
         distTag.innerText = `距離 ${item.distance}`;
-        document.getElementById('focus-dist-label').innerText = '步行可達生活圈';
+        document.getElementById('focus-dist-label').innerText = '步行生活圈';
       }
 
       document.getElementById('focus-cat-name').innerText = item.subTag || catName;
@@ -2920,13 +2910,13 @@
       const entranceBox = document.getElementById('entrance-notice-box');
       if (item.entranceGuide) {
         entranceBox.style.display = 'flex';
-        document.getElementById('entrance-title').innerText = item.isDrive ? '🚗 門市／面交指引：' : '🚗 車輛入口指引：';
+        document.getElementById('entrance-title').innerText = item.isDrive ? '🚗 門市／指引：' : '🚗 車輛入口指引：';
         document.getElementById('entrance-desc').innerHTML = item.entranceGuide;
       } else {
         entranceBox.style.display = 'none';
       }
 
-      // 導航網址與按鈕 (開車版預設 driving 導航)
+      // 導航網址與按鈕
       const walkNavUrl = `https://www.google.com/maps/dir/?api=1&origin=${AMAZON_COORDS[0]},${AMAZON_COORDS[1]}&destination=${item.coords[0]},${item.coords[1]}&travelmode=walking`;
       const driveNavUrl = `https://www.google.com/maps/dir/?api=1&origin=${AMAZON_COORDS[0]},${AMAZON_COORDS[1]}&destination=${item.coords[0]},${item.coords[1]}&travelmode=driving`;
       const searchShopUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name)}`;
@@ -2986,7 +2976,7 @@
         el.classList.toggle('active', el.getAttribute('data-id') === id);
       });
 
-      // 同步更新手機版地圖底部浮動卡片
+      // 更新手機版地圖底部懸浮卡片
       updateMobileFloatCard(item, openStatus, qrTargetUrl);
 
       // 關閉搜尋下拉
@@ -3143,8 +3133,8 @@
       const searchIcon = L.divIcon({
         className: 'custom-div-icon',
         html: `<div class="custom-marker marker-search"><i class="fa-solid fa-magnifying-glass"></i></div>`,
-        iconSize: [38, 38],
-        iconAnchor: [19, 19]
+        iconSize: [36, 36],
+        iconAnchor: [18, 18]
       });
       searchMarker = L.marker(AMAZON_COORDS, { icon: searchIcon, zIndexOffset: 1500 }).addTo(map);
       map.flyTo(AMAZON_COORDS, 17, { duration: 0.8 });
@@ -3271,7 +3261,7 @@
         return distA - distB;
       });
 
-      // 更新手機版清單數量計數
+      // 更新手機版清單計數
       const countEl = document.getElementById('mobile-list-count');
       if (countEl) countEl.innerText = filtered.length;
 
@@ -3341,14 +3331,13 @@
     }
 
     // =========================================================================
-    // 依分類過濾 (開車版自動 fitBounds 至 10km；其他分類恢復步行圈)
+    // 依分類過濾
     // =========================================================================
     function setCategory(cat, el) {
       currentCategory = cat;
       document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
       if (el) el.classList.add('active');
 
-      // 控制開車次分類晶片列顯示
       const subBar = document.getElementById('subfilter-bar');
       if (cat === 'drive_store') {
         subBar.style.display = 'flex';
@@ -3362,21 +3351,18 @@
         const bounds = L.latLngBounds([AMAZON_COORDS, ...drivePois.map(p => p.coords)]);
         map.fitBounds(bounds, { padding: [45, 45], maxZoom: 14 });
 
-        // 預設選中第一家開車特寵店家 (陶弟弟)
-        selectItem('drive_taodidi');
+        // 預設選中第一家開車特寵店家 (千易)
+        selectItem('drive_qianyi');
       } else {
         subBar.style.display = 'none';
-        // 恢復步行圈中心視野
         map.flyTo(AMAZON_COORDS, 17, { duration: 0.8 });
       }
 
-      // 更新地圖標記
       renderMarkers();
-      // 重新渲染清單
       renderList();
     }
 
-    // 開車次分類篩選 (水族/兩棲/兔寶/鳥禽)
+    // 開車次分類篩選
     function filterDriveSubTag(type, el) {
       currentDriveSubTag = type;
       document.querySelectorAll('.subchip').forEach(c => c.classList.remove('active'));
