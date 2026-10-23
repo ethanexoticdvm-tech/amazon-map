@@ -6,7 +6,7 @@
   <title>亞馬森特寵專科醫院 — 櫃台周邊導覽地圖 v2.2</title>
 
   <!-- PWA & Apple Web App 設定 -->
-  <link rel="manifest" href="manifest.json?v=1.4.4">
+  <link rel="manifest" href="manifest.json?v=2.3">
   <meta name="theme-color" content="#1B4332">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1460,7 +1460,7 @@
       <i class="fa-solid fa-map-location-dot"></i> 地圖探索
     </button>
     <button class="mobile-tab-btn" id="tab-btn-list" onclick="switchMobileView('list')">
-      <i class="fa-solid fa-list-ul"></i> 設施清單 (<span id="mobile-list-count">32</span>)
+      <i class="fa-solid fa-list-ul"></i> 設施清單 (<span id="mobile-list-count">34</span>)
     </button>
   </div>
 
@@ -1604,7 +1604,7 @@
     const AMAZON_COORDS = [25.079017, 121.579887];
 
     // =========================================================================
-    // 周邊真實設施完整資料庫 (步行圈 25 處 + 開車擴展圈 7 處 = 共 32 處，座標經 Google Places 逐一核對)
+    // 周邊真實設施完整資料庫 (步行圈 27 處 + 開車擴展圈 7 處 = 共 34 處，座標經 Google Places 逐一核對)
     // =========================================================================
     const LOCATIONS = [
       {
@@ -1637,6 +1637,7 @@
       },
       {
             "id": "park_gangfu",
+            "tcgId": "TPE0540",
             "category": "parking",
             "name": "港富立體停車場",
             "coords": [
@@ -1646,17 +1647,17 @@
             "distance": "320m",
             "walkTime": "步行 4 分鐘",
             "driveTime": "車程 2 分鐘",
-            "rate": "30 元 / 小時",
-            "totalSpaces": 160,
-            "availableSpaces": 48,
+            "rate": "30 元 / 小時 (全程以半小時計)",
+            "totalSpaces": 245,
+            "availableSpaces": 30,
             "tags": [
                   "步行4分",
                   "24H營運",
-                  "室內立體",
-                  "車位充裕"
+                  "公有立體245格",
+                  "即時連線"
             ],
             "entranceGuide": "🚗 車輛入口：<strong>內湖路一段 737 巷 50 弄 32 號</strong>。由 737 巷轉入 50 弄往前 20 公尺即達，步行回院 4 分鐘。",
-            "desc": "<strong>門診尖峰首選大容量室內立體！</strong>24 小時開放，160 格車位周轉快速。建議遇豪雨、烈日時將愛車停放於此室內場，安心陪伴毛孩就診。",
+            "desc": "<strong>門診尖峰首選大容量公有立體！</strong>24 小時開放，官方登記 245 格車位周轉快速，30 元/時。建議遇豪雨、烈日時將愛車停放於此室內場，安心陪伴毛孩就診。",
             "openHours": {
                   "display": "24 小時營業 (全年無休)",
                   "is24h": true
@@ -1664,6 +1665,7 @@
       },
       {
             "id": "park_chebaobao",
+            "tcgId": "TPE0525",
             "category": "parking",
             "name": "車堡寶文德停車場 (室內地下場)",
             "coords": [
@@ -1673,17 +1675,17 @@
             "distance": "350m",
             "walkTime": "步行 4 分鐘",
             "driveTime": "車程 2 分鐘",
-            "rate": "40 元 / 小時",
-            "totalSpaces": 65,
-            "availableSpaces": 22,
+            "rate": "100 元 / 小時 (首時1小時計，逾1小時以半小時計)",
+            "totalSpaces": 35,
+            "availableSpaces": 3,
             "tags": [
                   "室內地下",
                   "免日曬雨淋",
-                  "平穩好停",
-                  "門面寬闊"
+                  "35格地下場",
+                  "即時連線"
             ],
-            "entranceGuide": "🚗 車輛入口：<strong>文德路 212 號</strong>（國泰世華文德分行大樓斜對面地下 B2）。",
-            "desc": "室內地下停車場，天候不佳或攜帶大型特寵提籠時的最佳遮蔽選擇，沿文德路直行步行 4 分鐘抵達本院。",
+            "entranceGuide": "🚗 車輛入口：<strong>文德路 212 號地下 2 層</strong>（國泰世華文德分行大樓地下 B2）。",
+            "desc": "<strong>文德路 212 號地下 2 層專屬場地！</strong>全場 35 格，天候不佳或攜帶大型特寵提籠時的最佳遮蔽選擇，沿文德路直行步行 4 分鐘抵達本院。",
             "openHours": {
                   "display": "24 小時營業 (全年無休)",
                   "is24h": true
@@ -1691,8 +1693,9 @@
       },
       {
             "id": "park_wende_metro",
+            "tcgId": "TPE0677",
             "category": "parking",
-            "name": "文德捷運站轉乘立體停車場",
+            "name": "嘟嘟房捷運文德站轉乘立體停車場",
             "coords": [
                   25.078335,
                   121.584952
@@ -1700,17 +1703,79 @@
             "distance": "420m",
             "walkTime": "步行 5 分鐘",
             "driveTime": "車程 2 分鐘",
-            "rate": "30-40 元 / 小時",
+            "rate": "30 元 / 小時 (06:00-22:00)，10 元 / 小時 (22:00-06:00)",
             "totalSpaces": 306,
-            "availableSpaces": 96,
+            "availableSpaces": 129,
             "tags": [
                   "306格超大容量",
                   "悠遊卡進出",
-                  "室內立體",
-                  "24H營運"
+                  "夜間10元/時",
+                  "即時連線"
             ],
             "entranceGuide": "🚗 車輛入口：<strong>文德路 214 號</strong>（捷運文德站 2 號出口旁專用車道進入）。",
-            "desc": "<strong>周邊車位最多（306 格）！</strong>任何尖峰時段皆有充裕空位，支援悠遊卡快速進出，步行回院約 5 分鐘。",
+            "desc": "<strong>周邊車位最多（306 格）！</strong>任何尖峰時段皆有充裕空位，日間 30 元/時、夜間 10 元/時，支援悠遊卡快速進出，步行回院約 5 分鐘。",
+            "openHours": {
+                  "display": "24 小時營業 (全年無休)",
+                  "is24h": true
+            }
+      },
+      {
+            "id": "park_nh_sports",
+            "tcgId": "TPE0627",
+            "category": "parking",
+            "name": "臺北市內湖運動中心停車場",
+            "coords": [
+                  25.078258,
+                  121.575052
+            ],
+            "distance": "490m",
+            "walkTime": "步行 7-8 分鐘",
+            "driveTime": "車程 3 分鐘",
+            "rate": "30 元 / 小時 (全程以半小時計)",
+            "totalSpaces": 97,
+            "availableSpaces": 18,
+            "tags": [
+                  "港墘方向首選",
+                  "運動中心地下",
+                  "平價30元",
+                  "即時連線"
+            ],
+            "entranceGuide": "🚗 車輛入口：<strong>洲子街 12 號地下 2 至 3 層</strong>（內湖運動中心地下停車場車道入口）。",
+            "desc": "<strong>西側（港墘方向）優質平價公有地下停車場！</strong>洲子街 12 號 B2-B3，全場 97 格車位、30 元/時（以半小時計）。若從港墘、內科方向開車前來就診，可直接在此停車，沿洲子街與內湖路二段步行約 7-8 分鐘抵達本院。",
+            "openHours": {
+                  "display": "每日 06:00 - 22:00",
+                  "periods": [
+                        {
+                              "days": [1, 2, 3, 4, 5, 6, 7],
+                              "open": "06:00",
+                              "close": "22:00"
+                        }
+                  ]
+            }
+      },
+      {
+            "id": "park_dagangqian",
+            "tcgId": "TPE1388",
+            "category": "parking",
+            "name": "大港墘公園地下停車場",
+            "coords": [
+                  25.078512,
+                  121.574300
+            ],
+            "distance": "560m",
+            "walkTime": "步行 8-10 分鐘",
+            "driveTime": "車程 3 分鐘",
+            "rate": "平日日間 40 元 / 小時 (08-20)，夜間及假日 20 元 / 小時",
+            "totalSpaces": 258,
+            "availableSpaces": 35,
+            "tags": [
+                  "258格大容量",
+                  "尖峰客滿最佳備援",
+                  "24H營運",
+                  "即時連線"
+            ],
+            "entranceGuide": "🚗 車輛入口：<strong>洲子街 18 號地下 1 至 2 層</strong>（大港墘公園地下停車場專用車道入口）。",
+            "desc": "<strong>258 格超大容量新穎公有地下停車場！</strong>24 小時開放，平日日間 40 元/時、夜間與週末全天僅 20 元/時。當醫院正周邊或 737 巷尖峰客滿時之最佳備援大場，沿洲子街直行步行約 8-10 分鐘抵達本院。",
             "openHours": {
                   "display": "24 小時營業 (全年無休)",
                   "is24h": true
@@ -2834,6 +2899,10 @@
       // 渲染設施清單
       renderList();
 
+      // 啟動停管處真實即時車位連線與定時輪詢
+      syncParkingData();
+      startParkingPolling();
+
       // 啟動櫃台閒置計時器
       initIdleTimer();
 
@@ -3281,8 +3350,12 @@
     }
 
     // =========================================================================
-    // 停車位連線與狀態更新
+    // 停管處真實 API 即時同步與離線降級系統 (TCMSV_allavailable.json)
     // =========================================================================
+    const TCG_REALTIME_API = 'https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json';
+    const PARKING_CACHE_KEY = 'amazon_map_parking_cache_v2';
+    let parkingPollTimer = null;
+
     function updateParkingMeter(avail, total) {
       const numEl = document.getElementById('meter-number');
       const textEl = document.getElementById('meter-status-text');
@@ -3294,10 +3367,10 @@
 
       if (isParkingDegraded) {
         syncEl.className = 'meter-sync-time degraded';
-        syncEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> 資料時間：${lastValidParkingTime} (連線中斷・快照)`;
+        syncEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> 停管處快取時間：${lastValidParkingTime} (離線降級中)`;
       } else {
         syncEl.className = 'meter-sync-time';
-        syncEl.innerText = `資料時間：${lastValidParkingTime} (即時更新)`;
+        syncEl.innerHTML = `<i class="fa-solid fa-tower-broadcast" style="color:#2E7D32;"></i> 停管處即時更新：${lastValidParkingTime} (每分同步)`;
       }
 
       if (avail >= 25) {
@@ -3307,23 +3380,43 @@
       } else if (avail >= 10) {
         numEl.classList.add('status-warning');
         textEl.classList.add('status-warning');
-        textEl.innerText = '⚡ 車位稍緊・尚有空位';
+        textEl.innerText = '⚡ 車位尚可・建議盡早抵達';
       } else {
         numEl.classList.add('status-full');
         textEl.classList.add('status-full');
-        textEl.innerText = '⚠️ 車位緊張・建議備援';
+        textEl.innerText = '⚠️ 車位緊張・建議備援場';
       }
     }
 
-    function setParkingDegradedState() {
+    function setParkingDegradedState(reason) {
       isParkingDegraded = true;
       const text = document.getElementById('sync-text');
       const liveDot = document.getElementById('live-dot-indicator');
       const btn = document.getElementById('btn-sync-parking');
 
-      liveDot.className = 'live-dot offline';
-      btn.className = 'btn-sync-parking offline';
-      text.innerText = `連線逾時・資料時間 ${lastValidParkingTime}`;
+      if (liveDot) liveDot.className = 'live-dot offline';
+      if (btn) btn.className = 'btn-sync-parking offline';
+
+      // 嘗試從 localStorage 讀取最後一次有效真實資料
+      try {
+        const raw = localStorage.getItem(PARKING_CACHE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.spaces) {
+            LOCATIONS.filter(x => x.category === 'parking').forEach(p => {
+              if (parsed.spaces[p.id] !== undefined) {
+                p.availableSpaces = parsed.spaces[p.id];
+              }
+            });
+            if (parsed.time) lastValidParkingTime = parsed.time;
+          }
+        }
+      } catch (e) {
+        console.warn('讀取停車場快取異常:', e);
+      }
+
+      renderMarkers();
+      renderList();
 
       const activeCard = document.querySelector('.list-card.active');
       if (activeCard) {
@@ -3333,35 +3426,79 @@
           updateParkingMeter(currentItem.availableSpaces, currentItem.totalSpaces);
         }
       }
+
+      if (text) {
+        text.innerText = lastValidParkingTime ? `連線中斷 • 快取 ${lastValidParkingTime}` : '停管處離線中';
+      }
     }
 
-    function syncParkingData() {
+    async function syncParkingData() {
       const text = document.getElementById('sync-text');
       const liveDot = document.getElementById('live-dot-indicator');
       const btn = document.getElementById('btn-sync-parking');
-      text.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在連線停管處更新...';
+      if (text) text.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在連線停管處更新...';
 
       if (!navigator.onLine) {
-        setTimeout(setParkingDegradedState, 600);
+        setParkingDegradedState('離線');
         return;
       }
 
-      setTimeout(() => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 7000); // 7 秒超時防護
+
+      try {
+        const res = await fetch(TCG_REALTIME_API, {
+          signal: controller.signal,
+          cache: 'no-store'
+        });
+        clearTimeout(timeoutId);
+
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+        const data = await res.json();
+        const parks = (data && data.data && Array.isArray(data.data.park)) ? data.data.park : [];
+
+        // 建立快速查詢對照表 (TCG Parking ID -> availablecar)
+        const tcgMap = {};
+        for (let i = 0; i < parks.length; i++) {
+          const item = parks[i];
+          if (item && item.id) {
+            tcgMap[item.id] = item.availablecar;
+          }
+        }
+
         const now = new Date();
         const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
         lastValidParkingTime = timeStr;
         isParkingDegraded = false;
-        
+
+        const cacheSpaces = {};
+
         LOCATIONS.filter(x => x.category === 'parking').forEach(p => {
-          if (p.id === 'park_wende_metro') p.availableSpaces = 85 + Math.floor(Math.random() * 15);
-          else if (p.id === 'park_gangfu') p.availableSpaces = 42 + Math.floor(Math.random() * 10);
-          else if (p.id === 'park_chebaobao') p.availableSpaces = 18 + Math.floor(Math.random() * 8);
-          else if (p.id === 'park_bihu') p.availableSpaces = 12 + Math.floor(Math.random() * 6);
+          if (p.tcgId && tcgMap[p.tcgId] !== undefined) {
+            const rawVal = tcgMap[p.tcgId];
+            const parsed = parseInt(rawVal, 10);
+            if (!isNaN(parsed) && parsed >= 0) {
+              p.availableSpaces = parsed;
+            } else if (parsed < 0) {
+              // 停管處回傳 -9 代表無感應格位或暫滿
+              p.availableSpaces = 0;
+            }
+          }
+          cacheSpaces[p.id] = p.availableSpaces;
         });
+
+        // 寫入快取供離線/地下室降級
+        try {
+          localStorage.setItem(PARKING_CACHE_KEY, JSON.stringify({
+            time: timeStr,
+            timestamp: Date.now(),
+            spaces: cacheSpaces
+          }));
+        } catch (e) {}
 
         renderMarkers();
         renderList();
-        
+
         const activeCard = document.querySelector('.list-card.active');
         if (activeCard) {
           const activeId = activeCard.getAttribute('data-id');
@@ -3371,10 +3508,29 @@
           }
         }
 
-        liveDot.className = 'live-dot';
-        btn.className = 'btn-sync-parking';
-        text.innerText = `停管處連線已更新 (${timeStr})`;
-      }, 600);
+        if (liveDot) liveDot.className = 'live-dot';
+        if (btn) btn.className = 'btn-sync-parking';
+        if (text) text.innerText = `停管處連線已更新 (${timeStr})`;
+      } catch (err) {
+        console.warn('停管處即時空位同步失敗，切換至快取降級:', err);
+        setParkingDegradedState();
+      }
+    }
+
+    // 自動定時輪詢 (每 60 秒同步，背景隱藏時暫停以省電)
+    function startParkingPolling() {
+      if (parkingPollTimer) clearInterval(parkingPollTimer);
+      parkingPollTimer = setInterval(() => {
+        if (!document.hidden && navigator.onLine) {
+          syncParkingData();
+        }
+      }, 60000);
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && navigator.onLine) {
+          syncParkingData();
+        }
+      });
     }
 
     // =========================================================================
