@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>亞馬森特寵專科醫院 — 櫃台周邊導覽地圖 v2.1</title>
+  <title>亞馬森特寵專科醫院 — 櫃台周邊導覽地圖 v2.2</title>
 
   <!-- PWA & Apple Web App 設定 -->
   <link rel="manifest" href="manifest.json?v=1.4.4">
@@ -1587,7 +1587,7 @@
 
       <!-- 頁底版本水印 -->
       <div class="app-version-watermark">
-        亞馬森特寵專科醫院 • 櫃台周邊導覽系統 v2.1
+        亞馬森特寵專科醫院 • 櫃台周邊導覽系統 v2.2
       </div>
     </div>
 
@@ -1615,11 +1615,7 @@
                   25.0807,
                   121.5823
             ],
-            "parkingLines": [
-                  [[25.0795, 121.5819], [25.08005, 121.58215], [25.0807, 121.5823], [25.0814, 121.5821], [25.082, 121.5818], [25.08245, 121.58155]],
-                  [[25.0795, 121.5821], [25.07985, 121.5835], [25.08025, 121.5848], [25.0809, 121.58545], [25.0808, 121.5862], [25.08055, 121.5876], [25.08045, 121.5886]],
-                  [[25.08195, 121.58855], [25.08235, 121.58775], [25.08274, 121.58708]]
-            ],
+            "parkingLines": [[[25.07954,121.581884],[25.079578,121.582004],[25.079783,121.582685],[25.079808,121.582769],[25.079844,121.582742],[25.079874,121.582719],[25.080616,121.582163],[25.080752,121.582061],[25.081491,121.581477],[25.081899,121.581172],[25.082222,121.581131],[25.082405,121.581108]],[[25.079482,121.582038],[25.079578,121.582004],[25.079783,121.582685],[25.079808,121.582769],[25.079829,121.58283],[25.080052,121.583495],[25.080225,121.58392],[25.080597,121.584697],[25.080783,121.585182],[25.080863,121.585463],[25.08091,121.585629],[25.080963,121.585884],[25.081171,121.586696],[25.081181,121.586742],[25.08136,121.58756],[25.081421,121.587849],[25.081657,121.588807],[25.081702,121.589016]],[[25.082,121.588576],[25.082015,121.588542],[25.082034,121.588343],[25.082074,121.588168],[25.082084,121.58807],[25.082044,121.587945],[25.081977,121.587738],[25.081872,121.587417],[25.082226,121.58729],[25.082577,121.587161],[25.082738,121.587076]]],
             "distance": "300m",
             "walkTime": "步行 3-4 分鐘",
             "driveTime": "車程 1 分鐘",
@@ -2967,11 +2963,12 @@
         const bihu = LOCATIONS.find(x => x.id === 'park_bihu');
         if (bihu && bihu.parkingLines) {
           bihu.parkingLines.forEach(pts => {
-            const casing = L.polyline(pts, { color: '#FFFFFF', weight: 10, opacity: 0.95 });
-            const core = L.polyline(pts, { color: '#FF7A00', weight: 5, opacity: 1 });
-            core.on('click', () => selectItem('park_bihu'));
-            casing.addTo(map); core.addTo(map);
-            parkingLineLayers.push(casing, core);
+            const casing = L.polyline(pts, { color: '#FFFFFF', weight: 10, opacity: 0.95, interactive: false });
+            const core = L.polyline(pts, { color: '#FF7A00', weight: 5, opacity: 1, interactive: false });
+            const hit = L.polyline(pts, { color: '#FF7A00', weight: 22, opacity: 0, interactive: true });
+            hit.on('click', () => selectItem('park_bihu'));
+            casing.addTo(map); core.addTo(map); hit.addTo(map);
+            parkingLineLayers.push(casing, core, hit);
           });
         }
       }
