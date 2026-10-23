@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>亞馬森特寵專科醫院 — 櫃台周邊導覽地圖 v2.0</title>
+  <title>亞馬森特寵專科醫院 — 櫃台周邊導覽地圖 v2.1</title>
 
   <!-- PWA & Apple Web App 設定 -->
   <link rel="manifest" href="manifest.json?v=1.4.4">
@@ -1587,7 +1587,7 @@
 
       <!-- 頁底版本水印 -->
       <div class="app-version-watermark">
-        亞馬森特寵專科醫院 • 櫃台周邊導覽系統 v2.0
+        亞馬森特寵專科醫院 • 櫃台周邊導覽系統 v2.1
       </div>
     </div>
 
@@ -1612,10 +1612,15 @@
             "category": "parking",
             "name": "碧湖公園湖畔公有路邊收費車格",
             "coords": [
-                  25.0811,
-                  121.58045
+                  25.0807,
+                  121.5823
             ],
-            "distance": "280m",
+            "parkingLines": [
+                  [[25.0795, 121.5819], [25.08005, 121.58215], [25.0807, 121.5823], [25.0814, 121.5821], [25.082, 121.5818], [25.08245, 121.58155]],
+                  [[25.0795, 121.5821], [25.07985, 121.5835], [25.08025, 121.5848], [25.0809, 121.58545], [25.0808, 121.5862], [25.08055, 121.5876], [25.08045, 121.5886]],
+                  [[25.08195, 121.58855], [25.08235, 121.58775], [25.08274, 121.58708]]
+            ],
+            "distance": "300m",
             "walkTime": "步行 3-4 分鐘",
             "driveTime": "車程 1 分鐘",
             "rate": "20-30 元 / 小時",
@@ -1627,7 +1632,7 @@
                   "車位寬敞",
                   "漫步首選"
             ],
-            "entranceGuide": "🚗 <strong>內湖路二段 103 巷進碧湖路畔兩側</strong>，沿線劃設收費小型車格。",
+            "entranceGuide": "🚗 <strong>環湖路邊收費格（地圖橘線標示）</strong>：西岸內湖路二段 103 巷、南岸內湖路二段、東北側 179 巷，沿湖側劃設編號收費格。",
             "desc": "<strong>碧湖公園湖畔車格！</strong>週一至週五 09:00-17:00 計時收費，週末免費。沿湖畔漫步回院僅 3-4 分鐘，候診等待時可順道享受湖景微風。",
             "openHours": {
                   "display": "週一至週五 09:00 - 17:00 收費 (其餘時段免費停放)",
@@ -2709,6 +2714,7 @@
 
     let map;
     let markers = {};
+    let parkingLineLayers = [];
     let searchMarker = null;
     let circles = [];
     let currentCategory = 'all';
@@ -2953,6 +2959,22 @@
           m.addTo(map);
         }
       });
+
+      // 碧湖環湖路邊車格線段 (街景實證三段：西岸103巷／南岸內湖路二段／東北179巷)
+      parkingLineLayers.forEach(l => map.removeLayer(l));
+      parkingLineLayers = [];
+      if (currentCategory === 'all' || currentCategory === 'parking') {
+        const bihu = LOCATIONS.find(x => x.id === 'park_bihu');
+        if (bihu && bihu.parkingLines) {
+          bihu.parkingLines.forEach(pts => {
+            const casing = L.polyline(pts, { color: '#FFFFFF', weight: 10, opacity: 0.95 });
+            const core = L.polyline(pts, { color: '#FF7A00', weight: 5, opacity: 1 });
+            core.on('click', () => selectItem('park_bihu'));
+            casing.addTo(map); core.addTo(map);
+            parkingLineLayers.push(casing, core);
+          });
+        }
+      }
     }
 
     // =========================================================================
