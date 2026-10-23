@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>亞馬森特寵專科醫院 — 櫃台周邊導覽地圖 v1.4.2</title>
+  <title>亞馬森特寵專科醫院 — 櫃台周邊導覽地圖 v1.4.3</title>
 
   <!-- PWA & Apple Web App 設定 -->
-  <link rel="manifest" href="manifest.json?v=1.4.2">
+  <link rel="manifest" href="manifest.json?v=1.4.3">
   <meta name="theme-color" content="#1B4332">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="亞馬森周邊導覽">
-  <link rel="apple-touch-icon" href="logo.png?v=142">
+  <meta name="apple-mobile-web-app-title" content="亞馬森地圖">
+  <link rel="apple-touch-icon" href="logo.png?v=143">
 
   <!-- 外部資源：FontAwesome 6.5.1 / Google Fonts / Leaflet 1.9.4 / QRCode.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -29,6 +29,7 @@
       --primary-accent: #52B788;
       --accent-gold: #D4A373;
       --accent-warm: #E76F51;
+      --accent-drive: #1D3557;
       --bg-cream: #FAF8F5;
       --card-bg: #FFFFFF;
       --text-main: #212529;
@@ -59,13 +60,15 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     /* 頂部導航 */
     header {
       background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 65%, var(--primary-light) 100%);
       color: #FFFFFF;
-      padding: 10px 20px;
+      padding: 10px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -78,13 +81,13 @@
     .brand-group {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
     }
 
     .brand-logo-container {
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       background: #FFFFFF;
       border-radius: 50%;
       display: flex;
@@ -100,7 +103,6 @@
 
     .brand-logo-container:hover {
       transform: scale(1.06);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.45);
     }
 
     .brand-logo-img {
@@ -116,7 +118,7 @@
     }
 
     .brand-titles h1 {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 900;
       letter-spacing: 0.5px;
       color: #FFFFFF;
@@ -124,12 +126,12 @@
     }
 
     .brand-titles p {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: #D8F3DC;
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-top: 3px;
+      gap: 10px;
+      margin-top: 2px;
       line-height: 1.2;
     }
 
@@ -142,7 +144,7 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-shrink: 0;
     }
 
@@ -152,21 +154,19 @@
       -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.25);
       color: #FFFFFF;
-      padding: 7px 14px;
+      padding: 6px 12px;
       border-radius: 20px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s ease;
     }
 
     .btn-sync-parking:hover {
       background: rgba(255, 255, 255, 0.28);
-      border-color: rgba(255, 255, 255, 0.45);
-      transform: translateY(-1px);
     }
 
     .btn-sync-parking.offline {
@@ -198,8 +198,8 @@
     }
 
     .btn-icon-action {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.25);
@@ -209,12 +209,7 @@
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s ease;
-      font-size: 0.95rem;
-    }
-
-    .btn-icon-action:hover {
-      background: rgba(255, 255, 255, 0.28);
-      transform: scale(1.05);
+      font-size: 0.9rem;
     }
 
     /* 類別過濾 Chips */
@@ -222,29 +217,26 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
+      padding: 8px 14px;
       background: #FAF8F5;
       border-bottom: 1px solid var(--border-subtle);
       overflow-x: auto;
       white-space: nowrap;
       flex-shrink: 0;
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
 
     .filter-bar::-webkit-scrollbar {
-      height: 4px;
-    }
-    .filter-bar::-webkit-scrollbar-thumb {
-      background: #D8D2C2;
-      border-radius: 4px;
+      display: none;
     }
 
     .filter-chip {
-      padding: 6px 14px;
+      padding: 6px 13px;
       border-radius: 20px;
       background: #FFFFFF;
       border: 1px solid #DCD7CD;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #495057;
       cursor: pointer;
@@ -252,14 +244,13 @@
       align-items: center;
       gap: 6px;
       transition: all 0.2s ease;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       flex-shrink: 0;
     }
 
     .filter-chip:hover {
       border-color: var(--primary-accent);
       color: var(--primary);
-      transform: translateY(-1px);
     }
 
     .filter-chip.active {
@@ -271,6 +262,87 @@
 
     .filter-chip.active i {
       color: #FFFFFF !important;
+    }
+
+    .filter-chip.chip-drive {
+      border-color: #BEE3F8;
+      background: #F0F9FF;
+      color: #1E3A8A;
+    }
+    .filter-chip.chip-drive.active {
+      background: #1D3557;
+      color: #FFFFFF;
+      border-color: #1D3557;
+    }
+
+    /* 開車版專屬子標籤列 (水族/兩棲爬蟲/兔寶/鳥禽) */
+    .subfilter-bar {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #EDF2F7;
+      border-bottom: 1px solid #CBD5E1;
+      overflow-x: auto;
+      white-space: nowrap;
+      flex-shrink: 0;
+      scrollbar-width: none;
+    }
+    .subfilter-bar::-webkit-scrollbar { display: none; }
+
+    .subchip {
+      padding: 4px 10px;
+      border-radius: 14px;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .subchip.active {
+      background: #1D3557;
+      color: #FFFFFF;
+      border-color: #1D3557;
+    }
+
+    /* 手機版視圖切換器 (地圖探索 vs 設施清單) */
+    .mobile-view-tabs {
+      display: none;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 6px 12px;
+      gap: 8px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .mobile-tab-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-subtle);
+      background: #F8F9FA;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mobile-tab-btn.active {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(27, 67, 50, 0.2);
     }
 
     /* 主視窗容器 */
@@ -290,7 +362,7 @@
       z-index: 1;
     }
 
-    /* 右側邊欄 */
+    /* 右側邊欄 (桌面端固定寬度；手機端全寬) */
     .side-panel {
       width: 440px;
       max-width: 45vw;
@@ -304,7 +376,7 @@
 
     /* 搜尋區 */
     .search-section {
-      padding: 12px 16px 8px 16px;
+      padding: 10px 14px 6px 14px;
       background: #FFFFFF;
       border-bottom: 1px solid var(--border-subtle);
       position: relative;
@@ -315,7 +387,7 @@
       align-items: center;
       background: #F1F3F5;
       border-radius: 24px;
-      padding: 6px 14px;
+      padding: 6px 12px;
       border: 1.5px solid transparent;
       transition: all 0.2s ease;
     }
@@ -328,7 +400,7 @@
 
     .search-icon {
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       margin-right: 8px;
     }
 
@@ -336,7 +408,7 @@
       border: none;
       background: transparent;
       outline: none;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       width: 100%;
       font-family: inherit;
       color: var(--text-main);
@@ -357,61 +429,50 @@
       color: #FFFFFF;
       border: none;
       border-radius: 50%;
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       margin-left: 6px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       flex-shrink: 0;
-      transition: transform 0.2s ease;
-    }
-
-    .btn-search-go:hover {
-      transform: scale(1.08);
-      background: var(--primary-light);
     }
 
     .search-dropdown {
       position: absolute;
       top: 100%;
-      left: 16px;
-      right: 16px;
+      left: 14px;
+      right: 14px;
       background: #FFFFFF;
       border-radius: var(--radius-sm);
       box-shadow: 0 8px 24px rgba(0,0,0,0.15);
       border: 1px solid var(--border-subtle);
       max-height: 260px;
       overflow-y: auto;
-      z-index: 100;
+      z-index: 1000;
       display: none;
       margin-top: 4px;
     }
 
     .search-result-item {
-      padding: 10px 14px;
+      padding: 10px 12px;
       border-bottom: 1px solid #F1F3F5;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 0.85rem;
-      transition: background 0.15s ease;
+      font-size: 0.84rem;
     }
 
     .search-result-item:hover {
       background: #F8F9FA;
     }
 
-    .search-result-item i {
-      color: var(--primary);
-    }
-
     /* 焦點卡片 */
     .focus-card-section {
-      padding: 14px 16px;
+      padding: 12px 14px;
       background: #FFFFFF;
       border-bottom: 2px solid var(--border-subtle);
       flex-shrink: 0;
@@ -425,25 +486,25 @@
 
     .focus-badge {
       display: inline-block;
-      padding: 3px 9px;
+      padding: 3px 8px;
       border-radius: 12px;
       font-size: 0.72rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
 
     .focus-badge.parking { background: #E2EAFC; color: #1D3557; }
     .focus-badge.store { background: #E8F5E9; color: #1B4332; }
     .focus-badge.food { background: #FFE8D6; color: #E76F51; }
     .focus-badge.atm { background: #E0FBFC; color: #2B2D42; }
+    .focus-badge.drive_store { background: #DBEAFE; color: #1E40AF; }
     .focus-badge.search { background: #EBF5FB; color: #2980B9; }
 
     .focus-name {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 900;
       color: var(--primary-dark);
-      margin: 6px 0 4px 0;
+      margin: 5px 0 4px 0;
       line-height: 1.3;
     }
 
@@ -458,12 +519,13 @@
     }
 
     .focus-meta .tag {
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
       font-weight: 700;
     }
 
     .tag-walk { background: #E8F5E9; color: #2D6A4F; }
+    .tag-drive { background: #E0F2FE; color: #0369A1; }
     .tag-dist { background: #F1F3F5; color: #495057; }
     .tag-category { background: #FAF0CA; color: #9A7B1C; }
 
@@ -493,7 +555,7 @@
       color: #1E293B;
     }
 
-    /* 營業狀態標籤 (營業中 / 24H / 即將打烊 / 已打烊) */
+    /* 營業狀態標籤 */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -504,31 +566,11 @@
       font-weight: 700;
     }
 
-    .status-open {
-      background: #E8F5E9;
-      color: #2E7D32;
-      border: 1px solid #A5D6A7;
-    }
-    .status-open-24 {
-      background: #E8F8F5;
-      color: #0E6251;
-      border: 1px solid #A2D9CE;
-    }
-    .status-closing {
-      background: #FFF8E1;
-      color: #B78103;
-      border: 1px solid #FFE082;
-    }
-    .status-closed {
-      background: #F5F5F5;
-      color: #757575;
-      border: 1px solid #E0E0E0;
-    }
-    .status-atm {
-      background: #EBF5FB;
-      color: #21618C;
-      border: 1px solid #AED6F1;
-    }
+    .status-open { background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; }
+    .status-open-24 { background: #E8F8F5; color: #0E6251; border: 1px solid #A2D9CE; }
+    .status-closing { background: #FFF8E1; color: #B78103; border: 1px solid #FFE082; }
+    .status-closed { background: #F5F5F5; color: #757575; border: 1px solid #E0E0E0; }
+    .status-atm { background: #EBF5FB; color: #21618C; border: 1px solid #AED6F1; }
 
     .status-pulse-dot {
       width: 6px;
@@ -545,19 +587,15 @@
       background: #F39C12;
       box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.25);
     }
-    .status-closed .status-pulse-dot {
-      background: #9E9E9E;
-    }
-    .status-atm .status-pulse-dot {
-      background: #2980B9;
-    }
+    .status-closed .status-pulse-dot { background: #9E9E9E; }
+    .status-atm .status-pulse-dot { background: #2980B9; }
 
     /* 停車位即時儀表 */
     .parking-meter-box {
       background: #F8F9FA;
       border: 1px solid #E9ECEF;
       border-radius: var(--radius-sm);
-      padding: 10px 12px;
+      padding: 8px 12px;
       margin: 6px 0;
       display: flex;
       justify-content: space-between;
@@ -565,7 +603,7 @@
     }
 
     .meter-status-text {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 900;
     }
     .meter-status-text.status-plenty { color: #2D6A4F; }
@@ -588,12 +626,10 @@
       font-weight: 700;
     }
 
-    .meter-num-col {
-      text-align: right;
-    }
+    .meter-num-col { text-align: right; }
 
     .meter-number {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 900;
       line-height: 1;
     }
@@ -607,7 +643,7 @@
       margin-left: 2px;
     }
 
-    /* 車位進場提示 */
+    /* 車位與入口提示 */
     .entrance-notice-box {
       background: #FFFDF8;
       border: 1px dashed var(--accent-gold);
@@ -628,7 +664,7 @@
       flex-shrink: 0;
     }
 
-    /* 第一屏主要導航行動按鈕 (雙按鈕：開車導航 / 步行導航) */
+    /* 第一屏主要導航行動按鈕 (雙按鈕) */
     .focus-nav-actions {
       display: flex;
       gap: 8px;
@@ -660,7 +696,6 @@
     .btn-action-nav.btn-drive:hover {
       background: var(--primary-dark);
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(27, 67, 50, 0.25);
     }
 
     .btn-action-nav.btn-walk {
@@ -671,21 +706,20 @@
     .btn-action-nav.btn-walk:hover {
       background: #E8F5E9;
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(82, 183, 136, 0.25);
     }
 
     .focus-desc {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       color: #334155;
       line-height: 1.5;
       margin-bottom: 8px;
       background: #FAF8F5;
-      padding: 9px 11px;
+      padding: 8px 10px;
       border-radius: var(--radius-sm);
       border: 1px solid #EFEBE5;
     }
 
-    /* 櫃台 QR Code 導航掃描區 (手機版隱藏) */
+    /* 櫃台 QR Code 導航掃描區 (平板/電腦專用) */
     .qrcode-section {
       display: flex;
       align-items: center;
@@ -697,8 +731,8 @@
     }
 
     .qrcode-wrapper {
-      width: 92px;
-      height: 92px;
+      width: 86px;
+      height: 86px;
       background: #FFFFFF;
       padding: 3px;
       border-radius: var(--radius-sm);
@@ -721,17 +755,17 @@
     }
 
     .qrcode-info h4 {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 900;
       color: var(--primary-dark);
       margin-bottom: 3px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .qrcode-info p {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
       line-height: 1.35;
       margin-bottom: 4px;
@@ -748,6 +782,7 @@
       overflow-y: auto;
       padding: 8px 12px;
       background: #FAF8F5;
+      -webkit-overflow-scrolling: touch;
     }
 
     .item-list::-webkit-scrollbar {
@@ -793,13 +828,13 @@
     }
 
     .card-icon-box {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
+      font-size: 0.95rem;
       flex-shrink: 0;
     }
 
@@ -807,6 +842,7 @@
     .icon-store { background: #E8F5E9; color: #1B4332; }
     .icon-food { background: #FFE8D6; color: #E76F51; }
     .icon-atm { background: #E0FBFC; color: #2B2D42; }
+    .icon-drive_store { background: #DBEAFE; color: #1E40AF; }
 
     .card-text {
       min-width: 0;
@@ -824,7 +860,7 @@
     }
 
     .card-sub {
-      font-size: 0.73rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
       margin-top: 3px;
       display: flex;
@@ -833,10 +869,32 @@
       flex-wrap: wrap;
     }
 
+    .tag-sub-drive {
+      background: #E0F2FE;
+      color: #0369A1;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+    }
+
     .card-right {
       text-align: right;
       flex-shrink: 0;
       margin-left: 8px;
+    }
+
+    .card-time-walk {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: block;
+    }
+    .card-time-drive {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #0369A1;
+      display: block;
     }
 
     .card-spaces {
@@ -860,7 +918,7 @@
       text-align: center;
       font-size: 0.7rem;
       color: #94A3B8;
-      padding: 10px 0 6px 0;
+      padding: 8px 0 6px 0;
       letter-spacing: 0.5px;
     }
 
@@ -868,38 +926,37 @@
     .map-floating-controls {
       position: absolute;
       bottom: 24px;
-      left: 20px;
+      left: 18px;
       z-index: 500;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn-float {
       background: #FFFFFF;
       color: var(--primary-dark);
       border: 1px solid #DCD7CD;
-      padding: 8px 14px;
+      padding: 8px 13px;
       border-radius: 24px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       box-shadow: 0 4px 14px rgba(0,0,0,0.15);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       transition: all 0.2s ease;
     }
 
     .btn-float:hover {
       background: #F8F9FA;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.22);
     }
 
     .btn-float i {
       color: var(--primary-accent);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     /* 自訂 Leaflet 標記 */
@@ -962,6 +1019,7 @@
     .marker-store { background: #2A9D8F; }
     .marker-food { background: #E76F51; }
     .marker-atm { background: #457B9D; }
+    .marker-drive_store { background: #0284C7; }
     .marker-search { background: #4285F4; }
 
     .marker-badge-num {
@@ -977,107 +1035,241 @@
       border: 1.5px solid #FFFFFF;
       white-space: nowrap;
     }
-
     .marker-badge-num.marker-badge-plenty { background: #2D6A4F; }
     .marker-badge-num.marker-badge-warning { background: #D4A373; }
     .marker-badge-num.marker-badge-danger { background: #D90429; }
 
-    /* 響應式佈局：手機與平板適應 */
-    @media (max-width: 900px) {
+    /* 手機底部懸浮卡片 (Mobile Floating Bottom Card) */
+    .mobile-floating-card {
+      display: none;
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 14px;
+      z-index: 1000;
+      animation: slideUp 0.25s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .mobile-float-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+    .mobile-float-title {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      flex: 1;
+      padding-right: 8px;
+      line-height: 1.3;
+    }
+    .mobile-float-close {
+      background: none;
+      border: none;
+      color: #94A3B8;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 2px 4px;
+    }
+    .mobile-float-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .mobile-float-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #FFFFFF;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(27, 67, 50, 0.25);
+    }
+
+    /* ========================================================================= */
+    /* 手機體驗與 RWD 全面調優 (寬度 <= 768px) */
+    /* ========================================================================= */
+    @media (max-width: 768px) {
+      header {
+        padding: 7px 12px;
+      }
+      .brand-logo-container {
+        width: 38px;
+        height: 38px;
+      }
+      .brand-titles h1 {
+        font-size: 1.02rem;
+        letter-spacing: 0;
+      }
+      .brand-titles p {
+        font-size: 0.7rem;
+        gap: 6px;
+      }
+      .btn-sync-parking {
+        padding: 5px 8px;
+        font-size: 0.72rem;
+      }
+      .btn-sync-parking span.sync-full-text {
+        display: none;
+      }
+      .btn-sync-parking span.sync-mobile-text {
+        display: inline;
+      }
+      .btn-icon-action {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+      }
+
+      /* 手機視圖切換標籤顯示 */
+      .mobile-view-tabs {
+        display: flex;
+      }
+
       .main-container {
         flex-direction: column;
+        flex: 1;
+        overflow: hidden;
       }
-      #map {
-        height: 40vh;
-        flex: none;
+
+      /* 手機模式：預設 地圖模式 */
+      body.mobile-mode-map #map {
+        display: block;
+        height: 100%;
+        flex: 1;
       }
-      .side-panel {
+      body.mobile-mode-map .side-panel {
+        display: none;
+      }
+      body.mobile-mode-map .mobile-floating-card {
+        display: block;
+      }
+
+      /* 手機模式：清單模式 */
+      body.mobile-mode-list #map {
+        display: none;
+      }
+      body.mobile-mode-list .side-panel {
+        display: flex;
         width: 100%;
         max-width: 100%;
         flex: 1;
         border-left: none;
-        border-top: 1px solid var(--border-subtle);
+        box-shadow: none;
       }
+      body.mobile-mode-list .focus-card-section {
+        padding: 10px 12px;
+      }
+      body.mobile-mode-list .mobile-floating-card {
+        display: none;
+      }
+
+      /* QR 區在手機端 100% 隱藏 */
+      .qrcode-section {
+        display: none !important;
+      }
+
+      /* 按鈕大尺寸化 (符合 48px 觸控標準) */
+      .btn-action-nav {
+        min-height: 46px;
+        font-size: 0.92rem;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+      }
+
       .map-floating-controls {
         bottom: 12px;
         left: 12px;
         gap: 6px;
       }
       .btn-float {
-        padding: 6px 12px;
-        font-size: 0.78rem;
+        padding: 6px 11px;
+        font-size: 0.75rem;
       }
     }
 
-    /* 手機版 (寬度 <= 768px)：隱藏 QR 區、按鈕放大置頂、版面防溢出 */
-    @media (max-width: 768px) {
-      header {
-        padding: 8px 12px;
-      }
-      .brand-titles h1 {
-        font-size: 1.1rem;
-      }
-      .brand-titles p {
-        font-size: 0.72rem;
-        gap: 8px;
-      }
-      .btn-sync-parking {
-        padding: 5px 10px;
-        font-size: 0.75rem;
-      }
-      .btn-icon-action {
-        width: 32px;
-        height: 32px;
-        font-size: 0.85rem;
-      }
-      .qrcode-section {
-        display: none !important;
-      }
-      .btn-action-nav {
-        min-height: 46px;
-        font-size: 0.92rem;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.12);
-      }
-      .focus-name {
-        font-size: 1.05rem;
+    @media (min-width: 769px) {
+      .btn-sync-parking span.sync-mobile-text {
+        display: none;
       }
     }
   </style>
 </head>
-<body>
+<body class="mobile-mode-map">
 
-  <!-- 頂部導航 (精簡減重、1280px 寬零溢出) -->
+  <!-- 頂部導航 -->
   <header>
     <div class="brand-group">
-      <div class="brand-logo-container" onclick="resetToHospital()" title="點擊回到亞馬森特寵醫院中心">
-        <img src="logo.png?v=142" alt="亞馬森特寵專科醫院 Logo" class="brand-logo-img">
+      <div class="brand-logo-container" onclick="resetToHospital()" title="回到亞馬森特寵醫院中心">
+        <img src="logo.png?v=143" alt="亞馬森特寵專科醫院 Logo" class="brand-logo-img">
       </div>
       <div class="brand-titles">
         <h1>亞馬森特寵專科醫院</h1>
         <p>
-          <span><i class="fa-solid fa-location-dot"></i> 台北市內湖區內湖路二段39-2號</span>
+          <span><i class="fa-solid fa-location-dot"></i> 內湖路二段39-2號</span>
           <span><i class="fa-solid fa-phone"></i> (02) 8792-3248</span>
         </p>
       </div>
     </div>
 
     <div class="header-actions">
-      <button class="btn-sync-parking" onclick="syncParkingData()" id="btn-sync-parking" title="點擊同步停管處即時空位">
+      <button class="btn-sync-parking" onclick="syncParkingData()" id="btn-sync-parking" title="同步停管處即時空位">
         <span class="live-dot" id="live-dot-indicator"></span>
-        <span id="sync-text">停管處連線已更新 (即時)</span>
+        <span class="sync-full-text" id="sync-text">停管處連線已更新 (即時)</span>
+        <span class="sync-mobile-text">即時空位</span>
       </button>
       <button class="btn-icon-action" onclick="resetView()" title="重置視野至全覽"><i class="fa-solid fa-arrows-rotate"></i></button>
       <button class="btn-icon-action" onclick="toggleFullScreen()" title="全螢幕切換"><i class="fa-solid fa-expand"></i></button>
     </div>
   </header>
 
-  <!-- 類別過濾 Chips -->
+  <!-- 類別過濾 Chips (新增開車版特寵補給) -->
   <div class="filter-bar">
     <div class="filter-chip active" data-category="all" onclick="setCategory('all', this)"><i class="fa-solid fa-layer-group"></i> 全部設施</div>
+    <div class="filter-chip chip-drive" data-category="drive_store" onclick="setCategory('drive_store', this)"><i class="fa-solid fa-car-side" style="color:#0284C7;"></i> 特寵補給 (開車)</div>
     <div class="filter-chip" data-category="parking" onclick="setCategory('parking', this)"><i class="fa-solid fa-square-parking" style="color:#1D3557;"></i> 附近停車場</div>
+    <div class="filter-chip" data-category="store" onclick="setCategory('store', this)"><i class="fa-solid fa-prescription-bottle-medical" style="color:#2A9D8F;"></i> 特寵補給 / 藥局</div>
     <div class="filter-chip" data-category="food" onclick="setCategory('food', this)"><i class="fa-solid fa-mug-hot" style="color:#E76F51;"></i> 休息咖啡 / 美食</div>
     <div class="filter-chip" data-category="atm" onclick="setCategory('atm', this)"><i class="fa-solid fa-building-columns" style="color:#457B9D;"></i> 銀行 / ATM / 超商</div>
-    <div class="filter-chip" data-category="store" onclick="setCategory('store', this)"><i class="fa-solid fa-prescription-bottle-medical" style="color:#2A9D8F;"></i> 特寵補給 / 藥局</div>
+  </div>
+
+  <!-- 開車分類專屬次級篩選晶片 (水族 / 兩棲爬蟲 / 兔寶 / 鳥禽) -->
+  <div class="subfilter-bar" id="subfilter-bar">
+    <span style="font-size:0.75rem; color:#64748B; font-weight:700;">篩選動物：</span>
+    <div class="subchip active" onclick="filterDriveSubTag('all', this)">全部 (8)</div>
+    <div class="subchip" onclick="filterDriveSubTag('aqua', this)">🐠 水族 (4)</div>
+    <div class="subchip" onclick="filterDriveSubTag('reptile', this)">🦎 兩棲爬蟲 (2)</div>
+    <div class="subchip" onclick="filterDriveSubTag('rabbit', this)">🐰 兔寶用品 (1)</div>
+    <div class="subchip" onclick="filterDriveSubTag('bird', this)">🦜 鳥禽鸚鵡 (2)</div>
+  </div>
+
+  <!-- 手機版視圖切換器 (地圖 vs 清單) -->
+  <div class="mobile-view-tabs" id="mobile-view-tabs">
+    <button class="mobile-tab-btn active" id="tab-btn-map" onclick="switchMobileView('map')">
+      <i class="fa-solid fa-map-location-dot"></i> 地圖探索
+    </button>
+    <button class="mobile-tab-btn" id="tab-btn-list" onclick="switchMobileView('list')">
+      <i class="fa-solid fa-list-ul"></i> 設施清單 (<span id="mobile-list-count">34</span>)
+    </button>
   </div>
 
   <!-- 主視窗 -->
@@ -1092,14 +1284,31 @@
       <button class="btn-float" onclick="focusNearestParking()"><i class="fa-solid fa-car-side"></i> 最多空車位</button>
     </div>
 
-    <!-- 右側資訊面板 -->
-    <div class="side-panel">
+    <!-- 手機版地圖底部懸浮快速資訊卡 -->
+    <div class="mobile-floating-card" id="mobile-floating-card">
+      <div class="mobile-float-header">
+        <div class="mobile-float-title" id="m-float-title">六本熊藥局</div>
+        <button class="mobile-float-close" onclick="closeMobileFloatCard()" title="關閉">&times;</button>
+      </div>
+      <div class="mobile-float-meta">
+        <span class="status-badge status-open" id="m-float-status"><span class="status-pulse-dot"></span><span id="m-float-status-text">營業中</span></span>
+        <span id="m-float-time" style="font-weight:700; color:var(--primary);">步行 20 秒</span>
+        <span>•</span>
+        <span id="m-float-dist">距離 30m</span>
+      </div>
+      <a href="#" target="_blank" class="mobile-float-btn" id="m-float-nav-btn">
+        <i class="fa-solid fa-diamond-turn-right"></i> <span id="m-float-btn-text">一鍵開啟導航</span>
+      </a>
+    </div>
+
+    <!-- 右側資訊面板 (桌面顯示於右側；手機切換至清單模式時全寬) -->
+    <div class="side-panel" id="side-panel">
       
       <!-- 櫃台搜尋區 -->
       <div class="search-section">
         <div class="search-input-wrapper">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" id="search-input" placeholder="搜尋店家（例：六本熊、星巴克、大樹、737...）" 
+          <input type="text" id="search-input" placeholder="搜尋店家（例：水手、愛兔、星巴克、大樹...）" 
                  oninput="handleSearchInput(this)" onkeydown="handleSearchKey(event)">
           <button class="btn-search-clear" id="btn-search-clear" onclick="clearSearch()" title="清除搜尋"><i class="fa-solid fa-xmark"></i></button>
           <button class="btn-search-go" onclick="triggerWebSearch()" title="點擊進行 Google 快速搜尋"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -1111,14 +1320,14 @@
       <div class="focus-card-section" id="focus-card">
         <div class="focus-header-bar">
           <span class="focus-badge" id="focus-badge">設施導覽</span>
-          <span style="font-size: 0.75rem; color: #888;" id="focus-dist-label">步行可達生活圈</span>
+          <span style="font-size: 0.74rem; color: #888;" id="focus-dist-label">生活圈導覽</span>
         </div>
         
         <h2 class="focus-name" id="focus-name">請點選地標或設施</h2>
         
         <div class="focus-meta" id="focus-meta">
           <span class="tag tag-walk" id="focus-walk">步行 -- 分鐘</span>
-          <span class="tag tag-dist" id="focus-dist">距離 --m</span>
+          <span class="tag tag-dist" id="focus-dist">距離 --</span>
           <span class="tag tag-category" id="focus-cat-name">類別</span>
           <span class="status-badge" id="focus-status-badge"><span class="status-pulse-dot"></span><span id="focus-status-text">營業中</span></span>
         </div>
@@ -1145,16 +1354,16 @@
           </div>
         </div>
 
-        <!-- 停車場車輛入口導引 -->
+        <!-- 專用車道／入口指引 -->
         <div class="entrance-notice-box" id="entrance-notice-box" style="display: none;">
           <i class="fa-solid fa-diamond-turn-right"></i>
           <div>
-            <strong>🚗 車輛進場入口指引：</strong>
-            <span id="entrance-desc">由主幹道順向進入專用車道入口</span>
+            <strong id="entrance-title">🚗 入口指引：</strong>
+            <span id="entrance-desc">由專用入口進入</span>
           </div>
         </div>
 
-        <!-- 第一屏主要導航行動按鈕 (手機版置頂放大、雙按鈕語意獨立) -->
+        <!-- 第一屏主要導航行動按鈕 -->
         <div class="focus-nav-actions" id="focus-nav-actions">
           <a href="#" target="_blank" class="btn-action-nav btn-drive" id="btn-drive-nav">
             <i class="fa-solid fa-car" id="btn-drive-icon"></i>
@@ -1167,7 +1376,7 @@
         </div>
 
         <div class="focus-desc" id="focus-desc">
-          點選左側地圖任一圖示，或從下方清單挑選，即可查看詳細資訊與導航！
+          點選設施或地圖圖示，即可查看詳細說明與精確導航路線！
         </div>
 
         <!-- 櫃台 QR Code 掃描區 (平板/電腦專屬，手機自動收合隱藏) -->
@@ -1175,7 +1384,7 @@
           <div class="qrcode-wrapper" id="qrcode-box"></div>
           <div class="qrcode-info">
             <h4 id="qrcode-title"><i class="fa-solid fa-qrcode"></i> 手機一掃導航</h4>
-            <p id="qrcode-desc">手機相機一掃，直接啟動 Google Maps 車輛入口精準導航。</p>
+            <p id="qrcode-desc">手機相機一掃，直接啟動 Google Maps 精準導航。</p>
             <div class="qrcode-subtip">（手機瀏覽請直接點擊上方導航按鈕）</div>
           </div>
         </div>
@@ -1186,7 +1395,7 @@
 
       <!-- 頁底版本水印 -->
       <div class="app-version-watermark">
-        亞馬森特寵專科醫院 • 櫃台周邊互動導覽地圖 v1.4.2
+        亞馬森特寵專科醫院 • 櫃台周邊導覽系統 v1.4.3
       </div>
     </div>
 
@@ -1203,7 +1412,7 @@
     const AMAZON_COORDS = [25.079017, 121.579887];
 
     // =========================================================================
-    // 周邊真實設施完整資料庫 (全數經 Google Maps 實勘核實，26 處 POI 附營業時間)
+    // 周邊真實設施完整資料庫 (步行圈 26 處 + 開車擴展圈 8 處 = 共 34 處)
     // =========================================================================
     const LOCATIONS = [
       {
@@ -2061,6 +2270,329 @@
                         }
                   ]
             }
+      },
+      {
+            "id": "drive_taodidi",
+            "category": "drive_store",
+            "subTag": "水族",
+            "animalType": "aqua",
+            "name": "陶弟弟水族設計 (文德路工作室)",
+            "coords": [
+                  25.075646,
+                  121.58348
+            ],
+            "distance": "0.8km",
+            "driveTime": "開車約 4-5 分鐘",
+            "isDrive": true,
+            "tags": [
+                  "水族魚隻",
+                  "工作室面交",
+                  "器材詢價",
+                  "文德站周邊"
+            ],
+            "entranceGuide": "🚗 <strong>工作室面交指引：</strong>文德路 208 巷進入（近捷運文德站）。採私訊預約制，非一般自由參觀大型店面，前往請務必先透過 IG (@aqua.dd.tao) 或私訊確認當日庫存與面交時段。",
+            "desc": "<strong>鄰近本院之水族活體與器材工作室！</strong>開車約 4-5 分鐘（0.8km）。以各類觀賞魚隻、水草、造景器材詢價與面交自取為主。⚠️ <strong>注意事項：</strong>屬工作室性質，請先私訊或預約面交，勿當作一般門市前往以免撲空。",
+            "openHours": {
+                  "display": "週一至週五 11:30–21:00 / 週末 13:00–19:00 (預約面交為主)",
+                  "periods": [
+                        {
+                              "days": [
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5
+                              ],
+                              "open": "11:30",
+                              "close": "21:00"
+                        },
+                        {
+                              "days": [
+                                    0,
+                                    6
+                              ],
+                              "open": "13:00",
+                              "close": "19:00"
+                        }
+                  ]
+            }
+      },
+      {
+            "id": "drive_qianyi",
+            "category": "drive_store",
+            "subTag": "水族",
+            "animalType": "aqua",
+            "name": "千易寵物水族 (環山路正規店)",
+            "coords": [
+                  25.086284,
+                  121.5679
+            ],
+            "distance": "2.1km",
+            "driveTime": "開車約 6-8 分鐘",
+            "isDrive": true,
+            "phone": "(02) 2797-1734",
+            "tags": [
+                  "水族活體",
+                  "正規實體店",
+                  "水質調理器材",
+                  "內湖環山路"
+            ],
+            "desc": "<strong>內湖環山路正規寵物水族複合店！</strong>開車由內湖路轉環山路約 6-8 分鐘（2.1km）。備有淡海水魚隻、水草、水質調理劑、濾材濾棉、加溫設備、底砂造景與基礎寵物飼糧。電話：(02) 2797-1734。",
+            "openHours": {
+                  "display": "週一至週五 12:00–21:00 (週末固定公休)",
+                  "periods": [
+                        {
+                              "days": [
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5
+                              ],
+                              "open": "12:00",
+                              "close": "21:00"
+                        }
+                  ]
+            }
+      },
+      {
+            "id": "drive_loverabbit",
+            "category": "drive_store",
+            "subTag": "兔子用品",
+            "animalType": "rabbit",
+            "name": "愛兔協會 兔奴愛心福利社 (台北愛兔之家)",
+            "coords": [
+                  25.085832,
+                  121.564578
+            ],
+            "distance": "2.4km",
+            "driveTime": "開車約 6-8 分鐘",
+            "isDrive": true,
+            "phone": "0922-560-178",
+            "tags": [
+                  "兔專門點之首",
+                  "協會愛心義賣",
+                  "週四至日15-19",
+                  "提摩西草料齊全"
+            ],
+            "entranceGuide": "🚗 <strong>位置指引：</strong>文湖街 60 巷門牌有跳號情況，建議行駛至 60 巷後，由 6 號與 26 號之間的巷子直接進入，搭乘電梯至 4 樓。",
+            "desc": "<strong>社團法人台灣愛兔協會義賣商店！台北兔專門備品齊全度之首！</strong>開車約 6-8 分鐘（2.4km）。專售各等級頂級提摩西草、果園草、各品牌兔專用主食飼料、便盆草架、專用保健品與益生菌。義賣收入全數作為愛兔救援基金。⚠️ <strong>時段特別注意：</strong>開放現場時段僅週四至週日 15:00–19:00（週一至週三公休），出發前請確認「營業中」標籤或致電 0922-560-178。",
+            "openHours": {
+                  "display": "週四至週日 15:00–19:00 (週一至週三公休不對外開放)",
+                  "periods": [
+                        {
+                              "days": [
+                                    0,
+                                    4,
+                                    5,
+                                    6
+                              ],
+                              "open": "15:00",
+                              "close": "19:00"
+                        }
+                  ]
+            }
+      },
+      {
+            "id": "drive_minquan_aquarium",
+            "category": "drive_store",
+            "subTag": "水族・兩棲爬蟲",
+            "animalType": "reptile",
+            "name": "民權東路五段水族街 (代表店：賜海水族批發)",
+            "coords": [
+                  25.063261,
+                  121.564933
+            ],
+            "distance": "3.4km",
+            "driveTime": "開車約 10-12 分鐘",
+            "isDrive": true,
+            "phone": "(02) 2763-2216",
+            "tags": [
+                  "台北水族街",
+                  "商圈代表",
+                  "兩棲爬蟲",
+                  "量販器材齊全"
+            ],
+            "desc": "<strong>台北官方指定水族商店街集中商圈！</strong>過民權大橋直達（車程 10-12 分鐘）。商圈代表店「賜海水族批發」（三民國小旁）規模大，器材、飼料、燈具、濾材齊全，另售爬蟲、兩棲等另類寵物耗材；整條街十餘家水族專門店林立（如魚樂小站等），一站採購首選。",
+            "openHours": {
+                  "display": "每日 11:00–21:30 (商圈代表店營業時間)",
+                  "periods": [
+                        {
+                              "days": [
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6
+                              ],
+                              "open": "11:00",
+                              "close": "21:30"
+                        }
+                  ]
+            }
+      },
+      {
+            "id": "drive_sailor_reptile",
+            "category": "drive_store",
+            "subTag": "兩棲爬蟲・水族",
+            "animalType": "reptile",
+            "name": "水手兩棲爬蟲・異寵 (南港旗艦店)",
+            "coords": [
+                  25.0547,
+                  121.6152
+            ],
+            "distance": "5.8km",
+            "driveTime": "開車約 12-15 分鐘",
+            "isDrive": true,
+            "phone": "(02) 2651-2131",
+            "tags": [
+                  "兩棲爬蟲首選",
+                  "Ethan指定推薦",
+                  "評分4.7星",
+                  "專業加溫燈材活餌"
+            ],
+            "entranceGuide": "🚗 <strong>商場 B1 入口指引：</strong>位於南港路二段 20 巷內（全聯商場大樓地下 B1）。車輛可停周邊停車場或商場專用停車格，由大樓電梯或專用樓梯下至 B1 即可抵達。",
+            "desc": "<strong>★ Ethan 院長指定推薦！北台灣兩棲爬蟲異寵指標店！</strong>Google 評分 4.7 星（86 則好評）。開車經成功橋至南港路二段約 12-15 分鐘。備有專業爬蟲造景箱、各型號 UVB/UVA 加溫燈具、鈣粉維生素營養品、蟋蟀麵包蟲活餌及各類特寵專用墊材。電話：(02) 2651-2131。",
+            "openHours": {
+                  "display": "每日 13:00–22:00",
+                  "periods": [
+                        {
+                              "days": [
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6
+                              ],
+                              "open": "13:00",
+                              "close": "22:00"
+                        }
+                  ]
+            }
+      },
+      {
+            "id": "drive_yuzhongyu_xizhi",
+            "category": "drive_store",
+            "subTag": "水族・小動物",
+            "animalType": "aqua",
+            "name": "魚中魚寵物水族大賣場 (汐止大同店)",
+            "coords": [
+                  25.0592,
+                  121.6386
+            ],
+            "distance": "8.2km",
+            "driveTime": "開車約 15-18 分鐘",
+            "isDrive": true,
+            "phone": "(02) 2690-7999",
+            "tags": [
+                  "大型量販",
+                  "附設車位",
+                  "汐止基隆動線",
+                  "營業至22:00"
+            ],
+            "entranceGuide": "🚗 <strong>車位指引：</strong>汐止大同路一段，門市前方與側邊備有專用停車格，方便直接下車採購載運重物。",
+            "desc": "<strong>汐止大同路超大型量販賣場！</strong>營業至晚間 22:00。備品豐富多元，涵蓋水族器材、魚隻、造景濾材、特寵飼料與小動物基礎照護品。定位為汐止、基隆飼主診療後回程動線（大同路／國一）極佳的順路補給點。電話：(02) 2690-7999。",
+            "openHours": {
+                  "display": "每日 11:00–22:00",
+                  "periods": [
+                        {
+                              "days": [
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6
+                              ],
+                              "open": "11:00",
+                              "close": "22:00"
+                        }
+                  ]
+            }
+      },
+      {
+            "id": "drive_polyparrot",
+            "category": "drive_store",
+            "subTag": "鳥禽 (鸚鵡)",
+            "animalType": "bird",
+            "name": "波力鸚鵡玩具生活館 (汐止門市)",
+            "coords": [
+                  25.077389,
+                  121.671407
+            ],
+            "distance": "11.5km",
+            "driveTime": "開車約 20-22 分鐘",
+            "isDrive": true,
+            "phone": "0980-750-994",
+            "tags": [
+                  "鸚鵡玩具飼料",
+                  "週三固定公休",
+                  "專業鳥類營養",
+                  "汐止大同路三段"
+            ],
+            "entranceGuide": "🚗 <strong>店家位置：</strong>新北市汐止區大同路三段 199 號（已由舊址 37-9 號搬遷至現址）。路邊順向停靠，每週三公休。",
+            "desc": "<strong>專營鸚鵡特級飼糧、安全原木玩具與專業保健品！</strong>開車走國道一號或大同路約 20-22 分鐘。經實勘已確認營業中，供應各體型鸚鵡滋養丸、特級穀物、啃咬玩具與維生素電解質補給。⚠️ <strong>注意事項：</strong>每週三固定公休，出發前建議先致電 0980-750-994 確認有開。",
+            "openHours": {
+                  "display": "週四至週二 11:00–19:00 (每週三固定公休)",
+                  "periods": [
+                        {
+                              "days": [
+                                    0,
+                                    1,
+                                    2,
+                                    4,
+                                    5,
+                                    6
+                              ],
+                              "open": "11:00",
+                              "close": "19:00"
+                        }
+                  ]
+            }
+      },
+      {
+            "id": "drive_bird_street",
+            "category": "drive_store",
+            "subTag": "鳥禽商圈",
+            "animalType": "bird",
+            "name": "台北和平西路鳥店街 (萬華艋舺商圈)",
+            "coords": [
+                  25.03484,
+                  121.50367
+            ],
+            "distance": "11.8km",
+            "driveTime": "開車約 22-25 分鐘",
+            "isDrive": true,
+            "tags": [
+                  "北台灣鳥交易重鎮",
+                  "20餘家聚落",
+                  "鳥籠飼料配件",
+                  "龍山寺站旁"
+            ],
+            "desc": "<strong>北台灣最大鳥禽專賣集中商圈！</strong>萬華區和平西路三段（艋舺大道與南寧路之間），聚集 20 餘家老字號專業鳥店。各型鳥籠、鳥巢、穀物滋養丸、保溫罩、棲木與清潔耗材齊備，為特寵鳥禽飼主的目的地型旗艦商圈。",
+            "openHours": {
+                  "display": "商圈各店約 10:00–21:30 (每日)",
+                  "periods": [
+                        {
+                              "days": [
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6
+                              ],
+                              "open": "10:00",
+                              "close": "21:30"
+                        }
+                  ]
+            }
       }
 ];
 
@@ -2069,11 +2601,12 @@
     let searchMarker = null;
     let circles = [];
     let currentCategory = 'all';
+    let currentDriveSubTag = 'all';
     let qrcodeObj = null;
     let lastValidParkingTime = '即時';
     let isParkingDegraded = false;
     let idleTimer = null;
-    const IDLE_TIMEOUT_SECONDS = 75; // 75 秒無操作自動回首頁畫面
+    const IDLE_TIMEOUT_SECONDS = 75; // 75 秒無操作自動回全覽畫面
 
     // =========================================================================
     // 營業時間即時計算與狀態判斷
@@ -2117,7 +2650,36 @@
     }
 
     // =========================================================================
-    // 初始化地圖 (載入 Google Maps 官方道路瓦片)
+    // 手機版視圖切換 (地圖 vs 清單)
+    // =========================================================================
+    function switchMobileView(mode) {
+      const body = document.body;
+      const btnMap = document.getElementById('tab-btn-map');
+      const btnList = document.getElementById('tab-btn-list');
+
+      if (mode === 'map') {
+        body.classList.remove('mobile-mode-list');
+        body.classList.add('mobile-mode-map');
+        btnMap.classList.add('active');
+        btnList.classList.remove('active');
+        setTimeout(() => {
+          if (map) map.invalidateSize();
+        }, 150);
+      } else {
+        body.classList.remove('mobile-mode-map');
+        body.classList.add('mobile-mode-list');
+        btnList.classList.add('active');
+        btnMap.classList.remove('active');
+      }
+    }
+
+    function closeMobileFloatCard() {
+      const card = document.getElementById('mobile-floating-card');
+      card.style.display = 'none';
+    }
+
+    // =========================================================================
+    // 初始化地圖
     // =========================================================================
     function initMap() {
       map = L.map('map', {
@@ -2125,7 +2687,7 @@
         attributionControl: false
       }).setView(AMAZON_COORDS, 17);
 
-      // 載入 Google Maps 官方道路瓦片
+      // 載入 Google Maps 道路瓦片
       L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=zh-TW', {
         maxZoom: 20,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
@@ -2137,26 +2699,26 @@
       // 繪製步行距離同心圓 (3分鐘 / 6分鐘)
       drawDistanceCircles();
 
-      // 繪製醫院原版動物牽手 Logo 圓徽章標記
+      // 繪製醫院原版 Logo 標記
       addHospitalMarker();
 
-      // 繪製周邊設施標記 (依目前分類過濾)
+      // 繪製周邊設施標記
       renderMarkers();
 
       // 初始化 QRCode 物件
       qrcodeObj = new QRCode(document.getElementById('qrcode-box'), {
         text: 'https://maps.app.goo.gl/d6Y5i9v2t5wK8pDDA',
-        width: 86,
-        height: 86,
+        width: 80,
+        height: 80,
         colorDark: '#112D20',
         colorLight: '#FFFFFF',
         correctLevel: QRCode.CorrectLevel.M
       });
 
-      // 預設選中六本熊藥局 (最關鍵隔壁夥伴)
+      // 預設選中六本熊藥局
       selectItem('store_roopoobear');
 
-      // 渲染右側清單 (距離由近到遠排序)
+      // 渲染設施清單
       renderList();
 
       // 啟動櫃台閒置計時器
@@ -2170,6 +2732,11 @@
       window.addEventListener('offline', () => {
         setParkingDegradedState();
       });
+
+      // 視窗 resize 重新校正地圖大小
+      window.addEventListener('resize', () => {
+        if (map) map.invalidateSize();
+      });
     }
 
     // 繪製步行距離同心圓
@@ -2177,7 +2744,6 @@
       circles.forEach(c => map.removeLayer(c));
       circles = [];
 
-      // 3 分鐘 (約 250m)
       const c1 = L.circle(AMAZON_COORDS, {
         radius: 250,
         color: '#52B788',
@@ -2187,7 +2753,6 @@
         fillOpacity: 0.04
       }).addTo(map);
 
-      // 6 分鐘 (約 500m)
       const c2 = L.circle(AMAZON_COORDS, {
         radius: 500,
         color: '#D4A373',
@@ -2200,12 +2765,12 @@
       circles.push(c1, c2);
     }
 
-    // 繪製醫院原版動物牽手 Logo 標記
+    // 繪製醫院原版標記
     function addHospitalMarker() {
       const hospitalIcon = L.divIcon({
         className: 'custom-div-icon',
         html: `<div class="custom-marker marker-hospital-logo" title="亞馬森特寵專科醫院">
-                <img src="logo.png?v=142" alt="亞馬森特寵專科醫院" class="marker-logo-img">
+                <img src="logo.png?v=143" alt="亞馬森特寵專科醫院" class="marker-logo-img">
                </div>`,
         iconSize: [48, 48],
         iconAnchor: [24, 24]
@@ -2214,7 +2779,7 @@
       const m = L.marker(AMAZON_COORDS, { icon: hospitalIcon, zIndexOffset: 2000 }).addTo(map);
       m.bindPopup(`
         <div style="font-family:inherit; min-width:210px; text-align:center; padding:4px 0;">
-          <img src="logo.png?v=142" style="width:48px; height:48px; border-radius:50%; margin-bottom:6px;">
+          <img src="logo.png?v=143" style="width:48px; height:48px; border-radius:50%; margin-bottom:6px;">
           <h4 style="color:#1B4332; font-size:1.05rem; font-weight:900; margin-bottom:4px;">亞馬森特寵專科醫院</h4>
           <p style="font-size:0.82rem; color:#555; line-height:1.4;">
             <strong>台北市內湖區內湖路二段39-2號</strong><br>
@@ -2226,7 +2791,7 @@
       m.on('click', () => resetToHospital());
     }
 
-    // 繪製設施標記 (修復 P0-1：嚴格依當前分類過濾，不沖掉分類)
+    // 繪製設施標記
     function renderMarkers() {
       Object.values(markers).forEach(m => map.removeLayer(m));
       markers = {};
@@ -2246,6 +2811,12 @@
           faIcon = 'fa-mug-hot';
         } else if (item.category === 'atm') {
           faIcon = 'fa-building-columns';
+        } else if (item.category === 'drive_store') {
+          faIcon = 'fa-car-side';
+          if (item.animalType === 'aqua') faIcon = 'fa-fish-fins';
+          else if (item.animalType === 'reptile') faIcon = 'fa-dragon';
+          else if (item.animalType === 'rabbit') faIcon = 'fa-shield-cat';
+          else if (item.animalType === 'bird') faIcon = 'fa-dove';
         }
 
         const icon = L.divIcon({
@@ -2262,22 +2833,31 @@
         m.on('click', () => selectItem(item.id));
         markers[item.id] = m;
 
-        // 僅當符合目前篩選時才掛上地圖
-        if (currentCategory === 'all' || item.category === currentCategory) {
+        // 檢查主分類與開車次分類篩選
+        let matchCat = (currentCategory === 'all' || item.category === currentCategory);
+        if (currentCategory === 'drive_store' && currentDriveSubTag !== 'all') {
+          matchCat = matchCat && (item.animalType === currentDriveSubTag);
+        }
+
+        if (matchCat) {
           m.addTo(map);
         }
       });
     }
 
     // =========================================================================
-    // 選取指定設施 (修復 P0-3 雙導航按鈕、P0-4 QR 說明文案、P1-7 營業時間)
+    // 選取指定設施 (全面支援步行圈與開車版)
     // =========================================================================
     function selectItem(id) {
       const item = LOCATIONS.find(x => x.id === id);
       if (!item) return;
 
       // 地圖平滑聚焦
-      map.flyTo(item.coords, 18, { duration: 0.8 });
+      if (item.isDrive) {
+        map.flyTo(item.coords, 15, { duration: 0.8 });
+      } else {
+        map.flyTo(item.coords, 18, { duration: 0.8 });
+      }
 
       // 更新焦點卡片類別標籤
       const badgeEl = document.getElementById('focus-badge');
@@ -2287,12 +2867,27 @@
       else if (item.category === 'store') catName = '特寵補給 / 藥局';
       else if (item.category === 'food') catName = '休息咖啡 / 美食';
       else if (item.category === 'atm') catName = '銀行 / ATM / 超商';
+      else if (item.category === 'drive_store') catName = `🚗 特寵補給 (${item.subTag})`;
 
       badgeEl.innerText = catName;
       document.getElementById('focus-name').innerText = item.name;
-      document.getElementById('focus-walk').innerText = item.walkTime;
-      document.getElementById('focus-dist').innerText = `距離 ${item.distance}`;
-      document.getElementById('focus-cat-name').innerText = catName;
+
+      // 單位顯示：開車版顯示「開車約 X 分／X km」，不顯示步行時間
+      const walkTag = document.getElementById('focus-walk');
+      const distTag = document.getElementById('focus-dist');
+      if (item.isDrive) {
+        walkTag.className = 'tag tag-drive';
+        walkTag.innerHTML = `<i class="fa-solid fa-car"></i> ${item.driveTime}`;
+        distTag.innerText = `車程 ${item.distance}`;
+        document.getElementById('focus-dist-label').innerText = '10km 開車補給圈';
+      } else {
+        walkTag.className = 'tag tag-walk';
+        walkTag.innerHTML = `<i class="fa-solid fa-person-walking"></i> ${item.walkTime}`;
+        distTag.innerText = `距離 ${item.distance}`;
+        document.getElementById('focus-dist-label').innerText = '步行可達生活圈';
+      }
+
+      document.getElementById('focus-cat-name').innerText = item.subTag || catName;
       document.getElementById('focus-desc').innerHTML = item.desc;
 
       // 計算與更新營業時間狀態
@@ -2311,65 +2906,79 @@
         document.getElementById('focus-hours-box').style.display = 'none';
       }
 
-      // 停車場特殊空位與入口指引
+      // 停車場特殊空位儀表
       const meterBox = document.getElementById('parking-meter-box');
-      const entranceBox = document.getElementById('entrance-notice-box');
       if (item.category === 'parking') {
         meterBox.style.display = 'flex';
         document.getElementById('meter-rate').innerText = item.rate;
         updateParkingMeter(item.availableSpaces, item.totalSpaces);
-
-        if (item.entranceGuide) {
-          entranceBox.style.display = 'flex';
-          document.getElementById('entrance-desc').innerHTML = item.entranceGuide;
-        } else {
-          entranceBox.style.display = 'none';
-        }
       } else {
         meterBox.style.display = 'none';
+      }
+
+      // 車道／入口／面交指引
+      const entranceBox = document.getElementById('entrance-notice-box');
+      if (item.entranceGuide) {
+        entranceBox.style.display = 'flex';
+        document.getElementById('entrance-title').innerText = item.isDrive ? '🚗 門市／面交指引：' : '🚗 車輛入口指引：';
+        document.getElementById('entrance-desc').innerHTML = item.entranceGuide;
+      } else {
         entranceBox.style.display = 'none';
       }
 
-      // 導航網址與按鈕語意 (修復 P0-3：開車與步行獨立指向，無重複網址)
+      // 導航網址與按鈕 (開車版預設 driving 導航)
       const walkNavUrl = `https://www.google.com/maps/dir/?api=1&origin=${AMAZON_COORDS[0]},${AMAZON_COORDS[1]}&destination=${item.coords[0]},${item.coords[1]}&travelmode=walking`;
       const driveNavUrl = `https://www.google.com/maps/dir/?api=1&origin=${AMAZON_COORDS[0]},${AMAZON_COORDS[1]}&destination=${item.coords[0]},${item.coords[1]}&travelmode=driving`;
+      const searchShopUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name)}`;
 
       const btnDrive = document.getElementById('btn-drive-nav');
       const btnWalk = document.getElementById('btn-walk-nav');
       const btnDriveText = document.getElementById('btn-drive-text');
       const btnWalkText = document.getElementById('btn-walk-text');
 
-      btnDrive.href = driveNavUrl;
-      btnWalk.href = walkNavUrl;
-
-      if (item.category === 'parking') {
+      if (item.isDrive) {
+        btnDrive.href = driveNavUrl;
+        btnDriveText.innerText = '開車路線導航';
+        btnWalk.href = searchShopUrl;
+        document.getElementById('btn-walk-icon').className = 'fa-brands fa-google';
+        btnWalkText.innerText = 'Google 商家資訊';
+      } else if (item.category === 'parking') {
+        btnDrive.href = driveNavUrl;
         btnDriveText.innerText = '車道入口導航';
+        btnWalk.href = walkNavUrl;
+        document.getElementById('btn-walk-icon').className = 'fa-solid fa-person-walking';
         btnWalkText.innerText = '步行回院導航';
       } else {
+        btnDrive.href = driveNavUrl;
         btnDriveText.innerText = '開車導航';
+        btnWalk.href = walkNavUrl;
+        document.getElementById('btn-walk-icon').className = 'fa-solid fa-person-walking';
         btnWalkText.innerText = '步行導航';
       }
 
-      // QR Code 生成與文案切換 (修復 P0-4)
-      const qrTargetUrl = (item.category === 'parking') ? driveNavUrl : walkNavUrl;
+      // QR Code 生成
+      const qrTargetUrl = (item.isDrive || item.category === 'parking') ? driveNavUrl : walkNavUrl;
       qrcodeObj.clear();
       qrcodeObj.makeCode(qrTargetUrl);
 
       const qrTitle = document.getElementById('qrcode-title');
       const qrDesc = document.getElementById('qrcode-desc');
 
-      if (item.category === 'parking') {
+      if (item.isDrive) {
+        qrTitle.innerHTML = '<i class="fa-solid fa-qrcode"></i> 開車精準導航';
+        qrDesc.innerText = '手機相機一掃，直接啟動 Google Maps 車用路線導航。';
+      } else if (item.category === 'parking') {
         qrTitle.innerHTML = '<i class="fa-solid fa-qrcode"></i> 車位與入口導航';
         qrDesc.innerText = '手機相機一掃，直接啟動 Google Maps 車輛入口精準導航。';
       } else if (item.category === 'store') {
         qrTitle.innerHTML = '<i class="fa-solid fa-qrcode"></i> 特寵補給・藥局導航';
-        qrDesc.innerText = '手機相機一掃，立即啟動 Google Maps 導航前往急救耗材與藥局。';
+        qrDesc.innerText = '手機相機一掃，直接啟動 Google Maps 導航前往急救耗材與藥局。';
       } else if (item.category === 'food') {
         qrTitle.innerHTML = '<i class="fa-solid fa-qrcode"></i> 候診休憩・美食導航';
-        qrDesc.innerText = '手機相機一掃，立即啟動 Google Maps 帶您前往周邊餐飲咖啡廳。';
+        qrDesc.innerText = '手機相機一掃，直接啟動 Google Maps 帶您前往周邊餐飲咖啡廳。';
       } else if (item.category === 'atm') {
         qrTitle.innerHTML = '<i class="fa-solid fa-qrcode"></i> 金融提款・超商導航';
-        qrDesc.innerText = '手機相機一掃，立即啟動 Google Maps 前往周邊銀行、郵局與超商。';
+        qrDesc.innerText = '手機相機一掃，直接啟動 Google Maps 前往周邊銀行、郵局與超商。';
       }
 
       // 更新列表 Active 狀態
@@ -2377,8 +2986,35 @@
         el.classList.toggle('active', el.getAttribute('data-id') === id);
       });
 
+      // 同步更新手機版地圖底部浮動卡片
+      updateMobileFloatCard(item, openStatus, qrTargetUrl);
+
       // 關閉搜尋下拉
       document.getElementById('search-dropdown').style.display = 'none';
+    }
+
+    // 更新手機版底部懸浮卡片
+    function updateMobileFloatCard(item, openStatus, navUrl) {
+      const floatCard = document.getElementById('mobile-floating-card');
+      document.getElementById('m-float-title').innerText = item.name;
+      const statusEl = document.getElementById('m-float-status');
+      statusEl.className = `status-badge ${openStatus.badgeClass}`;
+      document.getElementById('m-float-status-text').innerText = openStatus.text;
+
+      if (item.isDrive) {
+        document.getElementById('m-float-time').innerText = item.driveTime;
+        document.getElementById('m-float-time').style.color = '#0369A1';
+        document.getElementById('m-float-dist').innerText = `車程 ${item.distance}`;
+        document.getElementById('m-float-btn-text').innerText = '一鍵開車導航';
+      } else {
+        document.getElementById('m-float-time').innerText = item.walkTime;
+        document.getElementById('m-float-time').style.color = 'var(--primary)';
+        document.getElementById('m-float-dist').innerText = `距離 ${item.distance}`;
+        document.getElementById('m-float-btn-text').innerText = (item.category === 'parking') ? '一鍵車道導航' : '一鍵步行導航';
+      }
+
+      document.getElementById('m-float-nav-btn').href = navUrl;
+      floatCard.style.display = 'block';
     }
 
     // =========================================================================
@@ -2397,10 +3033,10 @@
 
       clearBtn.style.display = 'block';
 
-      // 優先在本院精確資料庫模糊搜尋
       const matches = LOCATIONS.filter(item => {
         return item.name.toLowerCase().includes(q) || 
                item.desc.toLowerCase().includes(q) || 
+               (item.subTag && item.subTag.toLowerCase().includes(q)) ||
                item.tags.some(t => t.toLowerCase().includes(q));
       });
 
@@ -2409,21 +3045,25 @@
         matches.forEach(item => {
           const div = document.createElement('div');
           div.className = 'search-result-item';
-          div.innerHTML = `<i class="fa-solid fa-location-dot"></i> <div><strong>${item.name}</strong> <span style="font-size:0.75rem; color:#888;">(已核實・${item.walkTime})</span></div>`;
+          const timeLabel = item.isDrive ? item.driveTime : item.walkTime;
+          div.innerHTML = `<i class="fa-solid fa-location-dot"></i> <div><strong>${item.name}</strong> <span style="font-size:0.75rem; color:#888;">(已核實・${timeLabel})</span></div>`;
           div.onclick = () => {
             selectItem(item.id);
             dropdown.style.display = 'none';
+            if (window.innerWidth <= 768) switchMobileView('map');
           };
           dropdown.appendChild(div);
         });
       }
 
-      // Google Maps 快速搜尋導航選項
       const webDiv = document.createElement('div');
       webDiv.className = 'search-result-item';
       webDiv.style.background = '#F2F7F4';
-      webDiv.innerHTML = `<i class="fa-brands fa-google" style="color:#4285F4;"></i> <div><strong>Google 快速搜尋：「${input.value}」</strong><br><span style="font-size:0.72rem; color:#666;">為飼主產生專屬 Google Maps 搜尋與導航路線</span></div>`;
-      webDiv.onclick = () => triggerWebSearch(input.value);
+      webDiv.innerHTML = `<i class="fa-brands fa-google" style="color:#4285F4;"></i> <div><strong>Google 快速搜尋：「${input.value}」</strong><br><span style="font-size:0.72rem; color:#666;">產生專屬 Google Maps 搜尋與路線</span></div>`;
+      webDiv.onclick = () => {
+        triggerWebSearch(input.value);
+        if (window.innerWidth <= 768) switchMobileView('map');
+      };
       dropdown.appendChild(webDiv);
 
       dropdown.style.display = 'block';
@@ -2448,7 +3088,7 @@
     }
 
     // =========================================================================
-    // Google 快速搜尋模式
+    // Google 快速搜尋
     // =========================================================================
     function triggerWebSearch(keyword) {
       const q = keyword || document.getElementById('search-input').value.trim();
@@ -2460,34 +3100,30 @@
       const dropdown = document.getElementById('search-dropdown');
       dropdown.style.display = 'none';
 
-      // 先檢查是否剛好為已收錄設施
       const matched = LOCATIONS.find(x => x.name.toLowerCase().includes(q.toLowerCase()));
       if (matched) {
         selectItem(matched.id);
         return;
       }
 
-      // 產生專屬 Google Maps 搜尋與導航連結
       const searchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('台北市內湖區 ' + q)}`;
       const dirUrl = `https://www.google.com/maps/dir/?api=1&origin=${AMAZON_COORDS[0]},${AMAZON_COORDS[1]}&destination=${encodeURIComponent('台北市內湖區 ' + q)}`;
 
-      // 更新焦點卡片
       document.getElementById('focus-badge').className = 'focus-badge search';
       document.getElementById('focus-badge').innerText = '🔍 Google 快搜';
       document.getElementById('focus-name').innerText = q;
+      document.getElementById('focus-walk').className = 'tag tag-walk';
       document.getElementById('focus-walk').innerText = '依導航為準';
-      document.getElementById('focus-dist').innerText = '台北市內湖生活圈';
+      document.getElementById('focus-dist').innerText = '大台北生活圈';
       document.getElementById('focus-cat-name').innerText = 'Google 搜尋店家';
-      document.getElementById('focus-desc').innerHTML = `<strong>已為飼主生成「${q}」專屬 Google Maps 搜尋與導航路線！</strong><br>手機點擊導航或掃描 QR Code，直接啟動 Google Maps App 查看最新營業時間、實景照片與路徑。`;
+      document.getElementById('focus-desc').innerHTML = `<strong>已為飼主生成「${q}」專屬 Google Maps 搜尋與導航！</strong><br>手機相機一掃或點擊導航，直接啟動 Google Maps App 查看最新營業時間與實景照片。`;
 
-      // 隱藏特定項目
       document.getElementById('focus-hours-box').style.display = 'none';
       document.getElementById('focus-status-badge').className = 'status-badge status-open';
       document.getElementById('focus-status-text').innerText = '即時搜尋';
       document.getElementById('parking-meter-box').style.display = 'none';
       document.getElementById('entrance-notice-box').style.display = 'none';
 
-      // 雙按鈕語意獨立 (搜尋店家 / 路線導航)
       const btnDrive = document.getElementById('btn-drive-nav');
       const btnWalk = document.getElementById('btn-walk-nav');
       btnDrive.href = searchUrl;
@@ -2498,13 +3134,11 @@
       document.getElementById('btn-walk-icon').className = 'fa-solid fa-diamond-turn-right';
       document.getElementById('btn-walk-text').innerText = '路線導航';
 
-      // QR Code
       qrcodeObj.clear();
       qrcodeObj.makeCode(dirUrl);
       document.getElementById('qrcode-title').innerHTML = '<i class="fa-solid fa-qrcode"></i> Google 快搜導航';
       document.getElementById('qrcode-desc').innerText = `手機相機一掃，立即開啟 Google Maps 查看「${q}」最新路線與營業資訊。`;
 
-      // 在地圖中心放置搜尋標記
       if (searchMarker) map.removeLayer(searchMarker);
       const searchIcon = L.divIcon({
         className: 'custom-div-icon',
@@ -2517,7 +3151,7 @@
     }
 
     // =========================================================================
-    // 停車位連線與狀態更新 (修復 P2-10 連線失敗降級顯示)
+    // 停車位連線與狀態更新
     // =========================================================================
     function updateParkingMeter(avail, total) {
       const numEl = document.getElementById('meter-number');
@@ -2577,7 +3211,6 @@
       const btn = document.getElementById('btn-sync-parking');
       text.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在連線停管處更新...';
 
-      // 檢查離線狀態
       if (!navigator.onLine) {
         setTimeout(setParkingDegradedState, 600);
         return;
@@ -2596,7 +3229,6 @@
           else if (p.id === 'park_bihu') p.availableSpaces = 12 + Math.floor(Math.random() * 6);
         });
 
-        // 重新繪製標記與清單 (嚴格保持當前篩選)
         renderMarkers();
         renderList();
         
@@ -2616,7 +3248,7 @@
     }
 
     // =========================================================================
-    // 渲染右側清單 (修復 P1-8：嚴格按步行距離由近到遠排序，附營業狀態)
+    // 渲染設施清單
     // =========================================================================
     function renderList() {
       const container = document.getElementById('item-list');
@@ -2624,34 +3256,52 @@
 
       let filtered = LOCATIONS.filter(item => {
         if (currentCategory === 'all') return true;
+        if (currentCategory === 'drive_store') {
+          if (item.category !== 'drive_store') return false;
+          if (currentDriveSubTag !== 'all') return item.animalType === currentDriveSubTag;
+          return true;
+        }
         return item.category === currentCategory;
       });
 
-      // 依距離由近到遠嚴格排序 (P1-8)
+      // 依距離由近到遠嚴格排序 (公尺 / 公里轉換)
       filtered.sort((a, b) => {
-        const distA = parseInt(a.distance, 10) || 0;
-        const distB = parseInt(b.distance, 10) || 0;
+        const distA = a.distance.endsWith('km') ? parseFloat(a.distance) * 1000 : parseInt(a.distance, 10);
+        const distB = b.distance.endsWith('km') ? parseFloat(b.distance) * 1000 : parseInt(b.distance, 10);
         return distA - distB;
       });
+
+      // 更新手機版清單數量計數
+      const countEl = document.getElementById('mobile-list-count');
+      if (countEl) countEl.innerText = filtered.length;
 
       filtered.forEach(item => {
         const card = document.createElement('div');
         card.className = 'list-card';
         card.setAttribute('data-id', item.id);
-        card.onclick = () => selectItem(item.id);
+        card.onclick = () => {
+          selectItem(item.id);
+          if (window.innerWidth <= 768) switchMobileView('map');
+        };
 
         let iconFa = 'fa-location-dot';
         if (item.category === 'parking') iconFa = 'fa-square-parking';
         else if (item.category === 'store') iconFa = 'fa-prescription-bottle-medical';
         else if (item.category === 'food') iconFa = 'fa-mug-hot';
         else if (item.category === 'atm') iconFa = 'fa-building-columns';
+        else if (item.category === 'drive_store') {
+          if (item.animalType === 'aqua') iconFa = 'fa-fish-fins';
+          else if (item.animalType === 'reptile') iconFa = 'fa-dragon';
+          else if (item.animalType === 'rabbit') iconFa = 'fa-shield-cat';
+          else if (item.animalType === 'bird') iconFa = 'fa-dove';
+          else iconFa = 'fa-car-side';
+        }
 
-        // 計算營業狀態
         const opStatus = getOpenStatus(item.openHours);
 
         let rightHtml = `
           <div class="card-right">
-            <span style="font-size:0.75rem; font-weight:700; color:var(--primary);">${item.walkTime}</span>
+            <span class="${item.isDrive ? 'card-time-drive' : 'card-time-walk'}">${item.isDrive ? item.driveTime : item.walkTime}</span>
             <span class="card-spaces-label">${item.distance}</span>
           </div>
         `;
@@ -2666,6 +3316,8 @@
           `;
         }
 
+        let subTagHtml = item.subTag ? `<span class="tag-sub-drive">${item.subTag}</span><span>•</span>` : '';
+
         card.innerHTML = `
           <div class="card-left">
             <div class="card-icon-box icon-${item.category}">
@@ -2674,6 +3326,7 @@
             <div class="card-text">
               <div class="card-title">${item.name}</div>
               <div class="card-sub">
+                ${subTagHtml}
                 <span class="status-badge ${opStatus.badgeClass}"><span class="status-pulse-dot"></span>${opStatus.shortText}</span>
                 <span>•</span>
                 <span>${item.distance}</span>
@@ -2685,48 +3338,77 @@
 
         container.appendChild(card);
       });
-
-      // 保持 active 標記
-      const activeCard = document.querySelector('.list-card.active');
-      if (!activeCard && filtered.length > 0) {
-        // 如果無選取，預設維持選中
-      }
     }
 
     // =========================================================================
-    // 依分類過濾
+    // 依分類過濾 (開車版自動 fitBounds 至 10km；其他分類恢復步行圈)
     // =========================================================================
     function setCategory(cat, el) {
       currentCategory = cat;
       document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
       if (el) el.classList.add('active');
 
-      // 更新地圖標記顯示 (僅顯示符合該分類之設施)
-      Object.keys(markers).forEach(id => {
-        const item = LOCATIONS.find(x => x.id === id);
-        if (!item) return;
-        if (cat === 'all' || item.category === cat) {
-          if (!map.hasLayer(markers[id])) map.addLayer(markers[id]);
-        } else {
-          if (map.hasLayer(markers[id])) map.removeLayer(markers[id]);
-        }
-      });
+      // 控制開車次分類晶片列顯示
+      const subBar = document.getElementById('subfilter-bar');
+      if (cat === 'drive_store') {
+        subBar.style.display = 'flex';
+        currentDriveSubTag = 'all';
+        document.querySelectorAll('.subchip').forEach(c => c.classList.remove('active'));
+        const firstSub = subBar.querySelector('.subchip');
+        if (firstSub) firstSub.classList.add('active');
 
+        // 開車版視野：自動 fitBounds 到 10km 全覽範圍
+        const drivePois = LOCATIONS.filter(x => x.category === 'drive_store');
+        const bounds = L.latLngBounds([AMAZON_COORDS, ...drivePois.map(p => p.coords)]);
+        map.fitBounds(bounds, { padding: [45, 45], maxZoom: 14 });
+
+        // 預設選中第一家開車特寵店家 (陶弟弟)
+        selectItem('drive_taodidi');
+      } else {
+        subBar.style.display = 'none';
+        // 恢復步行圈中心視野
+        map.flyTo(AMAZON_COORDS, 17, { duration: 0.8 });
+      }
+
+      // 更新地圖標記
+      renderMarkers();
+      // 重新渲染清單
       renderList();
     }
 
-    // =========================================================================
-    // 視圖重置與快捷鍵
-    // =========================================================================
+    // 開車次分類篩選 (水族/兩棲/兔寶/鳥禽)
+    function filterDriveSubTag(type, el) {
+      currentDriveSubTag = type;
+      document.querySelectorAll('.subchip').forEach(c => c.classList.remove('active'));
+      if (el) el.classList.add('active');
+
+      renderMarkers();
+      renderList();
+
+      const matched = LOCATIONS.filter(x => x.category === 'drive_store' && (type === 'all' || x.animalType === type));
+      if (matched.length > 0) {
+        const bounds = L.latLngBounds([AMAZON_COORDS, ...matched.map(p => p.coords)]);
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+        selectItem(matched[0].id);
+      }
+    }
+
+    // 視圖重置
     function resetToHospital() {
       map.flyTo(AMAZON_COORDS, 18, { duration: 0.8 });
     }
 
     function resetView() {
-      map.flyTo(AMAZON_COORDS, 16.5, { duration: 0.8 });
+      if (currentCategory === 'drive_store') {
+        const drivePois = LOCATIONS.filter(x => x.category === 'drive_store');
+        const bounds = L.latLngBounds([AMAZON_COORDS, ...drivePois.map(p => p.coords)]);
+        map.fitBounds(bounds, { padding: [45, 45], maxZoom: 14 });
+      } else {
+        map.flyTo(AMAZON_COORDS, 16.5, { duration: 0.8 });
+      }
     }
 
-    // 最多空車位 (修復 P0-2：同步切換分類至附近停車場、清單高亮並滾動定位)
+    // 最多空車位
     function focusNearestParking() {
       const parkingChip = document.querySelector('.filter-chip[data-category="parking"]');
       if (parkingChip) {
@@ -2757,9 +3439,7 @@
       }
     }
 
-    // =========================================================================
-    // 櫃台無人值守閒置自動重置 (修復 P2-9：75秒無操作安靜回到全覽首頁畫面)
-    // =========================================================================
+    // 櫃台無人值守閒置自動重置 (75秒)
     function initIdleTimer() {
       resetIdleTimer();
       ['mousedown', 'mousemove', 'keydown', 'touchstart', 'scroll', 'click'].forEach(evt => {
@@ -2778,6 +3458,7 @@
       if (allChip) setCategory('all', allChip);
       selectItem('store_roopoobear');
       resetView();
+      if (window.innerWidth <= 768) switchMobileView('map');
     }
 
     // 啟動主流程
